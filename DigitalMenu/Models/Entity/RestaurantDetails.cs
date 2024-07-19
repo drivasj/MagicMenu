@@ -4,7 +4,8 @@ namespace DigitalMenu.Models.Entity
 {
     public class RestaurantDetails
     {
-        public int IdRestaurantDetails { get; set; }
+        [Key]
+        public int IdRestaurant { get; set; }
         public string Description { get; set; }
         [StringLength(50)]
         public string Code { get; set; }
@@ -15,6 +16,5 @@ namespace DigitalMenu.Models.Entity
         public string Phone { get; set; }
         [StringLength(250)]
         public string Address { get; set; }
-        public Restaurant Restaurant { get; set; }
     }
 }

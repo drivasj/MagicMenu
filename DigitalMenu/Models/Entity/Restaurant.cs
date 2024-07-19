@@ -13,8 +13,8 @@ namespace DigitalMenu.Models.Entity
         public DateTime RegisterDate { get; set; }
         public DateTime LastUpdate { get; set; }
         public bool Active { get; set; }
-        public List<RestaurantEmployee> RestaurantEmployee { get; set; }
+        public List<RestaurantEmployee> Restaurantemployee { get; set; }
         public List<Dishe> Dishes { get; set; }
-        public RestaurantDetails RestaurantDetails { get; set; }
+        public RestaurantDetails Restaurantdetails { get; set; }
     }
 }
