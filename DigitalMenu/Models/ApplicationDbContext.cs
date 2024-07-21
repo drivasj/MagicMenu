@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DigitalMenu.Models;
+using DigitalMenu.Models.Entity;
 
 namespace TestWeb
 {
@@ -10,5 +11,7 @@ namespace TestWeb
         {
         }
 
+        public DbSet<Dishes> Dishes {  get; set; }
+        public DbSet<DishesCategory> DishesCategory { get; set; }
     }
 }
