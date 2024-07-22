@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DigitalMenu.Models.CategoryDishe
 {
-    public class CategoryDashDTO
+    public class CategoryDashViewModel
     {
         public int IdDishesCategory { get; set; }
         public string Code { get; set; }
