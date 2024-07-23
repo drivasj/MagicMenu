@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using DigitalMenu.Models;
 using DigitalMenu.Models.Entity;
+using DigitalMenu.Models.EntitySystem;
 
 namespace TestWeb
 {
@@ -19,13 +20,14 @@ namespace TestWeb
         public DbSet<Employee> Employee { get; set; }
         public DbSet<EmployeeDetails> Employeedetails { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Employee>()
-        //        .HasOne(e => e.EmployeeDetails)
-        //        .WithOne(ed => ed.Employee)
-        //        .HasForeignKey<EmployeeDetails>(ed => ed.IdEmployee)
-        //        .OnDelete(DeleteBehavior.Cascade); // Optional: Cascade delete on Employee deletion
-        //}
+        // Entities System
+
+        public DbSet<Roleuser> Roleuser { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Role> Role { get; set; }
+        public DbSet<Rolemenu> Rolemenu { get; set; }
+        public DbSet<Menu> Menu { get; set; }
+        public DbSet<Application> Application { get; set; }
+
     }
 }
