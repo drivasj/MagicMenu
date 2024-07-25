@@ -20,11 +20,11 @@ namespace DigitalMenu.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true),
                     Description = table.Column<string>(type: "longtext", nullable: true),
-                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     RegisterUser = table.Column<string>(type: "longtext", nullable: true),
                     LastUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastUpdateUser = table.Column<string>(type: "longtext", nullable: true),
-                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: true),
                     Display = table.Column<string>(type: "longtext", nullable: true),
                     Icon = table.Column<string>(type: "longtext", nullable: true)
                 },
@@ -42,15 +42,15 @@ namespace DigitalMenu.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true),
                     Description = table.Column<string>(type: "longtext", nullable: true),
-                    Privilege = table.Column<int>(type: "int", nullable: false),
-                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Privilege = table.Column<int>(type: "int", nullable: true),
+                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     RegisterUser = table.Column<string>(type: "longtext", nullable: true),
                     LastUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastUpdateUser = table.Column<string>(type: "longtext", nullable: true),
-                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: true),
                     NameRoleNotification = table.Column<string>(type: "longtext", nullable: true),
-                    TimeInitial = table.Column<TimeSpan>(type: "time(6)", nullable: false),
-                    TimeFinal = table.Column<TimeSpan>(type: "time(6)", nullable: false)
+                    TimeInitial = table.Column<TimeSpan>(type: "time(6)", nullable: true),
+                    TimeFinal = table.Column<TimeSpan>(type: "time(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,17 +67,17 @@ namespace DigitalMenu.Migrations
                     UserName = table.Column<string>(type: "longtext", nullable: true),
                     Password = table.Column<string>(type: "longtext", nullable: true),
                     IdEmployee = table.Column<int>(type: "int", nullable: false),
-                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     RegisterUser = table.Column<string>(type: "longtext", nullable: true),
                     IdCompany = table.Column<int>(type: "int", nullable: false),
                     LastUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastUpdateUser = table.Column<string>(type: "longtext", nullable: true),
-                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Online = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    Online = table.Column<bool>(type: "tinyint(1)", nullable: true),
                     UserTelegram = table.Column<string>(type: "longtext", nullable: true),
-                    ChatIdTelegram = table.Column<long>(type: "bigint", nullable: false),
-                    PasswordUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    NotificationPush = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    ChatIdTelegram = table.Column<long>(type: "bigint", nullable: true),
+                    PasswordUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    NotificationPush = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,24 +92,24 @@ namespace DigitalMenu.Migrations
                     IdMenu = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     IdApplication = table.Column<int>(type: "int", nullable: false),
-                    applicationIdApplication = table.Column<int>(type: "int", nullable: true),
+                   // applicationIdApplication = table.Column<int>(type: "int", nullable: true),
                     Area = table.Column<string>(type: "longtext", nullable: true),
                     Controller = table.Column<string>(type: "longtext", nullable: true),
                     Action = table.Column<string>(type: "longtext", nullable: true),
                     Name = table.Column<string>(type: "longtext", nullable: true),
                     Description = table.Column<string>(type: "longtext", nullable: true),
-                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    RegisterDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     RegisterUser = table.Column<string>(type: "longtext", nullable: true),
                     LastUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastUpdateUser = table.Column<string>(type: "longtext", nullable: true),
-                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Menu", x => x.IdMenu);
                     table.ForeignKey(
                         name: "FK_Menu_Application_applicationIdApplication",
-                        column: x => x.applicationIdApplication,
+                        column: x => x.IdApplication,
                         principalTable: "Application",
                         principalColumn: "IdApplication");
                 })
@@ -122,24 +122,24 @@ namespace DigitalMenu.Migrations
                     IdRoleUser = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     IdRole = table.Column<int>(type: "int", nullable: false),
-                    roleIdRole = table.Column<int>(type: "int", nullable: true),
+                   // roleIdRole = table.Column<int>(type: "int", nullable: true),
                     IdUser = table.Column<int>(type: "int", nullable: false),
-                    userIdUser = table.Column<int>(type: "int", nullable: true),
+                    //userIdUser = table.Column<int>(type: "int", nullable: true),
                     LastUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastUpdateUser = table.Column<string>(type: "longtext", nullable: true),
-                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roleuser", x => x.IdRoleUser);
                     table.ForeignKey(
                         name: "FK_Roleuser_Role_roleIdRole",
-                        column: x => x.roleIdRole,
+                        column: x => x.IdRole,
                         principalTable: "Role",
                         principalColumn: "IdRole");
                     table.ForeignKey(
                         name: "FK_Roleuser_User_userIdUser",
-                        column: x => x.userIdUser,
+                        column: x => x.IdUser,
                         principalTable: "User",
                         principalColumn: "IdUser");
                 })
@@ -152,24 +152,24 @@ namespace DigitalMenu.Migrations
                     IdRoleMenu = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     IdRole = table.Column<int>(type: "int", nullable: false),
-                    roleIdRole = table.Column<int>(type: "int", nullable: true),
+                    //roleIdRole = table.Column<int>(type: "int", nullable: true),
                     IdMenu = table.Column<int>(type: "int", nullable: false),
-                    menuIdMenu = table.Column<int>(type: "int", nullable: true),
+                    //menuIdMenu = table.Column<int>(type: "int", nullable: true),
                     LastUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastUpdateUser = table.Column<string>(type: "longtext", nullable: true),
-                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rolemenu", x => x.IdRoleMenu);
                     table.ForeignKey(
                         name: "FK_Rolemenu_Menu_menuIdMenu",
-                        column: x => x.menuIdMenu,
+                        column: x => x.IdMenu,
                         principalTable: "Menu",
                         principalColumn: "IdMenu");
                     table.ForeignKey(
                         name: "FK_Rolemenu_Role_roleIdRole",
-                        column: x => x.roleIdRole,
+                        column: x => x.IdRole,
                         principalTable: "Role",
                         principalColumn: "IdRole");
                 })
@@ -178,27 +178,27 @@ namespace DigitalMenu.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Menu_applicationIdApplication",
                 table: "Menu",
-                column: "applicationIdApplication");
+                column: "IdMenu");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rolemenu_menuIdMenu",
                 table: "Rolemenu",
-                column: "menuIdMenu");
+                column: "IdMenu");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rolemenu_roleIdRole",
                 table: "Rolemenu",
-                column: "roleIdRole");
+                column: "IdRole");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roleuser_roleIdRole",
                 table: "Roleuser",
-                column: "roleIdRole");
+                column: "IdRole");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roleuser_userIdUser",
                 table: "Roleuser",
-                column: "userIdUser");
+                column: "IdUser");
         }
 
         /// <inheritdoc />

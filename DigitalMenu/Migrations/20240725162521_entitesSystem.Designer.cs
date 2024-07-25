@@ -355,12 +355,12 @@ namespace DigitalMenu.Migrations
                     b.Property<string>("RegisterUser")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("applicationIdApplication")
-                        .HasColumnType("int");
+                    //b.Property<int?>("applicationIdApplication")
+                    //    .HasColumnType("int");
 
                     b.HasKey("IdMenu");
 
-                    b.HasIndex("applicationIdApplication");
+                    b.HasIndex("IdMenu");
 
                     b.ToTable("Menu");
                 });
@@ -430,17 +430,17 @@ namespace DigitalMenu.Migrations
                     b.Property<string>("LastUpdateUser")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("menuIdMenu")
-                        .HasColumnType("int");
+                    //b.Property<int?>("menuIdMenu")
+                    //    .HasColumnType("int");
 
-                    b.Property<int?>("roleIdRole")
-                        .HasColumnType("int");
+                    //b.Property<int?>("roleIdRole")
+                    //    .HasColumnType("int");
 
                     b.HasKey("IdRoleMenu");
 
-                    b.HasIndex("menuIdMenu");
+                    b.HasIndex("IdMenu");
 
-                    b.HasIndex("roleIdRole");
+                    b.HasIndex("IdRole");
 
                     b.ToTable("Rolemenu");
                 });
@@ -466,17 +466,17 @@ namespace DigitalMenu.Migrations
                     b.Property<string>("LastUpdateUser")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("roleIdRole")
-                        .HasColumnType("int");
+                    //b.Property<int?>("roleIdRole")
+                    //    .HasColumnType("int");
 
-                    b.Property<int?>("userIdUser")
-                        .HasColumnType("int");
+                    //b.Property<int?>("userIdUser")
+                    //    .HasColumnType("int");
 
                     b.HasKey("IdRoleUser");
 
-                    b.HasIndex("roleIdRole");
+                    b.HasIndex("IdRole");
 
-                    b.HasIndex("userIdUser");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Roleuser");
                 });
