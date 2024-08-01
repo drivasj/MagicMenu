@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DigitalMenu.Models.EntitySystem
+namespace DigitalMenu.Models.EntityAdministrator
 {
     public class Application
     {
@@ -10,7 +10,7 @@ namespace DigitalMenu.Models.EntitySystem
         public string Description { get; set; }
         public DateTime RegisterDate { get; set; }
         public string RegisterUser { get; set; }
-        public Nullable<DateTime> LastUpdate { get; set; }
+        public DateTime? LastUpdate { get; set; }
         public string LastUpdateUser { get; set; }
         public bool Active { get; set; }
         public string Display { get; set; }

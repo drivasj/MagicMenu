@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using DigitalMenu.Models;
 using DigitalMenu.Models.Entity;
-using DigitalMenu.Models.EntitySystem;
+using DigitalMenu.Models.EntityAdministrator;
 
 namespace TestWeb
 {
@@ -20,7 +20,7 @@ namespace TestWeb
         public DbSet<Employee> Employee { get; set; }
         public DbSet<EmployeeDetails> Employeedetails { get; set; }
 
-        // Entities System
+        // Entities Administrator
 
         public DbSet<Roleuser> Roleuser { get; set; }
         public DbSet<User> User { get; set; }

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace DigitalMenu.Models.EntitySystem
+namespace DigitalMenu.Models.EntityAdministrator
 {
     public class Menu
     {
@@ -17,7 +17,7 @@ namespace DigitalMenu.Models.EntitySystem
         public string Description { get; set; }
         public DateTime RegisterDate { get; set; }
         public string RegisterUser { get; set; }
-        public Nullable<DateTime> LastUpdate { get; set; }
+        public DateTime? LastUpdate { get; set; }
         public string LastUpdateUser { get; set; }
         public bool Active { get; set; }
         public virtual List<Rolemenu> rolemenu { get; set; }

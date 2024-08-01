@@ -32,6 +32,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=CategoryDishe}/{action=Index}/{id?}");
+    pattern: "{controller=Role}/{action=CreateRole}/{id?}");
 
 app.Run();

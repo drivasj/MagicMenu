@@ -1,5 +1,4 @@
-﻿using DigitalMenu.Models.EntitySystem;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DigitalMenu.Models.Entity
 {
@@ -17,8 +16,6 @@ namespace DigitalMenu.Models.Entity
         public List<RestaurantEmployee> Restaurantemployee { get; set; }
         public List<Dishe> Dishes { get; set; }
         public RestaurantDetails Restaurantdetails { get; set; }
-
-
 
     }
 }

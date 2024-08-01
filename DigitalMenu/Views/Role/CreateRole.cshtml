@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Create Role";
+}
+
+<h3>Crear Rol</h3>
+
+<div>
+    <div class="mb-3">
+        <label class="form-label"></label>
+        <input type="text" class="form-control" placeholder="name" name="Name" id="name" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label"></label>
+        <input type="text" class="form-control" placeholder="description" name="Description" id="description" />
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="saveRole()">Guardar</button>
+</div>
+
+@section Scripts {
+    <script src="~/js/administrator/role.js" asp-append-version="true"></script>
+
+}

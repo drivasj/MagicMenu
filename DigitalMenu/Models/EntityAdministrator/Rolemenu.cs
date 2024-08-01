@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Data;
 
-namespace DigitalMenu.Models.EntitySystem
+namespace DigitalMenu.Models.EntityAdministrator
 {
     public class Rolemenu
     {
@@ -11,7 +11,7 @@ namespace DigitalMenu.Models.EntitySystem
         public Role role { get; set; }
         public int IdMenu { get; set; }
         public Menu menu { get; set; }
-        public Nullable<DateTime> LastUpdate { get; set; }
+        public DateTime? LastUpdate { get; set; }
         public string LastUpdateUser { get; set; }
         public bool Active { get; set; }
     }

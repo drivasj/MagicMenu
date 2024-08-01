@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DigitalMenu.Models.EntitySystem
+namespace DigitalMenu.Models.EntityAdministrator
 {
     public class User
     {
@@ -12,7 +12,7 @@ namespace DigitalMenu.Models.EntitySystem
         public DateTime RegisterDate { get; set; }
         public string RegisterUser { get; set; }
         public int IdCompany { get; set; }
-        public Nullable<DateTime> LastUpdate { get; set; }
+        public DateTime? LastUpdate { get; set; }
         public string LastUpdateUser { get; set; }
         public bool Active { get; set; }
         public bool Online { get; set; }
@@ -20,7 +20,7 @@ namespace DigitalMenu.Models.EntitySystem
         public long ChatIdTelegram { get; set; }
         public DateTime PasswordUpdate { get; set; }
         public bool NotificationPush { get; set; }
-        public  List<Roleuser> roleuser { get; set; }
+        public List<Roleuser> roleuser { get; set; }
 
     }
 }
