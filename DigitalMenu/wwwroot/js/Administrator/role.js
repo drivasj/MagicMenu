@@ -3,27 +3,26 @@
     description : $("#description").val()
 }
 
-// Save Role
+function saveRole() {
 
-async function saveRole() {
-
-    const data = JSON.stringify({
-        Name: roleViewModel.name,
-        Description: roleViewModel.description
-    });
-
-    const response = await fetch("/Role/SaveRole", {
-        method: 'POST',
-        body: data,
-        headers: {
-            'Content-Type': 'application/json'
+    $.ajax({
+        url: "/Role/SaveRole",
+        type: "POST",
+        data: {
+            name: roleViewModel.name,
+            description: roleViewModel.description
+        },
+        async: true,
+        cache: false,
+        beforeSend: function () {
+            //Loading();
+        },
+        success: function (data) {
+            alert("Register save");
+        },
+        error: function () {
+            alert("Register save");
         }
     });
-
-    if (response.ok) {
-        alert("Register save");
-    } else {
-        alert("Error");
-    }
 }
 

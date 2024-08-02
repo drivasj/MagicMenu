@@ -25,14 +25,14 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Role>> SaveRole([FromBody] RoleCrearDTO roleCrearDTO)
+        public async Task <IActionResult> SaveRole(string name, string description)
         {
             var usuario = "Admin";
 
             var role = new Role
             {
-                Name = roleCrearDTO.Name,
-                Description = roleCrearDTO.Description,
+                Name = name,
+                Description = description,
                 RegisterDate = DateTime.Now,
                 RegisterUser = usuario,
                 Active = true
@@ -40,7 +40,7 @@ namespace DigitalMenu.Controllers
             context.Add(role);
             await context.SaveChangesAsync();
 
-            return role;
+            return View();
         }
     }
 }
