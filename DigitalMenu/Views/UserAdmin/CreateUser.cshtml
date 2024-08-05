@@ -1,0 +1,27 @@
+﻿@using DigitalMenu.Models.Administrator
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<h3>Create User</h3>
+
+<div>
+    <div class="mb-3">
+        <label class="form-label"></label>
+        <input type="text" class="form-control" placeholder="User Name" id="userName" autocomplete="off" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"></label>
+        <input type="text" class="form-control" placeholder="Password" id="password" autocomplete="off" />
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="saveUser()">Guardar</button>
+
+</div>
+
+@section Scripts {
+
+    <script src="~/js/administrator/userAdmin.js" asp-append-version="true"></script>
+
+}

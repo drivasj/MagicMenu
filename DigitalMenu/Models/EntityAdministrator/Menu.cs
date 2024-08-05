@@ -14,6 +14,7 @@ namespace DigitalMenu.Models.EntityAdministrator
         public string Controller { get; set; }
         public string Action { get; set; }
         public string Name { get; set; }
+        public bool Movil { get; set; }
         public string Description { get; set; }
         public DateTime RegisterDate { get; set; }
         public string RegisterUser { get; set; }

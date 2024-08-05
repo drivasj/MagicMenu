@@ -1,16 +1,14 @@
-﻿const roleViewModel = {
-    name : $("#name").val(),
-    description : $("#description").val()
-}
+﻿function saveRole() {
 
-function saveRole() {
+    const name = $("#name").val();
+    const description = $("#description").val();
 
     $.ajax({
         url: "/Role/SaveRole",
         type: "POST",
         data: {
-            name: roleViewModel.name,
-            description: roleViewModel.description
+            name: name,
+            description: description
         },
         async: true,
         cache: false,
@@ -21,7 +19,7 @@ function saveRole() {
             alert("Register save");
         },
         error: function () {
-            alert("Register save");
+            alert("Error");
         }
     });
 }

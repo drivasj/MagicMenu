@@ -27,14 +27,14 @@ namespace DigitalMenu.Controllers
         [HttpPost]
         public async Task <IActionResult> SaveRole(string name, string description)
         {
-            var usuario = "Admin";
+            var user = "Admin";
 
             var role = new Role
             {
                 Name = name,
                 Description = description,
                 RegisterDate = DateTime.Now,
-                RegisterUser = usuario,
+                RegisterUser = user,
                 Active = true
             };
             context.Add(role);

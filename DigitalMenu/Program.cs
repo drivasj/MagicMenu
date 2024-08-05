@@ -32,6 +32,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Role}/{action=CreateRole}/{id?}");
+    pattern: "{controller=Menu}/{action=CreateMenu}/{id?}");
 
 app.Run();

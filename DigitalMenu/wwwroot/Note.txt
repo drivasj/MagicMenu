@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráfico de Gastos</title>
+</head>
+<body>
+    <canvas id="myChart"></canvas>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/chart.js/dist/Chart.bundle.min.js"></script>
+    <script>
+        $.getJSON('@Url.Action("Index")', function (data) {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,   
+
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Distribución de Gastos'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+public class HomeController : Controller
+{
+    public IActionResult Index()
+    {
+        var gastos = new List<Gasto>
+        {
+            new Gasto { Categoria = "Alimentos", Monto = 500 },
+            new Gasto { Categoria = "Transporte", Monto = 300 },
+            new Gasto { Categoria = "Entretenimiento", Monto = 200 },
+        };
+
+        var chartData = new
+        {
+            labels = gastos.Select(g => g.Categoria).ToList(),
+            datasets = new[]
+            {
+                new
+                {
+                    data = gastos.Select(g => g.Monto).ToList(),
+                    backgroundColor = new[] { "#FF6384", "#36A2EB", "#FFCE56" },
+                    borderColor = new[] { "#FF6384", "#36A2EB", "#FFCE56" }
+                }
+            }
+        };
+
+        return Json(chartData);
+    }
+}
