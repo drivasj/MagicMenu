@@ -1,0 +1,56 @@
+﻿@model List<MenuCLS>
+
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="OffcanvasMenu" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+        <h6 class="offcanvas-title">Menu</h6>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="dropdown p-1">
+            <button type="button" class="btn btn-light dropdown-toggle" id="dropdownMenuUser" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person"></i> @* @ViewBag.UserName *@
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuUser">
+                <li><a class="dropdown-item" data-bs-dismiss="offcanvas" style="cursor:pointer" onclick="LoadMainPage('EmployeePerfil','Employee', 'Tools')">Mi perfil</a></li>
+                <li><a class="dropdown-item" data-bs-dismiss="offcanvas" style="cursor:pointer" onclick="LoadMainPage('ResetPassworForm','Administrator', 'Administrator')">Cambiar contraseña</a></li>
+                <li><a class="dropdown-item" data-bs-dismiss="offcanvas" style="cursor:pointer;" onclick="SessionSigOut()">Cerrar sesion</a></li>
+            </ul>
+        </div>
+
+        <hr />
+
+        @if (Model != null && Model.Any())
+        {
+            for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                <div class="dropdown p-1">
+                    <button type="button" class="btn btn-light dropdown-toggle" id="@string.Concat("dropdownMenu", i)" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="@item.icon"></i> @item.nameMenu
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="@string.Concat("dropdownMenu", i)">
+                        @foreach (SubMenu subItem in item.elements)
+                        {
+                            <li><a style="cursor:pointer;" class="dropdown-item" data-bs-dismiss="offcanvas" onclick="LoadMainPage('@subItem.action', '@subItem.controller', '@subItem.area');">@subItem.display</a></li>
+                        }
+                    </ul>
+                </div>
+            }
+        }
+
+@*         @if (ViewBag.CreenStatus)
+        {
+            <div class="dropdown p-1">
+                <button type="button" class="btn btn-light dropdown-toggle" id="dropdownMenuMonitor" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-display"></i> Pantallas
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuMonitor">
+                    <li>@Html.ActionLink("Transferencias", "TransferProccessOnline", "Tools", new { Area = "Tools" }, new { @class = "dropdown-item" })</li>
+                    <li>@Html.ActionLink("Repartidores", "DeliveryServices", "Tools", new { Area = "Tools" }, new { @class = "dropdown-item" })</li>
+                </ul>
+            </div>
+        } *@
+        <input type="hidden" readonly="readonly" value="@ViewBag.UserName" id="InputSessionUserHide" name="InputSessionUserHide" />
+    </div>
+</div>
