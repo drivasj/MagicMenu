@@ -9,10 +9,14 @@
     <link rel="stylesheet" href="~/DigitalMenu.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="container-fluid">
+        @await Component.InvokeAsync("Navbar");
+        @await Component.InvokeAsync("Menu");
 
-    @await Component.InvokeAsync("Menu");
-
-    @RenderBody()
+        <div class="col py-3">
+            @RenderBody()
+        </div>
+    </div>
 
 
     <footer class="border-top footer text-muted">

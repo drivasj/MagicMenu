@@ -1,6 +1,5 @@
 ﻿@model List<MenuCLS>
 
-
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="OffcanvasMenu" aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header">
         <h6 class="offcanvas-title">Menu</h6>
@@ -32,24 +31,29 @@
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="@string.Concat("dropdownMenu", i)">
                         @foreach (SubMenu subItem in item.elements)
                         {
-                            <li><a style="cursor:pointer;" class="dropdown-item" data-bs-dismiss="offcanvas" onclick="LoadMainPage('@subItem.action', '@subItem.controller', '@subItem.area');">@subItem.display</a></li>
+                            @*<li><a style="cursor:pointer;" class="dropdown-item" data-bs-dismiss="offcanvas"
+                            onclick="LoadMainPage('@subItem.action', '@subItem.controller', '@subItem.area');">@subItem.display</a></li>*@
+                            <li>
+                                <a asp-controller="@subItem.controller" asp-action="@subItem.action"
+                                   style="cursor:pointer;" class="dropdown-item" data-bs-dismiss="offcanvas">@subItem.display</a>
+                            </li>
                         }
                     </ul>
                 </div>
             }
         }
 
-@*         @if (ViewBag.CreenStatus)
+        @*         @if (ViewBag.CreenStatus)
         {
-            <div class="dropdown p-1">
-                <button type="button" class="btn btn-light dropdown-toggle" id="dropdownMenuMonitor" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-display"></i> Pantallas
-                </button>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuMonitor">
-                    <li>@Html.ActionLink("Transferencias", "TransferProccessOnline", "Tools", new { Area = "Tools" }, new { @class = "dropdown-item" })</li>
-                    <li>@Html.ActionLink("Repartidores", "DeliveryServices", "Tools", new { Area = "Tools" }, new { @class = "dropdown-item" })</li>
-                </ul>
-            </div>
+        <div class="dropdown p-1">
+        <button type="button" class="btn btn-light dropdown-toggle" id="dropdownMenuMonitor" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-display"></i> Pantallas
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuMonitor">
+        <li>@Html.ActionLink("Transferencias", "TransferProccessOnline", "Tools", new { Area = "Tools" }, new { @class = "dropdown-item" })</li>
+        <li>@Html.ActionLink("Repartidores", "DeliveryServices", "Tools", new { Area = "Tools" }, new { @class = "dropdown-item" })</li>
+        </ul>
+        </div>
         } *@
         <input type="hidden" readonly="readonly" value="@ViewBag.UserName" id="InputSessionUserHide" name="InputSessionUserHide" />
     </div>
