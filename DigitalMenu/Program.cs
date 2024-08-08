@@ -1,3 +1,5 @@
+using DigitalMenu.Services.Interfaces;
+using DigitalMenu.Services;
 using Microsoft.EntityFrameworkCore;
 using TestWeb;
 
@@ -12,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseMySQL(connectionString);
 });
+
+builder.Services.AddTransient<IUserRepository, UserRepository>();  
 
 var app = builder.Build();
 
@@ -32,6 +36,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Menu}/{action=CreateMenu}/{id?}");
+    pattern: "{controller=UserAdmin}/{action=Index}/{id?}");
 
 app.Run();

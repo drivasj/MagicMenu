@@ -1,22 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DigitalMenu.Models.EntityAdministrator;
 using TestWeb;
+using DigitalMenu.Services.Interfaces;
+using DigitalMenu.Models.DTO.UserEmployee;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace DigitalMenu.Controllers
 {
     public class UserAdminController : Controller
     {
+        private readonly IUserRepository userRepository;
+
         public ApplicationDbContext Context { get; }
 
-        public UserAdminController(ApplicationDbContext context)
+        public UserAdminController(ApplicationDbContext context, IUserRepository userRepository)
         {
             Context = context;
+            this.userRepository = userRepository;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult<List<EmployeeDTO>>> Index()
         {
-            return View();
+            int usuarioId = userRepository.GetUserId();
+
+            var employee = await Context.Employee
+                            .Where(e => e.Active == true)
+                            .OrderByDescending(e => e.IdEmployee)
+                            .Select(t => new EmployeeDTO
+                            {
+                                IdEmployee = t.IdEmployee,
+                                FirstName = t.FirstName,
+                                LastName = t.LastName,
+                                UserName = t.UserName
+                            }).ToListAsync();
+            return View(employee); 
         }
 
         [HttpGet]
@@ -24,6 +42,8 @@ namespace DigitalMenu.Controllers
         {
             return View();
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> SaveUser(string userName, string password)
