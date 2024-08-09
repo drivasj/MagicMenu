@@ -1,16 +1,10 @@
 ﻿
 function saveUser() {
-
-    const userName = $("#userName").val();
-    const password = $("#password").val();
-
+    conts
     $.ajax({
         url: "/UserAdmin/SaveUser",
         type: "POST",
-        data: {
-            userName: userName,
-            password: password
-        },
+        data: { model: model },
         async: true,
         cache: false,
         //beforeSend: function () {
@@ -23,4 +17,21 @@ function saveUser() {
             alert("Error");
         }
     });
+}
+
+function modelUser() {
+
+    const model = {
+
+        name = $("#userName").val(),
+        middleName = $("#password").val(),
+        middleName = $("#password").val(),
+        middleName = $("#password").val(),
+        middleName = $("#password").val(),
+        name = $("#userName").val(),
+        name = $("#userName").val(),
+        name = $("#userName").val()
+    }
+
+    return model;
 }
