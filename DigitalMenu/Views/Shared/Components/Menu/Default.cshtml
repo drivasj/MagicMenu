@@ -18,30 +18,30 @@
         </div>
 
         <hr />
-
-        @if (Model != null && Model.Any())
-        {
-            for (int i = 0; i < Model.Count; i++)
+ 
+            @if (Model != null && Model.Any())
             {
-                var item = Model[i];
-                <div class="dropdown p-1">
-                    <button type="button" class="btn btn-light dropdown-toggle" id="@string.Concat("dropdownMenu", i)" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="@item.icon"></i> @item.nameMenu
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="@string.Concat("dropdownMenu", i)">
-                        @foreach (SubMenu subItem in item.elements)
-                        {
-                            @*<li><a style="cursor:pointer;" class="dropdown-item" data-bs-dismiss="offcanvas"
-                            onclick="LoadMainPage('@subItem.action', '@subItem.controller', '@subItem.area');">@subItem.display</a></li>*@
-                            <li>
-                                <a style="cursor:pointer;" class="dropdown-item" asp-controller="@subItem.controller" asp-action="@subItem.action">@subItem.display</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    var item = Model[i];
+                    <div class="dropdown p-1">
+                        <button type="button" class="btn btn-light dropdown-toggle" id="@string.Concat("dropdownMenu", i)" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="@item.icon"></i> @item.nameMenu
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="@string.Concat("dropdownMenu", i)">
+                            @foreach (SubMenu subItem in item.elements)
+                            {
+                                @*<li><a style="cursor:pointer;" class="dropdown-item" data-bs-dismiss="offcanvas"
+                                onclick="LoadMainPage('@subItem.action', '@subItem.controller', '@subItem.area');">@subItem.display</a></li>*@
+                                <li>
+                                    <a style="cursor:pointer;" class="dropdown-item" asp-controller="@subItem.controller" asp-action="@subItem.action">@subItem.display</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
             }
-        }
-
+         
         @*         @if (ViewBag.CreenStatus)
         {
         <div class="dropdown p-1">

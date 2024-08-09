@@ -20,3 +20,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.bg-custom-color {
+    background-color: #559AFE;
+}
+
+.bg-color-span{
+    color:white;
+}

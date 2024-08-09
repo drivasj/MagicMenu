@@ -4,6 +4,7 @@ using TestWeb;
 using DigitalMenu.Services.Interfaces;
 using DigitalMenu.Models.DTO.UserEmployee;
 using Microsoft.EntityFrameworkCore;
+using DigitalMenu.Models.Entity;
 
 
 namespace DigitalMenu.Controllers
@@ -22,19 +23,30 @@ namespace DigitalMenu.Controllers
 
         public async Task<ActionResult<List<EmployeeDTO>>> Index()
         {
-            int usuarioId = userRepository.GetUserId();
+            try
+            {
+                int usuarioId = userRepository.GetUserId();
 
-            var employee = await Context.Employee
-                            .Where(e => e.Active == true)
-                            .OrderByDescending(e => e.IdEmployee)
-                            .Select(t => new EmployeeDTO
-                            {
-                                IdEmployee = t.IdEmployee,
-                                FirstName = t.FirstName,
-                                LastName = t.LastName,
-                                UserName = t.UserName
-                            }).ToListAsync();
-            return View(employee); 
+                var employee = await Context.Employee
+                                //.Include(e=>e.Employeedetails)
+                                .Where(e => e.Active == true)
+                                .OrderByDescending(e => e.IdEmployee)
+                                .Select(t => new EmployeeDTO
+                                {
+                                    IdEmployee = t.IdEmployee,
+                                    FirstName = t.FirstName,
+                                    LastName = t.LastName,
+                                    UserName = t.UserName,
+                                    Email = t.Employeedetails.Email
+                                }).ToListAsync();
+                return View(employee);
+            }
+            catch (Exception ex) 
+            {
+                string message = ex.Message;
+                return View("Error", message);
+            }
+
         }
 
         [HttpGet]

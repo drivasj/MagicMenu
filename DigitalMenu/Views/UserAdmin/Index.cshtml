@@ -4,19 +4,20 @@
 @{
     ViewData["Title"] = "Categorías";
 }
+<h4>Usuarios</h4>
+<hr class="bg-custom-color" />
 
-<h1>Usuarios</h1>
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
+<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Nuevo Usuario
 </button>
 
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>FirstName</th>
             <th>LastName</th>
             <th>UserName</th>
+            <th>Email</th>
             <th></th>
         </tr>
     </thead>
@@ -27,6 +28,7 @@
                 <td>@item.FirstName</td>
                 <td>@item.LastName</td>
                 <td>@item.UserName</td>
+                <td>@item.Email</td>
                 <td>
                     <a class="btn btn-primary" asp-action="Editar" asp-route-id="@item.IdEmployee">Editar</a>
                     <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@item.IdEmployee">Borrar</a>
@@ -41,11 +43,51 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nuevo usuario
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body table-responsive">
-                <div class="row g-3 needs-validation">
+                <div class="row g-3 needs-validation mb-3">
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Nombre</label>
+                         <input type="text" class="form-control"/>   
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Segundo Nombre</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Primer Apellido</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Segundo Apellido</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Documento</label>
+                        <input type="text" class="form-control" />
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Teléfono</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Correo electrónico</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Role</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Usuario</label>
+                        <input type="text" class="form-control" />
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -55,3 +97,4 @@
             </div>
         </div>
     </div>
+</div>

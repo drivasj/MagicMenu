@@ -9,19 +9,18 @@
     <link rel="stylesheet" href="~/DigitalMenu.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="container-fluid">
-        @await Component.InvokeAsync("Navbar");
-        @await Component.InvokeAsync("Menu");
+    @await Component.InvokeAsync("Navbar")
+    @await Component.InvokeAsync("Menu")
 
-        <div class="col py-3">
+    <div class="container">
+        <main role="main" class="pb-3">
             @RenderBody()
-        </div>
+        </main>
     </div>
 
-
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted bg-custom-color">
         <div class="container">
-            &copy; 2024 - DigitalMenu - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+             &copy; 2024 - DigitalMenu
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
