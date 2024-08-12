@@ -1,7 +1,9 @@
-﻿namespace DigitalMenu.Services.Interfaces
+﻿
+namespace DigitalMenu.Services.Interfaces
 {
     public interface IUserRepository
     {
+        Task<int> GetLastUserId();
         int GetUserId();
     }
 }

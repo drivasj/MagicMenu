@@ -1,6 +1,7 @@
 ﻿
 function saveUser() {
-    conts
+    const model = modelUser();
+
     $.ajax({
         url: "/UserAdmin/SaveUser",
         type: "POST",
@@ -23,15 +24,17 @@ function modelUser() {
 
     const model = {
 
-        name = $("#userName").val(),
-        middleName = $("#password").val(),
-        middleName = $("#password").val(),
-        middleName = $("#password").val(),
-        middleName = $("#password").val(),
-        name = $("#userName").val(),
-        name = $("#userName").val(),
-        name = $("#userName").val()
-    }
+        FirstName : $("#name").val(),
+      //  middleName : $("#middleName").val(),
+      //  motherName : $("#motherName").val(),
+        LastName : $("#lastName").val(),
+        DocumentNR: $("#document").val(),
+        Phone: $("#phone").val(),
+        Email: $("#email").val(),
+        IdRole: $("#role").val(),
+        UserName: $("#userName").val(),
+        Adress: $("#adress").val()
 
+    }
     return model;
 }

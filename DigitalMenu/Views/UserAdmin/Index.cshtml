@@ -7,7 +7,7 @@
 <h4>Usuarios</h4>
 <hr class="bg-custom-color" />
 
-<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewUser">
     Nuevo Usuario
 </button>
 
@@ -37,3 +37,9 @@
         }
     </tbody>
 </table>
+
+<partial name="_NewUserForm" />
+
+@section Scripts{
+    <script src="~/js/administrator/userAdmin.js" asp-append-version=" true"></script>
+}

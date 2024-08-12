@@ -1,9 +1,9 @@
 ﻿<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalNewUser" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
+                <h5 class="modal-title" id="ModalNewUserLabel">
                     Nuevo usuario
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -13,46 +13,51 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Nombre</label>
-                        <input type="text" class="form-control" id="name" />
+                        <input type="text" class="form-control" id="name" autocomplete="off"/>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Segundo Nombre</label>
-                        <input type="text" class="form-control" id="middleName" />
+                        <input type="text" class="form-control" id="middleName" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Primer Apellido</label>
-                        <input type="text" class="form-control" id="motherName" />
+                        <input type="text" class="form-control" id="motherName" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Segundo Apellido</label>
-                        <input type="text" class="form-control" id="lastName" />
+                        <input type="text" class="form-control" id="lastName" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Documento</label>
-                        <input type="text" class="form-control" id="document" />
+                        <input type="text" class="form-control" id="document" autocomplete="off" />
                     </div>
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Teléfono</label>
-                        <input type="text" class="form-control" id="phone"/>
+                        <input type="text" class="form-control" id="phone" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Correo electrónico</label>
-                        <input type="text" class="form-control" id="email" />
+                        <input type="text" class="form-control" id="email" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Role</label>
-                        <input type="text" class="form-control" id="role" />
+                        <input type="text" class="form-control" id="role" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Usuario</label>
-                        <input type="text" class="form-control" id="userName" />
+                        <input type="text" class="form-control" id="userName" autocomplete="off" />
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Dirección</label>
+                        <input type="text" class="form-control" id="adress" autocomplete="off" />
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="saveUser()">Save changes</button>
                 </div>
             </div>
         </div>

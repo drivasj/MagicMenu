@@ -11,13 +11,14 @@ namespace DigitalMenu.Controllers
 {
     public class UserAdminController : Controller
     {
+        private readonly ApplicationDbContext context;
         private readonly IUserRepository userRepository;
+        private static readonly object _lock = new object();
 
-        public ApplicationDbContext Context { get; }
 
         public UserAdminController(ApplicationDbContext context, IUserRepository userRepository)
         {
-            Context = context;
+            this.context = context;
             this.userRepository = userRepository;
         }
 
@@ -27,7 +28,7 @@ namespace DigitalMenu.Controllers
             {
                 int usuarioId = userRepository.GetUserId();
 
-                var employee = await Context.Employee
+                var employee = await context.Employee
                                 //.Include(e=>e.Employeedetails)
                                 .Where(e => e.Active == true)
                                 .OrderByDescending(e => e.IdEmployee)
@@ -41,7 +42,7 @@ namespace DigitalMenu.Controllers
                                 }).ToListAsync();
                 return View(employee);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 string message = ex.Message;
                 return View("Error", message);
@@ -55,27 +56,70 @@ namespace DigitalMenu.Controllers
             return View();
         }
 
-
-
         [HttpPost]
-        public async Task<IActionResult> SaveUser(string userName, string password)
+        public async Task<IActionResult> SaveUser(UserDTO model)
         {
-            var registerUser = "Admin";
-
-            var user = new User
+            using (var transaction = context.Database.BeginTransaction())
             {
-                UserName = userName,
-                Password = password,
-                IdEmployee = 1,
-                RegisterDate = DateTime.Now,
-                RegisterUser = registerUser,
-                IdCompany = 1,
-                Active = true
-            };
+                try
+                {
+                    int iduser = userRepository.GetUserId();
 
-            Context.Add(user);
-            await Context.SaveChangesAsync();
-            return View();
+                    int iduserNew = await userRepository.GetLastUserId() +1;
+
+                    var user = new User
+                    {
+                        UserName = model.UserName,
+                        Password = "12345678",
+                        IdEmployee = model.IdEmployee,
+                        RegisterDate = DateTime.Now.Date,
+                        IdCompany = 1,
+                        Active = true,
+                    };
+
+                    var employee = new Employee
+                    {
+                        Code = iduserNew,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Document = model.DocumentNR,
+                        UserName = model.UserName,
+                        RegisterUser = iduser.ToString(),
+                        RegisterDate = DateTime.Now.Date,
+                        Active = true,
+                    };
+
+                    var employeeDetails = new EmployeeDetails
+                    {
+                        Email = model.Email,
+                        Phone = model.Phone,
+                        Adress = model.Adress
+                    };
+
+                    var roleuser = new Roleuser
+                    {
+                        IdRole = model.IdRole,
+                        IdUser = iduserNew,
+                        Active = true
+                    };
+
+                    context.Add(user);
+                    context.Add(employee);
+                    context.Add(employee);
+                    context.Add(roleuser);
+
+                    await context.SaveChangesAsync();
+                    transaction.Commit();
+
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    string menssage = ex.Message;
+                    return View(menssage);
+                }
+            }
         }
     }
 }
