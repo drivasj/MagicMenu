@@ -20,7 +20,9 @@ namespace DigitalMenu.Services
 
         public async Task<int> GetLastUserId()
         {
-            int userId = await context.User.MaxAsync(x => x.IdUser);
+            int userId = 1;
+
+            //int userId = await context.User.MaxAsync(x => x.IdUser);
             return userId;
         }
     }

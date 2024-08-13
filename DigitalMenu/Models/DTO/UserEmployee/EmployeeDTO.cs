@@ -1,4 +1,4 @@
-﻿using DigitalMenu.Models.Entity;
+﻿using DigitalMenu.Models.EntityAdministrator;
 using System.ComponentModel.DataAnnotations;
 
 namespace DigitalMenu.Models.DTO.UserEmployee

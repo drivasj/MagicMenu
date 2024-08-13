@@ -16,16 +16,16 @@ namespace DigitalMenu.Controllers
             this.context = context;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var model = await context.Dishescategory.Select(c => new CategoryDashViewModel
-            {
-                IdDishesCategory = c.IdDishesCategory,
-                Name = c.Name,
-                Description = c.Description,
-            }).ToListAsync();
+        //public async Task<IActionResult> Index()
+        //{
+        //    var model = await context.Dishescategory.Select(c => new CategoryDashViewModel
+        //    {
+        //        IdDishesCategory = c.IdDishesCategory,
+        //        Name = c.Name,
+        //        Description = c.Description,
+        //    }).ToListAsync();
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
     }
 }

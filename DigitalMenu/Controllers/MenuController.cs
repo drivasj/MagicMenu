@@ -31,7 +31,7 @@ namespace DigitalMenu.Controllers
             {
                 var menu = new Menu
                 {
-                    IdApplication = model.IdApplication,
+                    ApplicationId = model.IdApplication,
                     Area = model.Area,
                     Controller = model.Controller,
                     Action = model.Action,

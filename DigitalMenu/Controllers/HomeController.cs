@@ -38,11 +38,11 @@ namespace DigitalMenu.Controllers
             List<MenuCLS> menu;
 
             menu = (from ru in Context.Roleuser
-                    join u in Context.User on ru.IdUser equals u.IdUser
-                    join r in Context.Role on ru.IdRole equals r.IdRole
-                    join rm in Context.Rolemenu on r.IdRole equals rm.IdRole
-                    join m in Context.Menu on rm.IdMenu equals m.IdMenu
-                    join a in Context.Application on m.IdApplication equals a.IdApplication
+                    join u in Context.User on ru.UserId equals u.IdUser
+                    join r in Context.Role on ru.RoleId equals r.IdRole
+                    join rm in Context.Rolemenu on r.IdRole equals rm.RoleId
+                    join m in Context.Menu on rm.MenuId equals m.IdMenu
+                    join a in Context.Application on m.ApplicationId equals a.IdApplication
                     where u.IdUser == idUser && ru.Active == true && rm.Active == true
                     select new MenuCLS()
                     {

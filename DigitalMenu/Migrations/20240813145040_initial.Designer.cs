@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestWeb;
 
@@ -10,9 +11,11 @@ using TestWeb;
 namespace DigitalMenu.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240813145040_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,7 +293,8 @@ namespace DigitalMenu.Migrations
 
                     b.HasKey("IdRoleUser");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -387,8 +391,8 @@ namespace DigitalMenu.Migrations
             modelBuilder.Entity("DigitalMenu.Models.EntityAdministrator.Roleuser", b =>
                 {
                     b.HasOne("DigitalMenu.Models.EntityAdministrator.Role", "role")
-                        .WithMany("roleuser")
-                        .HasForeignKey("RoleId")
+                        .WithOne("roleuser")
+                        .HasForeignKey("DigitalMenu.Models.EntityAdministrator.Roleuser", "RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

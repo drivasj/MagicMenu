@@ -25,9 +25,9 @@ function modelUser() {
     const model = {
 
         FirstName : $("#name").val(),
-      //  middleName : $("#middleName").val(),
-      //  motherName : $("#motherName").val(),
-        LastName : $("#lastName").val(),
+        MiddleName: $("#middleName").val(),
+        LastName: $("#lastName").val(),
+        MotherName : $("#motherName").val(),
         DocumentNR: $("#document").val(),
         Phone: $("#phone").val(),
         Email: $("#email").val(),

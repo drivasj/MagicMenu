@@ -59,67 +59,78 @@ namespace DigitalMenu.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveUser(UserDTO model)
         {
-            using (var transaction = context.Database.BeginTransaction())
+            //using (var transaction = context.Database.BeginTransaction())
+            //{
+            try
             {
-                try
+                int iduser = userRepository.GetUserId();
+
+                int iduserNew = await userRepository.GetLastUserId() + 1;
+
+                var user = new User
                 {
-                    int iduser = userRepository.GetUserId();
+                    UserName = model.UserName,
+                    Password = "12345678",
+                    EmployeeId = iduserNew,
+                    RegisterDate = DateTime.Now.Date,
+                    RegisterUser = iduser.ToString(),
+                    IdCompany = 1,
+                    Active = true,
+                };
 
-                    int iduserNew = await userRepository.GetLastUserId() +1;
+                var roleuser = new Roleuser
+                {
+                    RoleId = model.IdRole,
+                    UserId = iduserNew,
+                    Active = true
+                };
 
-                    var user = new User
-                    {
-                        UserName = model.UserName,
-                        Password = "12345678",
-                        IdEmployee = model.IdEmployee,
-                        RegisterDate = DateTime.Now.Date,
-                        IdCompany = 1,
-                        Active = true,
-                    };
+                var employee = new Employee
+                {
+                    FirstName = model.FirstName,
+                    MiddleName = model.MiddleName,
+                    LastName = model.LastName,
+                    MotherLastName = model.LastName,
+                    Document = model.DocumentNR,
+                    UserName = model.UserName,
+                    RegisterUser = iduser.ToString(),
+                    RegisterDate = DateTime.Now.Date,
+                    Active = true,
 
-                    var employee = new Employee
-                    {
-                        Code = iduserNew,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Document = model.DocumentNR,
-                        UserName = model.UserName,
-                        RegisterUser = iduser.ToString(),
-                        RegisterDate = DateTime.Now.Date,
-                        Active = true,
-                    };
-
-                    var employeeDetails = new EmployeeDetails
-                    {
+                    Employeedetails = new EmployeeDetails
+                    {                       
                         Email = model.Email,
                         Phone = model.Phone,
                         Adress = model.Adress
-                    };
+                    }
+                };
 
-                    var roleuser = new Roleuser
-                    {
-                        IdRole = model.IdRole,
-                        IdUser = iduserNew,
-                        Active = true
-                    };
+                context.Add(employee);
+                await context.SaveChangesAsync();
 
-                    context.Add(user);
-                    context.Add(employee);
-                    context.Add(employee);
-                    context.Add(roleuser);
 
-                    await context.SaveChangesAsync();
-                    transaction.Commit();
+                //context.Add(user);
+                //await context.SaveChangesAsync();
 
-                    return View();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    string menssage = ex.Message;
-                    return View(menssage);
-                }
+                //context.Add(roleuser);
+                //await context.SaveChangesAsync();
+
+                //context.Add(employee);
+                //await context.SaveChangesAsync();
+                //context.Add(employeeDetails);
+
+                //await context.SaveChangesAsync();
+                //transaction.Commit();
+
+                return View();
             }
+            catch (Exception ex)
+            {
+                //transaction.Rollback();
+                string menssage = ex.Message;
+                return View(menssage);
+            }
+            //}
         }
     }
 }
