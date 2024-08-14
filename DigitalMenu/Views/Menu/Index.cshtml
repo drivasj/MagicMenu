@@ -1,0 +1,47 @@
+﻿@using DigitalMenu.Models.Administrator
+@model IEnumerable<MenuViewModel>
+
+@{
+    ViewData["Title"] = "Menu";
+}
+<h4>Lista de menu</h4>
+<hr class="bg-custom-color" />
+
+<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewMenu">
+    Nuevo menu
+</button>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>ApplicationId</th>
+            <th>Controller</th>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Active</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ApplicationId</td>
+                <td>@item.Controller</td>
+                <td>@item.Action</td>
+                <td>@item.Name</td>
+                <td>@item.Active</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Editar" asp-route-id="@item.IdMenu">Editar</a>
+                    <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@item.IdMenu">Borrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_NewMenuForm" />
+
+@section Scripts {
+    <script src="~/js/administrator/menu.js" asp-append-version=" true"></script>
+}

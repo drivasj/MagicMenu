@@ -1,34 +1,47 @@
-﻿function saveApp() {
-
-    const model = modelApp()
+﻿
+function saveApplication() {
+    const model = modelApplication();
 
     $.ajax({
-        url: "/Application/SaveApp",
+        url: "/Administrator/Application",
         type: "POST",
         data: { model: model },
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         async: true,
+        dateType: 'json',
         cache: false,
         //beforeSend: function () {
         //    //Loading();
         //},
         success: function (data) {
-            alert("Register save");
+            if (data.success) {
+                closeModalNewApplication();
+                successSwal(data.message);
+            } else {
+                closeModalNewApplication();
+                ErrorSwal(data.message);
+            }
         },
         error: function () {
-            alert("Error");
+            closeModalNewApplication();
+            ErrorSwal(data.message);
         }
     });
 }
 
-
-function modelApp() {
+function modelApplication() {
 
     const model = {
-        Name: $("#name").val(),
-        Description: $("#description").val(),
-        Display: $("#display").val(),
-        Icon: $("#icon").val(),
-    }
 
+        Name: $("#idApplication").val(),
+        Description: $("#area").val(),
+        Display: $("#controller").val(),
+        Icon: $("#icon").val()  
+    }
     return model;
+}
+
+function closeModalNewApplication() {
+    let modalNewMenu = bootstrap.Modal.getInstance(document.getElementById('ModalNewApplication'));
+    modalNewMenu.hide();
 }

@@ -1,7 +1,4 @@
 ﻿using DigitalMenu.Models.Administrator;
-using DigitalMenu.Models.DTO.UserEmployee;
-using DigitalMenu.Models.EntityAdministrator;
-using DigitalMenu.Services;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,46 +6,50 @@ using TestWeb;
 
 namespace DigitalMenu.Controllers
 {
-    public class MenuController : Controller
+    public class AdministratorController : Controller
     {
         private readonly ApplicationDbContext context;
         private readonly IAdministratorRepository administratorRepository;
 
-        public MenuController(ApplicationDbContext context, IAdministratorRepository administratorRepository)
+        public AdministratorController(ApplicationDbContext context, IAdministratorRepository administratorRepository)
         {
             this.context = context;
             this.administratorRepository = administratorRepository;
         }
-        public async Task<ActionResult<List<MenuViewModel>>> Index()
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<ActionResult<List<ApplicationViewModel>>> Application()
         {
             try
             {
-                var menu = await context.Menu.Where(m => m.Active == true).Select(m => new MenuViewModel
+                var application = await context.Application.Where(a => a.Active == true).Select(a => new ApplicationViewModel
                 {
-                    IdMenu = m.IdMenu,
-                    ApplicationId = m.ApplicationId,
-                    Controller = m.Controller,
-                    Action = m.Action,
-                    Name = m.Name,
-                    Active = m.Active
-
+                    IdApplication = a.IdApplication,
+                    Name = a.Name,
+                    Description = a.Description,
+                    Display = a.Display
                 }).ToListAsync();
 
-                return View(menu);
+                return View (application);
+
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 string message = ex.Message;
                 return View("Error", message);
-            }          
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveMenu(MenuViewModel model)
+        public async Task<IActionResult> SaveApplication(ApplicationViewModel model)
         {
             try
             {
-                if (await administratorRepository.SaveMenu(model))
+                if (await administratorRepository.SaveApplication(model))
                 {
                     return Ok(new { success = true, message = "Registro guardado correctamente." });
                 }

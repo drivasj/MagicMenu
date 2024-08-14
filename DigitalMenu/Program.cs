@@ -16,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();  
+builder.Services.AddTransient<IAdministratorRepository, AdministratorRepository>();
 
 var app = builder.Build();
 
@@ -36,6 +37,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=UserAdmin}/{action=Index}/{id?}");
+    pattern: "{controller=Administrator}/{action=Application}/{id?}");
 
 app.Run();

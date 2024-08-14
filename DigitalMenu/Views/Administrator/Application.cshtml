@@ -1,0 +1,44 @@
+﻿@using DigitalMenu.Models.Administrator
+@model IEnumerable<ApplicationViewModel>
+
+@{
+    ViewData["Title"] = "Application";
+}
+<h4>Lista de Application</h4>
+<hr class="bg-custom-color" />
+
+<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewApplication">
+    Nueva Application
+</button>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Display</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Display</td>
+                <td>@item.Icon</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Editar" asp-route-id="@item.IdApplication">Editar</a>
+                    <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@item.IdApplication">Borrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_Partial\_NewApplicationForm" />
+
+@section Scripts {
+    <script src="~/js/administrator/application.js" asp-append-version=" true"></script>
+}
