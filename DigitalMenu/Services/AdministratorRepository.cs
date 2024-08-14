@@ -1,6 +1,8 @@
 ﻿using DigitalMenu.Models.Administrator;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TestWeb;
 
 namespace DigitalMenu.Services
@@ -12,6 +14,21 @@ namespace DigitalMenu.Services
         public AdministratorRepository(ApplicationDbContext context)
         {
             this.context = context;
+        }
+        public async Task<List<MenuViewModel>> ListMenu()
+        {
+            var menu = await context.Menu.Where(m => m.Active == true).Select(m => new MenuViewModel
+            {
+                IdMenu = m.IdMenu,
+                ApplicationId = m.ApplicationId,
+                Controller = m.Controller,
+                Action = m.Action,
+                Name = m.Name,
+                Active = m.Active
+
+            }).ToListAsync();
+
+            return menu;
         }
 
         public async Task<bool> SaveMenu(MenuViewModel model)
@@ -41,6 +58,19 @@ namespace DigitalMenu.Services
                 string menssage = ex.Message;
                 return false;
             }         
+        }
+
+        public async Task<List<ApplicationViewModel>> ListApplications()
+        {        
+            var application = await context.Application.Where(a => a.Active == true).Select(a => new ApplicationViewModel
+            {
+                IdApplication = a.IdApplication,
+                Name = a.Name,
+                Description = a.Description,
+                Display = a.Display
+            }).ToListAsync();
+
+            return application;
         }
 
         public async Task<bool> SaveApplication(ApplicationViewModel model)
