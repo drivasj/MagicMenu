@@ -14,6 +14,7 @@ namespace DigitalMenu.Models.EntityAdministrator
         [StringLength(50)]
         public string Password { get; set; }
         public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime RegisterDate { get; set; }

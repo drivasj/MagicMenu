@@ -59,78 +59,78 @@ namespace DigitalMenu.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveUser(UserDTO model)
         {
-            //using (var transaction = context.Database.BeginTransaction())
-            //{
-            try
+            using (var transaction = context.Database.BeginTransaction())
             {
-                int iduser = userRepository.GetUserId();
-
-                int iduserNew = await userRepository.GetLastUserId() + 1;
-
-                var user = new User
+                try
                 {
-                    UserName = model.UserName,
-                    Password = "12345678",
-                    EmployeeId = iduserNew,
-                    RegisterDate = DateTime.Now.Date,
-                    RegisterUser = iduser.ToString(),
-                    IdCompany = 1,
-                    Active = true,
-                };
+                    int iduser = userRepository.GetUserId();
 
-                var roleuser = new Roleuser
+                    //int iduserNew = await userRepository.GetLastUserId() + 1;
+
+                    //var user = new User
+                    //{
+                    //    UserName = model.UserName,
+                    //    Password = "12345678",
+                    //    EmployeeId = iduserNew,
+                    //    RegisterDate = DateTime.Now.Date,
+                    //    RegisterUser = iduser.ToString(),
+                    //    IdCompany = 1,
+                    //    Active = true,
+                    //};
+
+                    //var roleuser = new Roleuser
+                    //{
+                    //    RoleId = model.IdRole,
+                    //    UserId = iduserNew,
+                    //    Active = true
+                    //};
+
+                    var employee = new Employee
+                    {
+                        FirstName = model.FirstName,
+                        MiddleName = model.MiddleName,
+                        LastName = model.LastName,
+                        MotherLastName = model.LastName,
+                        Document = model.DocumentNR,
+                        UserName = model.UserName,
+                        RegisterUser = iduser.ToString(),
+                        RegisterDate = DateTime.Now.Date,
+                        Active = true,
+                        User = new User
+                        {
+                            UserName = model.UserName,
+                            Password = "12345678",
+                            RegisterDate = DateTime.Now.Date,
+                            RegisterUser = iduser.ToString(),
+                            IdCompany = 1,
+                            Active = true,
+                            roleuser = new Roleuser
+                            {
+                                RoleId = model.IdRole,
+                                Active = true
+                            }
+                        },
+
+                        Employeedetails = new EmployeeDetails
+                        {
+                            Email = model.Email,
+                            Phone = model.Phone,
+                            Adress = model.Adress
+                        }
+                    };
+
+                    context.Add(employee);
+                    await context.SaveChangesAsync();
+                    transaction.Commit();
+                    return View();
+                }
+                catch (Exception ex)
                 {
-                    RoleId = model.IdRole,
-                    UserId = iduserNew,
-                    Active = true
-                };
-
-                var employee = new Employee
-                {
-                    FirstName = model.FirstName,
-                    MiddleName = model.MiddleName,
-                    LastName = model.LastName,
-                    MotherLastName = model.LastName,
-                    Document = model.DocumentNR,
-                    UserName = model.UserName,
-                    RegisterUser = iduser.ToString(),
-                    RegisterDate = DateTime.Now.Date,
-                    Active = true,
-
-                    Employeedetails = new EmployeeDetails
-                    {                       
-                        Email = model.Email,
-                        Phone = model.Phone,
-                        Adress = model.Adress
-                    }
-                };
-
-                context.Add(employee);
-                await context.SaveChangesAsync();
-
-
-                //context.Add(user);
-                //await context.SaveChangesAsync();
-
-                //context.Add(roleuser);
-                //await context.SaveChangesAsync();
-
-                //context.Add(employee);
-                //await context.SaveChangesAsync();
-                //context.Add(employeeDetails);
-
-                //await context.SaveChangesAsync();
-                //transaction.Commit();
-
-                return View();
+                    //transaction.Rollback();
+                    string menssage = ex.Message;
+                    return View(menssage);
+                }
             }
-            catch (Exception ex)
-            {
-                //transaction.Rollback();
-                string menssage = ex.Message;
-                return View(menssage);
-            }
-            //}
         }
     }
 }

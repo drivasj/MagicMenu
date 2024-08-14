@@ -36,5 +36,6 @@ namespace DigitalMenu.Models.EntityAdministrator
         public DateTime? LastUpdate { get; set; }
         public bool Active { get; set; }
         public EmployeeDetails Employeedetails { get; set; }
+        public User User { get; set; }
     }
 }
