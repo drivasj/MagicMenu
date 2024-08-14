@@ -65,26 +65,6 @@ namespace DigitalMenu.Controllers
                 {
                     int iduser = userRepository.GetUserId();
 
-                    //int iduserNew = await userRepository.GetLastUserId() + 1;
-
-                    //var user = new User
-                    //{
-                    //    UserName = model.UserName,
-                    //    Password = "12345678",
-                    //    EmployeeId = iduserNew,
-                    //    RegisterDate = DateTime.Now.Date,
-                    //    RegisterUser = iduser.ToString(),
-                    //    IdCompany = 1,
-                    //    Active = true,
-                    //};
-
-                    //var roleuser = new Roleuser
-                    //{
-                    //    RoleId = model.IdRole,
-                    //    UserId = iduserNew,
-                    //    Active = true
-                    //};
-
                     var employee = new Employee
                     {
                         FirstName = model.FirstName,
@@ -126,7 +106,7 @@ namespace DigitalMenu.Controllers
                 }
                 catch (Exception ex)
                 {
-                    //transaction.Rollback();
+                    transaction.Rollback();
                     string menssage = ex.Message;
                     return View(menssage);
                 }
