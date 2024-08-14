@@ -59,57 +59,18 @@ namespace DigitalMenu.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveUser(UserDTO model)
         {
-            using (var transaction = context.Database.BeginTransaction())
+            try
             {
-                try
+                if (await userRepository.SaveUserEmployee(model))
                 {
-                    int iduser = userRepository.GetUserId();
-
-                    var employee = new Employee
-                    {
-                        FirstName = model.FirstName,
-                        MiddleName = model.MiddleName,
-                        LastName = model.LastName,
-                        MotherLastName = model.LastName,
-                        Document = model.DocumentNR,
-                        UserName = model.UserName,
-                        RegisterUser = iduser.ToString(),
-                        RegisterDate = DateTime.Now.Date,
-                        Active = true,
-                        User = new User
-                        {
-                            UserName = model.UserName,
-                            Password = "12345678",
-                            RegisterDate = DateTime.Now.Date,
-                            RegisterUser = iduser.ToString(),
-                            IdCompany = 1,
-                            Active = true,
-                            roleuser = new Roleuser
-                            {
-                                RoleId = model.IdRole,
-                                Active = true
-                            }
-                        },
-
-                        Employeedetails = new EmployeeDetails
-                        {
-                            Email = model.Email,
-                            Phone = model.Phone,
-                            Adress = model.Adress
-                        }
-                    };
-
-                    context.Add(employee);
-                    await context.SaveChangesAsync();
-                    transaction.Commit();
-                    return View();
+                    return Ok(new { success = true, message = "Usuario y empleado guardados correctamente." });
                 }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    string menssage = ex.Message;
-                    return View(menssage);
-                }
+
+                return Ok(new { success = false, message = "Error al intentar completar la operación." });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { success = false, message = string.Concat("Error general: ", ex) });
             }
         }
     }
