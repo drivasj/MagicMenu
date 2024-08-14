@@ -3,7 +3,7 @@ function saveMenu() {
     const model = modelMenu();
 
     $.ajax({
-        url: "/Menu/SaveMenu",
+        url: "/Administrator/SaveMenu",
         type: "POST",
         data: { model: model },
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',

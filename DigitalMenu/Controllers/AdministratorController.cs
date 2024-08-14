@@ -100,20 +100,8 @@ namespace DigitalMenu.Controllers
             try
             {
                 int usuarioId = userRepository.GetUserId();
-
-                var employee = await context.Employee
-                                //.Include(e=>e.Employeedetails)
-                                .Where(e => e.Active == true)
-                                .OrderByDescending(e => e.IdEmployee)
-                                .Select(t => new EmployeeDTO
-                                {
-                                    IdEmployee = t.IdEmployee,
-                                    FirstName = t.FirstName,
-                                    LastName = t.LastName,
-                                    UserName = t.UserName,
-                                    Email = t.Employeedetails.Email
-                                }).ToListAsync();
-                return View(employee);
+                var Listemployee = await administratorRepository.ListUser();
+                return View(Listemployee);
             }
             catch (Exception ex)
             {

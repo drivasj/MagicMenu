@@ -3,7 +3,7 @@ function saveUser() {
     const model = modelUser();
 
     $.ajax({
-        url: "/UserAdmin/SaveUser",
+        url: "/Administrator/SaveUser",
         type: "POST",
         data: { model: model },
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',

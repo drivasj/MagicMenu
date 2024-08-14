@@ -1,4 +1,5 @@
 ﻿using DigitalMenu.Models.Administrator;
+using DigitalMenu.Models.DTO.UserEmployee;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -97,6 +98,23 @@ namespace DigitalMenu.Services
                 string menssage = ex.Message;
                 return false;
             }
+        }
+
+        public async Task<ActionResult<List<EmployeeDTO>>> ListUser()
+        {
+            var employee = await context.Employee
+                               //.Include(e=>e.Employeedetails)
+                               .Where(e => e.Active == true)
+                               .OrderByDescending(e => e.IdEmployee)
+                               .Select(t => new EmployeeDTO
+                               {
+                                   IdEmployee = t.IdEmployee,
+                                   FirstName = t.FirstName,
+                                   LastName = t.LastName,
+                                   UserName = t.UserName,
+                                   Email = t.Employeedetails.Email
+                               }).ToListAsync();
+            return employee;
         }
     }
 }
