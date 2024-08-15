@@ -8,6 +8,7 @@ namespace DigitalMenu.Services.Interfaces
     {
         Task<List<ApplicationViewModel>> ListApplications();
         Task<List<MenuViewModel>> ListMenu();
+        Task<List<MenuViewModel>> ListMenuSingAsignar();
         Task<List<EmployeeDTO>> ListUser();
         Task<List<RoleViewModel>> Roles();
         Task<bool> SaveApplication(ApplicationViewModel model);

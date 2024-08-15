@@ -10,6 +10,9 @@
 <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewMenu">
     Nuevo menu
 </button>
+<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#ModalAdminMenu">
+    Administrador de menu
+</button>
 
 <table class="table table-hover">
     <thead>
@@ -41,7 +44,7 @@
 </table>
 
 <partial name="_Partial\_CreateMenuForm" />
-
+<partial name="_Partial\_AdminMenuRol" />
 @section Scripts {
     <script src="~/js/administrator/menu.js" asp-append-version=" true"></script>
 }

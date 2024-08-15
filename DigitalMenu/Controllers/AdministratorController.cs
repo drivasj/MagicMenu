@@ -58,11 +58,15 @@ namespace DigitalMenu.Controllers
         {
             var listMenu = await administratorRepository.ListMenu();
             var listApplication = await administratorRepository.ListApplications();
+            var lisRole = await administratorRepository.Roles();
+            var listMenuSinAsingnar = await administratorRepository.ListMenuSingAsignar();
 
             var listViewModel = new TwoListMenuApp
             {
                 Menu = listMenu,
-                Application = listApplication
+                Application = listApplication,
+                Role = lisRole,
+                MenuSA = listMenuSinAsingnar
             };
 
             return View(listViewModel);
