@@ -1,0 +1,43 @@
+﻿@using DigitalMenu.Models.Administrator
+@model IEnumerable<RoleViewModel>
+
+@{
+    ViewData["Title"] = "Roles";
+}
+<h4>Lista de Roles</h4>
+<hr class="bg-custom-color" />
+
+<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewRole">
+    Nuevo Rol
+</button>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>         
+            <th>Active</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Active</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Editar" asp-route-id="@item.IdRole">Editar</a>
+                    <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@item.IdRole">Borrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_Partial\_CreateRolForm" />
+
+@section Scripts {
+    <script src="~/js/administrator/role.js" asp-append-version=" true"></script>
+}

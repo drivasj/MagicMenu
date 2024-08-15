@@ -1,4 +1,6 @@
-﻿<!-- Modal -->
+﻿@using DigitalMenu.Models.Administrator
+@model CombosRoleUserViewModel
+<!-- Modal -->
 <div class="modal fade" id="ModalNewUser" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -13,7 +15,7 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Nombre</label>
-                        <input type="text" class="form-control" id="name" autocomplete="off"/>
+                        <input type="text" class="form-control" id="name" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Segundo Nombre</label>
@@ -42,7 +44,13 @@
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Role</label>
-                        <input type="text" class="form-control" id="role" autocomplete="off" />
+                        <select class="form-select" id="role">
+                            <option value="#">Seleccionar</option>
+                            @foreach (var role in Model.Roles)
+                            {
+                                <option value="@role.IdRole">@role.Name</option>
+                            }
+                        </select>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Usuario</label>

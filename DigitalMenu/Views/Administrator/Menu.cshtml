@@ -1,5 +1,5 @@
 ﻿@using DigitalMenu.Models.Administrator
-@model IEnumerable<MenuViewModel>
+@model TwoListMenuApp
 
 @{
     ViewData["Title"] = "Menu";
@@ -23,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Menu)
         {
             <tr>
                 <td>@item.ApplicationId</td>

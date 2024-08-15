@@ -8,8 +8,10 @@ namespace DigitalMenu.Services.Interfaces
     {
         Task<List<ApplicationViewModel>> ListApplications();
         Task<List<MenuViewModel>> ListMenu();
-        Task<ActionResult<List<EmployeeDTO>>> ListUser();
+        Task<List<EmployeeDTO>> ListUser();
+        Task<List<RoleViewModel>> Roles();
         Task<bool> SaveApplication(ApplicationViewModel model);
         Task<bool> SaveMenu(MenuViewModel model);
+        Task<bool> SaveRole(RoleViewModel model);
     }
 }

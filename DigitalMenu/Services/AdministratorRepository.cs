@@ -3,12 +3,13 @@ using DigitalMenu.Models.DTO.UserEmployee;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using TestWeb;
 
 namespace DigitalMenu.Services
 {
-    public class AdministratorRepository: IAdministratorRepository
+    public class AdministratorRepository : IAdministratorRepository
     {
         private readonly ApplicationDbContext context;
 
@@ -18,18 +19,26 @@ namespace DigitalMenu.Services
         }
         public async Task<List<MenuViewModel>> ListMenu()
         {
-            var menu = await context.Menu.Where(m => m.Active == true).Select(m => new MenuViewModel
+            try
             {
-                IdMenu = m.IdMenu,
-                ApplicationId = m.ApplicationId,
-                Controller = m.Controller,
-                Action = m.Action,
-                Name = m.Name,
-                Active = m.Active
+                var menu = await context.Menu.Where(m => m.Active == true).Select(m => new MenuViewModel
+                {
+                    IdMenu = m.IdMenu,
+                    ApplicationId = m.ApplicationId,
+                    Controller = m.Controller,
+                    Action = m.Action,
+                    Name = m.Name,
+                    Active = m.Active
 
-            }).ToListAsync();
+                }).ToListAsync();
 
-            return menu;
+                return menu;
+            }
+            catch (Exception ex)
+            {
+                string menssage = ex.Message;
+                return null;
+            }
         }
 
         public async Task<bool> SaveMenu(MenuViewModel model)
@@ -58,20 +67,28 @@ namespace DigitalMenu.Services
             {
                 string menssage = ex.Message;
                 return false;
-            }         
+            }
         }
 
         public async Task<List<ApplicationViewModel>> ListApplications()
-        {        
-            var application = await context.Application.Where(a => a.Active == true).Select(a => new ApplicationViewModel
+        {
+            try
             {
-                IdApplication = a.IdApplication,
-                Name = a.Name,
-                Description = a.Description,
-                Display = a.Display
-            }).ToListAsync();
+                var application = await context.Application.Where(a => a.Active == true).Select(a => new ApplicationViewModel
+                {
+                    IdApplication = a.IdApplication,
+                    Name = a.Name,
+                    Description = a.Description,
+                    Display = a.Display
+                }).ToListAsync();
 
-            return application;
+                return application;
+            }
+            catch (Exception ex)
+            {
+                string menssage = ex.Message;
+                return null;
+            }
         }
 
         public async Task<bool> SaveApplication(ApplicationViewModel model)
@@ -80,13 +97,13 @@ namespace DigitalMenu.Services
             {
                 var application = new Application
                 {
-                   Name = model.Name,
-                   Description = model.Description,
-                   RegisterDate = DateTime.Now,
-                   RegisterUser = "1",
-                   Active = true,
-                   Display = model.Display,
-                   Icon = model.Icon,
+                    Name = model.Name,
+                    Description = model.Description,
+                    RegisterDate = DateTime.Now,
+                    RegisterUser = "1",
+                    Active = true,
+                    Display = model.Display,
+                    Icon = model.Icon,
                 };
 
                 context.Add(application);
@@ -100,21 +117,76 @@ namespace DigitalMenu.Services
             }
         }
 
-        public async Task<ActionResult<List<EmployeeDTO>>> ListUser()
+        public async Task<List<EmployeeDTO>> ListUser()
         {
-            var employee = await context.Employee
-                               //.Include(e=>e.Employeedetails)
-                               .Where(e => e.Active == true)
-                               .OrderByDescending(e => e.IdEmployee)
-                               .Select(t => new EmployeeDTO
-                               {
-                                   IdEmployee = t.IdEmployee,
-                                   FirstName = t.FirstName,
-                                   LastName = t.LastName,
-                                   UserName = t.UserName,
-                                   Email = t.Employeedetails.Email
-                               }).ToListAsync();
-            return employee;
+            try
+            {
+                var employee = await context.Employee
+                //.Include(e=>e.Employeedetails)
+                .Where(e => e.Active == true)
+                .OrderByDescending(e => e.IdEmployee)
+                .Select(t => new EmployeeDTO
+                {
+                    IdEmployee = t.IdEmployee,
+                    FirstName = t.FirstName,
+                    LastName = t.LastName,
+                    UserName = t.UserName,
+                    Email = t.Employeedetails.Email
+                }).ToListAsync();
+
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return null;
+            }
+        }
+
+        public async Task<List<RoleViewModel>> Roles()
+        {
+            try
+            {
+                var roles = await context.Role
+                .Select(r => new RoleViewModel
+                {
+                    IdRole = r.IdRole,
+                    Name = r.Name,
+                    Description = r.Description,
+                    Active = r.Active
+                }).ToListAsync();
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return null;
+            }
+        }
+
+        public async Task<bool> SaveRole(RoleViewModel model)
+        {
+            try
+            {
+                var role = new Role
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    Privilege = 0,
+                    RegisterDate = DateTime.Now,
+                    RegisterUser = "1",
+                    Active = true
+                };
+
+                context.Add(role);
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string menssage = ex.Message;
+                return false;
+            }
         }
     }
 }

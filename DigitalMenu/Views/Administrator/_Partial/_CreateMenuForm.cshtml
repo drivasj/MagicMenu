@@ -1,5 +1,8 @@
-﻿<!-- Modal -->
-<div class="modal fade" id="ModalNewMenu" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
+﻿@using DigitalMenu.Models.Administrator
+@model TwoListMenuApp
+
+<!-- Modal -->
+<div class="modal fade" id="ModalNewMenu" tabindex="-1" aria-labelledby="ModalNewMenuLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +16,13 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Application</label>
-                        <input type="text" class="form-control" id="idApplication" autocomplete="off" />
+                        <select class="form-select" id="idApplication">
+                            <option value="#">Seleccionar</option>
+                            @foreach (var app in Model.Application)
+                            {
+                                <option value="@app.IdApplication">@app.Name</option>
+                            }
+                        </select>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Area</label>

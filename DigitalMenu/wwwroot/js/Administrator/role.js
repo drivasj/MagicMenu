@@ -1,26 +1,45 @@
-﻿function saveRole() {
-
-    const name = $("#name").val();
-    const description = $("#description").val();
+﻿
+function saveRole() {
+    const model = modelRole();
 
     $.ajax({
-        url: "/Role/SaveRole",
+        url: "/Administrator/SaveRole",
         type: "POST",
-        data: {
-            name: name,
-            description: description
-        },
+        data: { model: model },
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         async: true,
+        dateType: 'json',
         cache: false,
-        beforeSend: function () {
-            //Loading();
-        },
+        //beforeSend: function () {
+        //    //Loading();
+        //},
         success: function (data) {
-            alert("Register save");
+            if (data.success) {
+                closeModalNewRole();
+                successSwal(data.message);
+            } else {
+                closeModalNewRole();
+                ErrorSwal(data.message);
+            }
         },
         error: function () {
-            alert("Error");
+            closeModalNewRole();
+            ErrorSwal(data.message);
         }
     });
 }
 
+function modelRole() {
+
+    const model = {
+
+        Name: $("#nameRol").val(),
+        Description: $("#description").val()        
+    }
+    return model;
+}
+
+function closeModalNewRole() {
+    let modalNewMenu = bootstrap.Modal.getInstance(document.getElementById('ModalNewRole'));
+    modalNewMenu.hide();
+}

@@ -14,7 +14,7 @@ namespace DigitalMenu.Controllers
         private readonly IAdministratorRepository administratorRepository;
         private readonly IUserRepository userRepository;
 
-        public AdministratorController(ApplicationDbContext context, 
+        public AdministratorController(ApplicationDbContext context,
             IAdministratorRepository administratorRepository,
             IUserRepository userRepository)
         {
@@ -31,17 +31,8 @@ namespace DigitalMenu.Controllers
         [HttpGet]
         public async Task<IActionResult> Application()
         {
-            try
-            {
-                var listApplications = await administratorRepository.ListApplications();
-                return View (listApplications);
-
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-                return View("Error", message);
-            }
+            var listApplications = await administratorRepository.ListApplications();
+            return View(listApplications);
         }
 
         [HttpPost]
@@ -65,16 +56,16 @@ namespace DigitalMenu.Controllers
         [HttpGet]
         public async Task<IActionResult> Menu()
         {
-            try
+            var listMenu = await administratorRepository.ListMenu();
+            var listApplication = await administratorRepository.ListApplications();
+
+            var listViewModel = new TwoListMenuApp
             {
-                var listMenu = await administratorRepository.ListMenu();
-                return View(listMenu);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-                return View("Error", message);
-            }
+                Menu = listMenu,
+                Application = listApplication
+            };
+
+            return View(listViewModel);
         }
 
         [HttpPost]
@@ -95,20 +86,20 @@ namespace DigitalMenu.Controllers
             }
         }
 
-        public async Task<ActionResult<List<EmployeeDTO>>> User()
+        [HttpGet]
+        public async Task<IActionResult> Users()
         {
-            try
-            {
-                int usuarioId = userRepository.GetUserId();
-                var Listemployee = await administratorRepository.ListUser();
-                return View(Listemployee);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-                return View("Error", message);
-            }
+            int usuarioId = userRepository.GetUserId();
+            var listemployee = await administratorRepository.ListUser();
+            var listRoles = await administratorRepository.Roles();
 
+            var listViewModel = new CombosRoleUserViewModel
+            {
+                Employees = listemployee,
+                Roles = listRoles
+            };
+
+            return View(listViewModel);
         }
 
         [HttpPost]
@@ -119,6 +110,31 @@ namespace DigitalMenu.Controllers
                 if (await userRepository.SaveUserEmployee(model))
                 {
                     return Ok(new { success = true, message = "Usuario y empleado guardados correctamente." });
+                }
+
+                return Ok(new { success = false, message = "Error al intentar completar la operación." });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { success = false, message = string.Concat("Error general: ", ex) });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Roles()
+        {
+            var roles = await administratorRepository.Roles();
+            return View(roles);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveRole(RoleViewModel model)
+        {
+            try
+            {
+                if (await administratorRepository.SaveRole(model))
+                {
+                    return Ok(new { success = true, message = "Registro guardado correctamente." });
                 }
 
                 return Ok(new { success = false, message = "Error al intentar completar la operación." });
