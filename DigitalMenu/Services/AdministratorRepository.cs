@@ -41,20 +41,16 @@ namespace DigitalMenu.Services
             }
         }
 
-        public async Task<List<MenuViewModel>> ListMenuSingAsignar()
+        public async Task<List<MenuViewModel>> ListMenuSingAsignar(int idRol)
         {
             try
             {
                 var menu = await context.Menu
-                    .Where(m => !m.rolemenu.Any(rm => rm.RoleId == 1))
+                    .Where(m => !m.rolemenu.Any(rm => rm.RoleId == idRol))
                     .Select(m => new MenuViewModel
                 {
                     IdMenu = m.IdMenu,
-                    ApplicationId = m.ApplicationId,
-                    Controller = m.Controller,
-                    Action = m.Action,
                     Name = m.Name,
-                    Active = m.Active
 
                 }).ToListAsync();
 

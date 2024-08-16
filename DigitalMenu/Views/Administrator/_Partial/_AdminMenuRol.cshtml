@@ -16,7 +16,7 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Rol</label>
-                        <select class="form-select" id="idrolAdmin">
+                        <select class="form-select" id="idrolAdmin" onchange="cargarMenuSA(this.value)">
                             <option value="#">Seleccionar</option>
                             @foreach (var role in Model.Role)
                             {
@@ -27,12 +27,15 @@
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Menu</label>
-                        <select class="form-select" id="idmenuAdmin">
+   @*                      <select class="form-select" id="idmenuAdmin">
                             <option value="#">Seleccionar</option>
                             @foreach (var menu in Model.MenuSA)
                             {
                                 <option value="@menu.IdMenu">@menu.Name</option>
                             }
+                        </select> *@
+                        <select class="form-select" id="menus">
+                            <option value="">Selecciona un menú</option>
                         </select>
                     </div>              
                 </div>

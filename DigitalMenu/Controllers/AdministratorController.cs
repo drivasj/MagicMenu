@@ -1,5 +1,7 @@
-﻿using DigitalMenu.Models.Administrator;
+﻿using DigitalMenu.Models;
+using DigitalMenu.Models.Administrator;
 using DigitalMenu.Models.DTO.UserEmployee;
+using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -56,17 +58,18 @@ namespace DigitalMenu.Controllers
         [HttpGet]
         public async Task<IActionResult> Menu()
         {
-            var listMenu = await administratorRepository.ListMenu();
+            //var listMenu = await administratorRepository.ListMenu();
             var listApplication = await administratorRepository.ListApplications();
             var lisRole = await administratorRepository.Roles();
-            var listMenuSinAsingnar = await administratorRepository.ListMenuSingAsignar();
+
+            //var listMenuSinAsingnar = await administratorRepository.ListMenuSingAsignar();
 
             var listViewModel = new TwoListMenuApp
             {
-                Menu = listMenu,
+                Menu = new List<MenuViewModel>(),
                 Application = listApplication,
-                Role = lisRole,
-                MenuSA = listMenuSinAsingnar
+                Role = lisRole
+                //MenuSA = listMenuSinAsingnar
             };
 
             return View(listViewModel);
@@ -147,6 +150,15 @@ namespace DigitalMenu.Controllers
             {
                 return Ok(new { success = false, message = string.Concat("Error general: ", ex) });
             }
+        }
+
+        public async Task<IActionResult> GetMenuRol([FromBody] ModelTest model)
+        {
+            List<MenuViewModel> listMenuSinAsingnar;
+
+            listMenuSinAsingnar = await administratorRepository.ListMenuSingAsignar(model.idRolAdmin);
+            var response = new { mensaje = "El valor seleccionado es: " + model.idRolAdmin };
+            return Json(listMenuSinAsingnar);
         }
     }
 }
