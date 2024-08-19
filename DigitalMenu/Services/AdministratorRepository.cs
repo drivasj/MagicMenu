@@ -41,14 +41,14 @@ namespace DigitalMenu.Services
             }
         }
 
-        public async Task<List<MenuViewModel>> ListMenuSingAsignar(int idRol)
+        public async Task<List<MenuSelect>> ListMenuSingAsignar(int idRol)
         {
             try
             {
                 var menu = await context.Menu
                     .Where(m => !m.rolemenu.Any(rm => rm.RoleId == idRol))
-                    .Select(m => new MenuViewModel
-                {
+                    .Select(m => new MenuSelect
+                    {
                     IdMenu = m.IdMenu,
                     Name = m.Name,
 
@@ -82,6 +82,28 @@ namespace DigitalMenu.Services
                 };
 
                 context.Add(menu);
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string menssage = ex.Message;
+                return false;
+            }
+        }
+
+        public async Task<bool> Rolemenu(RoleMenuViewModel model)
+        {
+            try
+            {
+                var rolMenu = new Rolemenu
+                {
+                    RoleId = model.RoleId,
+                    MenuId = model.MenuId,
+                    Active = true
+                };
+
+                context.Add(rolMenu);
                 await context.SaveChangesAsync();
                 return true;
             }

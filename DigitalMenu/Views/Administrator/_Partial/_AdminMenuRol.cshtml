@@ -16,32 +16,20 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Rol</label>
-                        <select class="form-select" id="idrolAdmin" onchange="cargarMenuSA(this.value)">
-                            <option value="#">Seleccionar</option>
-                            @foreach (var role in Model.Role)
-                            {
-
-                                <option value="@role.IdRole">@role.Name</option>
-                            }
+                        <select class="form-select" id="roles" asp-items="@(new SelectList(Model.Role,"IdRole","Name"))" onchange="cargarMenus(this.value)">
+                            <option value="">Seleccionar un rol</option>
                         </select>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Menu</label>
-   @*                      <select class="form-select" id="idmenuAdmin">
-                            <option value="#">Seleccionar</option>
-                            @foreach (var menu in Model.MenuSA)
-                            {
-                                <option value="@menu.IdMenu">@menu.Name</option>
-                            }
-                        </select> *@
                         <select class="form-select" id="menus">
-                            <option value="">Selecciona un menú</option>
-                        </select>
+                            <option value="">Seleccionar un menú</option>
+                        </select> 
                     </div>              
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="saveMenu()">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="saveRolMenu()">Save changes</button>
                 </div>
             </div>
         </div>

@@ -6,7 +6,10 @@ using TestWeb;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+});
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -15,7 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySQL(connectionString);
 });
 
-builder.Services.AddTransient<IUserRepository, UserRepository>();  
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IAdministratorRepository, AdministratorRepository>();
 
 var app = builder.Build();

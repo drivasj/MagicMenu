@@ -1,4 +1,5 @@
-﻿
+﻿const { error } = require("jquery");
+
 async function saveMenu() {
     const model = modelMenu();
 
@@ -43,47 +44,56 @@ function modelMenu() {
     return model;
 }
 
+async function saveRolMenu() {
+
+    const rolId = $("#roles").val();
+    const menuId = $("#menus").val("#");
+
+    fetch('/Administrator/SaveMenuRol', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ rolId, menuId })
+    })
+        .then(response => reponse.json())
+        .then(data => {          
+            successSwal(data.message); //Manejar la respuesta del servidor
+        })
+        .catch(error => {
+           
+            ErrorSwal('Error: ', error); //Mensaje de error
+        });
+}
+
+
 function closeModalNewMenu() {
     let modalNewMenu = bootstrap.Modal.getInstance(document.getElementById('ModalNewMenu'));
     modalNewMenu.hide();
 }
 
-function enviarDatos() {
+async function cargarMenus(rolId) {
 
-    var idRolAdminValue = $("#idrolAdmin").val();
-
-    fetch('/Administrator/ProcesarDatos', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ idRolAdmin: idRolAdminValue })
-    })
-        .then(response => response.json())
-        .then(data => {
-            successSwal(data.mensaje);
-        })
-        .catch(error => {
-            ErrorSwal(data.message);
-        });
-}
-
-async function cargarMenuSA(rolId) {
     fetch('/Administrator/GetMenuRol', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ idRolAdmin: rolId })
+        body: JSON.stringify({ rolId: rolId })
     })
         .then(response => response.json())
         .then(data => {
             const selectMenus = document.getElementById('menus');
             selectMenus.innerHTML = '';
-            data.forEach(listMenuSinAsingnar => {
+            const optioninitial = document.createElement('option');
+            optioninitial.value = "#";
+            optioninitial.text = "Seleccionar un menú";
+            selectMenus.appendChild(optioninitial);
+
+            data.forEach(menus => {
                 const option = document.createElement('option');
-                option.value = listMenuSinAsingnar.IdMenu;
-                option.text = listMenuSinAsingnar.Name;
+                option.value = menus.IdMenu;
+                option.text = menus.Name;
                 selectMenus.appendChild(option);
             });
         })
@@ -91,5 +101,3 @@ async function cargarMenuSA(rolId) {
             console.error('Error:', error);
         });
 }
-
-

@@ -58,21 +58,63 @@ namespace DigitalMenu.Controllers
         [HttpGet]
         public async Task<IActionResult> Menu()
         {
-            //var listMenu = await administratorRepository.ListMenu();
             var listApplication = await administratorRepository.ListApplications();
             var lisRole = await administratorRepository.Roles();
 
-            //var listMenuSinAsingnar = await administratorRepository.ListMenuSingAsignar();
 
             var listViewModel = new TwoListMenuApp
             {
-                Menu = new List<MenuViewModel>(),
                 Application = listApplication,
-                Role = lisRole
-                //MenuSA = listMenuSinAsingnar
+                Role = lisRole,
+                MenuSelect = new List<MenuSelect>(),
+                Menu = new List<MenuViewModel>()
             };
 
             return View(listViewModel);
+        }
+
+        [HttpPost]
+        //public async Task<IActionResult> GetMenuRol(int rolId)
+        public async Task<IActionResult> GetMenuRol([FromBody] TestModel model)
+        {
+            if (model.rolId == 0)
+            {
+                return BadRequest("Invalid role ID");
+            }
+
+            var menus = await administratorRepository.ListMenuSingAsignar(model.rolId);
+
+            return Json(menus);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveMenuRol([FromBody] RoleMenuViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (await administratorRepository.Rolemenu(model))
+                    {
+                        return Json(new { message = "Datos guardados correctamente" });
+
+                    }
+                    else
+                    {
+                        return Json(new { message = "Error al intentar completar la operación." });
+                    }
+                }
+                else
+                {
+                    return Json(new { message = "Error al intentar completar la operación." });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = ex.Message });
+            }
         }
 
         [HttpPost]
@@ -150,15 +192,6 @@ namespace DigitalMenu.Controllers
             {
                 return Ok(new { success = false, message = string.Concat("Error general: ", ex) });
             }
-        }
-
-        public async Task<IActionResult> GetMenuRol([FromBody] ModelTest model)
-        {
-            List<MenuViewModel> listMenuSinAsingnar;
-
-            listMenuSinAsingnar = await administratorRepository.ListMenuSingAsignar(model.idRolAdmin);
-            var response = new { mensaje = "El valor seleccionado es: " + model.idRolAdmin };
-            return Json(listMenuSinAsingnar);
         }
     }
 }
