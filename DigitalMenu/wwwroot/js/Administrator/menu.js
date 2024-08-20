@@ -1,6 +1,4 @@
-﻿const { error } = require("jquery");
-
-async function saveMenu() {
+﻿async function saveMenu() {
     const model = modelMenu();
 
     $.ajax({
@@ -16,15 +14,15 @@ async function saveMenu() {
         //},
         success: function (data) {
             if (data.success) {
-                closeModalNewMenu();
+                closeModalNewMenu("ModalNewMenu");
                 successSwal(data.message);
             } else {
-                closeModalNewMenu();
+                closeModalNewMenu("ModalNewMenu");
                 ErrorSwal(data.message);
             }
         },
         error: function () {
-            closeModalNewUser();
+            closeModalNewMenu();
             ErrorSwal(data.message);
         }
     });
@@ -44,32 +42,39 @@ function modelMenu() {
     return model;
 }
 
-async function saveRolMenu() {
+function saveRolMenu() {
 
-    const rolId = $("#roles").val();
-    const menuId = $("#menus").val("#");
+    const data = getRolMenu();
 
     fetch('/Administrator/SaveMenuRol', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ rolId, menuId })
+        body: data
     })
-        .then(response => reponse.json())
-        .then(data => {          
-            successSwal(data.message); //Manejar la respuesta del servidor
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                successSwal(data.message);
+                closeModal("ModalRolMenu");
+            } else {
+                ErrorSwal(data.message);
+                closeModal("ModalRolMenu");
+            }
         })
         .catch(error => {
-           
-            ErrorSwal('Error: ', error); //Mensaje de error
+            ErrorSwal('Error: ', error);
+            closeModal("ModalRolMenu");
         });
 }
 
+function getRolMenu() {
 
-function closeModalNewMenu() {
-    let modalNewMenu = bootstrap.Modal.getInstance(document.getElementById('ModalNewMenu'));
-    modalNewMenu.hide();
+    return JSON.stringify({
+        RoleId: $("#roles").val(),
+        MenuId: $("#menus").val()
+    });
 }
 
 async function cargarMenus(rolId) {

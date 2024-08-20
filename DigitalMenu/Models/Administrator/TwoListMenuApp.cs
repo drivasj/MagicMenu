@@ -9,9 +9,7 @@ namespace DigitalMenu.Models.Administrator
         public IEnumerable<RoleViewModel> Role { get; set; }
         public IEnumerable<MenuViewModel> Menu { get; set; }
 
-        public IEnumerable<MenuSelect> MenuSelect { get; set; }
-        public int RolId { get; set; }
-
-
+        //public IEnumerable<MenuSelect> MenuSelect { get; set; }
+        //public int RolId { get; set; }
     }
 }

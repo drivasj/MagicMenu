@@ -7,6 +7,7 @@ using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TestWeb;
+using ZstdSharp.Unsafe;
 
 namespace DigitalMenu.Controllers
 {
@@ -60,14 +61,14 @@ namespace DigitalMenu.Controllers
         {
             var listApplication = await administratorRepository.ListApplications();
             var lisRole = await administratorRepository.Roles();
-
+            var listMenu = await administratorRepository.ListMenu();
 
             var listViewModel = new TwoListMenuApp
             {
                 Application = listApplication,
                 Role = lisRole,
-                MenuSelect = new List<MenuSelect>(),
-                Menu = new List<MenuViewModel>()
+                Menu = listMenu
+                //MenuSelect = new List<MenuSelect>(),
             };
 
             return View(listViewModel);
@@ -92,28 +93,22 @@ namespace DigitalMenu.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (model.RoleId == 0 || model.MenuId == 0)
                 {
-                    if (await administratorRepository.Rolemenu(model))
-                    {
-                        return Json(new { message = "Datos guardados correctamente" });
-
-                    }
-                    else
-                    {
-                        return Json(new { message = "Error al intentar completar la operación." });
-                    }
-                }
-                else
-                {
-                    return Json(new { message = "Error al intentar completar la operación." });
-
+                    return BadRequest("Invalid role ID");
                 }
 
+                var roleMenu = await administratorRepository.Rolemenu(model);
+
+                return Json(new
+                {
+                    success = roleMenu,
+                    message = roleMenu ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                });
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message });
+                return Json(new { success = false, message = ex.Message });
             }
         }
 
@@ -148,7 +143,7 @@ namespace DigitalMenu.Controllers
                 Roles = listRoles
             };
 
-            return View(listViewModel);
+            return View("Users",listViewModel);
         }
 
         [HttpPost]

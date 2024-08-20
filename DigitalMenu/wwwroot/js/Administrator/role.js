@@ -43,3 +43,24 @@ function closeModalNewRole() {
     let modalNewMenu = bootstrap.Modal.getInstance(document.getElementById('ModalNewRole'));
     modalNewMenu.hide();
 }
+
+function guardarDatos() {
+    const rolId = document.getElementById('roles').value;
+    const menuId = document.getElementById('menus').value;
+
+    fetch('/Home/GuardarDatos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ rolId, menuId })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Manejar la respuesta del servidor
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:',error);
+        });
+}

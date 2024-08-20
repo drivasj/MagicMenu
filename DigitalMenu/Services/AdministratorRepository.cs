@@ -99,7 +99,7 @@ namespace DigitalMenu.Services
                 var rolMenu = new Rolemenu
                 {
                     RoleId = model.RoleId,
-                    MenuId = model.MenuId,
+                    MenuId = model.MenuId,                   
                     Active = true
                 };
 
