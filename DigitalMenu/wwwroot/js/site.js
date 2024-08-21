@@ -12,7 +12,7 @@ function LoadMainPage(controller,action) {
         .then(response => response.text())
         .then(data => {
             // Actualizar el contenido de la sección principal
-            //$('#content-section').html(data);
+            $('#content-section').html(data);
             successSwal('');
             // Ocultar el indicador de carga
             //$('#loading-indicator').hide();
@@ -21,7 +21,7 @@ function LoadMainPage(controller,action) {
             //console.error('Error al cargar la página:', error);
             ErrorSwal('Error al cargar la página:', error);
             // Mostrar un mensaje de error al usuario
-            //$('#content-section').html('Ocurrió un error al cargar la página.');
+            $('#content-section').html('Ocurrió un error al cargar la página.');
         });
 }
 function successSwal(message) {
