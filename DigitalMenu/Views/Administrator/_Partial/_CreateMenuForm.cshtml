@@ -16,12 +16,8 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Application</label>
-                        <select class="form-select" id="idApplication">
-                            <option value="#">Seleccionar</option>
-                            @foreach (var app in Model.Application)
-                            {
-                                <option value="@app.IdApplication">@app.Name</option>
-                            }
+                        <select class="form-select" id="idApplication" asp-items="@(new SelectList(Model.Application,"IdApplication","Display"))">
+                            <option value="">Seleccionar</option>
                         </select>
                     </div>
                     <div class="col-6 col-md-4">
@@ -41,7 +37,7 @@
                         <input type="text" class="form-control" id="nameMenu" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
-                        <label for="name" class="form-label fw-bold">Descripción</label>
+                        <label for="name" class="form-label fw-bold">Description</label>
                         <input type="text" class="form-control" id="description" autocomplete="off" />
                     </div>
 

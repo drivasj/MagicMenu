@@ -1,45 +1,47 @@
-﻿async function saveMenu() {
-    const model = modelMenu();
-
-    $.ajax({
-        url: "/Administrator/SaveMenu",
-        type: "POST",
-        data: { model: model },
-        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-        async: true,
-        dateType: 'json',
-        cache: false,
-        //beforeSend: function () {
-        //    //Loading();
-        //},
-        success: function (data) {
-            if (data.success) {
-                closeModalNewMenu("ModalNewMenu");
-                successSwal(data.message);
-            } else {
-                closeModalNewMenu("ModalNewMenu");
-                ErrorSwal(data.message);
-            }
+﻿function saveMenu() {
+    Loading();
+    const data = getModelMenu();
+    
+    fetch('/Administrator/SaveMenu', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         },
-        error: function () {
-            closeModalNewMenu();
-            ErrorSwal(data.message);
-        }
-    });
+        body: data
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                closeModal("ModalNewMenu");
+                LoadMainPage('Administrator', 'Menu');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+                closeModal("ModalNewMenu");
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+            closeModal("ModalNewMenu");
+        });
 }
 
-function modelMenu() {
 
-    const model = {
 
+
+function getModelMenu() {
+
+    return JSON.stringify({
         ApplicationId: $("#idApplication").val(),
         Area: $("#area").val(),
         Controller: $("#controller").val(),
         Action: $("#action").val(),
         Name: $("#nameMenu").val(),
-        Description: $("#description").val(),
-    }
-    return model;
+        Description: $("#description").val()
+    });
 }
 
 function saveRolMenu() {

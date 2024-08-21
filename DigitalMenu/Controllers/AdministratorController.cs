@@ -68,14 +68,12 @@ namespace DigitalMenu.Controllers
                 Application = listApplication,
                 Role = lisRole,
                 Menu = listMenu
-                //MenuSelect = new List<MenuSelect>(),
             };
 
             return View(listViewModel);
         }
 
         [HttpPost]
-        //public async Task<IActionResult> GetMenuRol(int rolId)
         public async Task<IActionResult> GetMenuRol([FromBody] TestModel model)
         {
             if (model.rolId == 0)
@@ -113,16 +111,22 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveMenu(MenuViewModel model)
+        public async Task<IActionResult> SaveMenu([FromBody] MenuViewModel model)
         {
             try
             {
-                if (await administratorRepository.SaveMenu(model))
+                if (!ModelState.IsValid)
                 {
-                    return Ok(new { success = true, message = "Registro guardado correctamente." });
+                    return BadRequest("Invalid Model");
                 }
 
-                return Ok(new { success = false, message = "Error al intentar completar la operación." });
+                var menu = await administratorRepository.SaveMenu(model);
+
+                return Json(new
+                {
+                    success = menu,
+                    message = menu ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                });
             }
             catch (Exception ex)
             {

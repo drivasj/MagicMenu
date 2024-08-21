@@ -21,16 +21,17 @@ namespace DigitalMenu.Services
         {
             try
             {
-                var menu = await context.Menu.Where(m => m.Active == true).Select(m => new MenuViewModel
-                {
-                    IdMenu = m.IdMenu,
-                    ApplicationId = m.ApplicationId,
-                    Controller = m.Controller,
-                    Action = m.Action,
-                    Name = m.Name,
-                    Active = m.Active
+                var menu = await context.Menu
+                    .Include(a => a.application)
+                    //.Where(m => m.Active == true)
+                    .Select(m => new MenuViewModel
+                    {
+                        IdMenu = m.IdMenu,
+                        ApplicationName = m.application.Display,
+                        Name = m.Name,
+                        Active = m.Active
 
-                }).ToListAsync();
+                    }).ToListAsync();
 
                 return menu;
             }
@@ -49,10 +50,10 @@ namespace DigitalMenu.Services
                     .Where(m => !m.rolemenu.Any(rm => rm.RoleId == idRol))
                     .Select(m => new MenuSelect
                     {
-                    IdMenu = m.IdMenu,
-                    Name = m.Name,
+                        IdMenu = m.IdMenu,
+                        Name = m.Name,
 
-                }).ToListAsync();
+                    }).ToListAsync();
 
                 return menu;
             }
@@ -99,7 +100,7 @@ namespace DigitalMenu.Services
                 var rolMenu = new Rolemenu
                 {
                     RoleId = model.RoleId,
-                    MenuId = model.MenuId,                   
+                    MenuId = model.MenuId,
                     Active = true
                 };
 
