@@ -61,3 +61,8 @@ public class HomeController : Controller
         return Json(chartData);
     }
 }
+
+
+--Agregar nueva application (application)
+-- Agregar un modulo a la application (menu)
+-- en el administrador de menu agregar al rol el modulo agregado a la aplicacion (administrador de menu)
