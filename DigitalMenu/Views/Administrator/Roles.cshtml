@@ -6,11 +6,11 @@
     Layout = "~/Views/Administrator/Shared/_AdministratorLayout.cshtml";
 }
 
-<h4>Lista de Roles</h4>
+<h4>Role List</h4>
 <hr class="bg-custom-color" />
 
-<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewRole">
-    Nuevo Rol
+<button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewRole">
+    New Rol
 </button>
 
 <table class="table table-hover">
@@ -19,6 +19,7 @@
             <th>Name</th>
             <th>Description</th>         
             <th>Active</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -30,8 +31,10 @@
                 <td>@item.Description</td>
                 <td>@item.Active</td>
                 <td>
-                    <a class="btn btn-primary" asp-action="Editar" asp-route-id="@item.IdRole">Editar</a>
-                    <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@item.IdRole">Borrar</a>
+                    <a class="bi bi-pencil-square" asp-action="Editar" asp-route-id="@item.IdRole"></a>
+                </td>
+                <td>
+                    <a class="bi bi-trash3" asp-action="Borrar" asp-route-id="@item.IdRole"></a>
                 </td>
             </tr>
         }

@@ -7,7 +7,6 @@ namespace DigitalMenu.Models.Administrator
         public int IdMenu { get; set; }
         public int ApplicationId { get; set; }
         public string ApplicationName { get; set; }
-
         public string Area { get; set; }
         public string Controller { get; set; }
         public string Action { get; set; }

@@ -39,16 +39,23 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveApplication(ApplicationViewModel model)
+        public async Task<IActionResult> SaveApplication([FromBody] ApplicationViewModel model)
         {
             try
             {
-                if (await administratorRepository.SaveApplication(model))
+                if (!ModelState.IsValid)
                 {
-                    return Ok(new { success = true, message = "Registro guardado correctamente." });
+                    return BadRequest("Invalid Model");
                 }
 
-                return Ok(new { success = false, message = "Error al intentar completar la operación." });
+                var app = await administratorRepository.SaveApplication(model);
+
+                return Json(new
+                {
+                    success = app,
+                    message = app ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                });
+
             }
             catch (Exception ex)
             {
@@ -130,7 +137,7 @@ namespace DigitalMenu.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new { success = false, message = string.Concat("Error general: ", ex) });
+                return Json(new { success = false, message = ex.Message });
             }
         }
 
@@ -151,20 +158,27 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveUser(UserDTO model)
+        public async Task<IActionResult> SaveUser([FromBody] UserDTO model)
         {
             try
             {
-                if (await userRepository.SaveUserEmployee(model))
+                if (!ModelState.IsValid)
                 {
-                    return Ok(new { success = true, message = "Usuario y empleado guardados correctamente." });
+                    return BadRequest("Invalid Model");
                 }
 
-                return Ok(new { success = false, message = "Error al intentar completar la operación." });
+                var user = await userRepository.SaveUserEmployee(model);
+
+                return Json(new
+                {
+                    success = user,
+                    message = user ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                });
+
             }
             catch (Exception ex)
             {
-                return Ok(new { success = false, message = string.Concat("Error general: ", ex) });
+                return Json(new { success = false, message = ex.Message });
             }
         }
 
@@ -176,20 +190,27 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveRole(RoleViewModel model)
+        public async Task<IActionResult> SaveRole([FromBody] RoleViewModel model)
         {
             try
             {
-                if (await administratorRepository.SaveRole(model))
+                if (!ModelState.IsValid)
                 {
-                    return Ok(new { success = true, message = "Registro guardado correctamente." });
+                    return BadRequest("Invalid Model");
                 }
 
-                return Ok(new { success = false, message = "Error al intentar completar la operación." });
+                var rol = await administratorRepository.SaveRole(model);
+
+                return Json(new
+                {
+                    success = rol,
+                    message = rol ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                });
+
             }
             catch (Exception ex)
             {
-                return Ok(new { success = false, message = string.Concat("Error general: ", ex) });
+                return Json(new { success = false, message = ex.Message });
             }
         }
     }

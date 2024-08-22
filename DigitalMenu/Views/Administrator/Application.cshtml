@@ -5,11 +5,11 @@
     ViewData["Title"] = "Application";
     Layout = "~/Views/Administrator/Shared/_AdministratorLayout.cshtml";
 }
-<h4>Lista de Application</h4>
+<h4>Application list</h4>
 <hr class="bg-custom-color" />
 
-<button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewApplication">
-    Nueva Application
+<button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewApplication">
+    New Application
 </button>
 
 <table class="table table-hover">
@@ -18,6 +18,8 @@
             <th>Name</th>
             <th>Description</th>
             <th>Display</th>
+            <th>Icon</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -30,8 +32,10 @@
                 <td>@item.Display</td>
                 <td>@item.Icon</td>
                 <td>
-                    <a class="btn btn-primary" asp-action="Editar" asp-route-id="@item.IdApplication">Editar</a>
-                    <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@item.IdApplication">Borrar</a>
+                    <a class="bi bi-pencil-square" asp-action="Editar" asp-route-id="@item.IdApplication"></a>
+                </td>
+                <td>
+                    <a class="bi bi-trash3" asp-action="Borrar" asp-route-id="@item.IdApplication"></a>
                 </td>
             </tr>
         }

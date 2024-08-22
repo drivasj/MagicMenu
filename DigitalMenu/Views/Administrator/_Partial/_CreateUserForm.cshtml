@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="ModalNewUserLabel">
-                    Nuevo usuario
+                    New User
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -44,13 +44,9 @@
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Role</label>
-                        <select class="form-select" id="role">
-                            <option value="#">Seleccionar</option>
-                            @foreach (var role in Model.Roles)
-                            {
-                                <option value="@role.IdRole">@role.Name</option>
-                            }
-                        </select>
+                            <select class="form-select" id="role" asp-items="@(new SelectList(Model.Roles,"IdRole","Name"))">
+                                <option value="">Seleccionar</option>
+                            </select>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Usuario</label>

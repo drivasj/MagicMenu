@@ -1,66 +1,37 @@
-﻿
-function saveRole() {
-    const model = modelRole();
+﻿function saveRole() {
+    Loading();
+    const data = modelRole();
 
-    $.ajax({
-        url: "/Administrator/SaveRole",
-        type: "POST",
-        data: { model: model },
-        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-        async: true,
-        dateType: 'json',
-        cache: false,
-        //beforeSend: function () {
-        //    //Loading();
-        //},
-        success: function (data) {
-            if (data.success) {
-                closeModalNewRole();
-                successSwal(data.message);
-            } else {
-                closeModalNewRole();
-                ErrorSwal(data.message);
-            }
-        },
-        error: function () {
-            closeModalNewRole();
-            ErrorSwal(data.message);
-        }
-    });
-}
-
-function modelRole() {
-
-    const model = {
-
-        Name: $("#nameRol").val(),
-        Description: $("#description").val()        
-    }
-    return model;
-}
-
-function closeModalNewRole() {
-    let modalNewMenu = bootstrap.Modal.getInstance(document.getElementById('ModalNewRole'));
-    modalNewMenu.hide();
-}
-
-function guardarDatos() {
-    const rolId = document.getElementById('roles').value;
-    const menuId = document.getElementById('menus').value;
-
-    fetch('/Home/GuardarDatos', {
+    fetch('/Administrator/SaveRole', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ rolId, menuId })
+        body: data
     })
         .then(response => response.json())
         .then(data => {
-            // Manejar la respuesta del servidor
-            console.log(data);
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                closeModal("ModalNewRole");
+                LoadMainPage('Administrator', 'Roles');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+                closeModal("ModalNewRole");
+            }
         })
         .catch(error => {
-            console.error('Error:',error);
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+            closeModal("ModalNewRole");
         });
+}
+
+function modelRole() {
+    return JSON.stringify({
+        Name: $("#nameRol").val(),
+        Description: $("#description").val()      
+    });
 }

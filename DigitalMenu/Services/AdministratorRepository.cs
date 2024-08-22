@@ -124,7 +124,8 @@ namespace DigitalMenu.Services
                     IdApplication = a.IdApplication,
                     Name = a.Name,
                     Description = a.Description,
-                    Display = a.Display
+                    Display = a.Display,
+                    Icon = a.Icon
                 }).ToListAsync();
 
                 return application;

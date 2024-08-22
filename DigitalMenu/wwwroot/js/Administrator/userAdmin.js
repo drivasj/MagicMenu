@@ -1,54 +1,46 @@
-﻿
-function saveUser() {
-    const model = modelUser();
+﻿function saveUser() {
+    Loading();
+    const data = modelUser();
 
-    $.ajax({
-        url: "/Administrator/SaveUser",
-        type: "POST",
-        data: { model: model },
-        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-        async: true,
-        dateType: 'json',
-        cache: false,
-        //beforeSend: function () {
-        //    //Loading();
-        //},
-        success: function (data) {
-            if (data.success) {
-                closeModalNewUser();
-                successSwal(data.message);
-            } else {
-                closeModalNewUser();
-                ErrorSwal(data.message);
-            }          
+    fetch('/Administrator/SaveUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         },
-        error: function () {
-            closeModalNewUser();
-            ErrorSwal(data.message);
-        }
-    });
+        body: data
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                closeModal("ModalNewUser");
+                LoadMainPage('Administrator', 'Users');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+                closeModal("ModalNewUser");
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+            closeModal("ModalNewUser");
+        });
 }
 
 function modelUser() {
 
-    const model = {
-
-        FirstName : $("#name").val(),
+    return JSON.stringify({
+        FirstName: $("#name").val(),
         MiddleName: $("#middleName").val(),
         LastName: $("#lastName").val(),
-        MotherName : $("#motherName").val(),
+        MotherName: $("#motherName").val(),
         DocumentNR: $("#document").val(),
         Phone: $("#phone").val(),
         Email: $("#email").val(),
         IdRole: $("#role").val(),
         UserName: $("#userName").val(),
         Adress: $("#adress").val()
-
-    }
-    return model;
-}
-
-function closeModalNewUser() {
-    let modalNewUser = bootstrap.Modal.getInstance(document.getElementById('ModalNewUser'));
-    modalNewUser.hide();
+    });
 }

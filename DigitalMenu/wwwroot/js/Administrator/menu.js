@@ -29,11 +29,7 @@
         });
 }
 
-
-
-
 function getModelMenu() {
-
     return JSON.stringify({
         ApplicationId: $("#idApplication").val(),
         Area: $("#area").val(),
