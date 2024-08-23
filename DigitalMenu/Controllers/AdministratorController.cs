@@ -4,6 +4,8 @@ using DigitalMenu.Models.DTO.UserEmployee;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services;
 using DigitalMenu.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -220,5 +222,59 @@ namespace DigitalMenu.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public IActionResult Login(string mensaje = null)
+        {
+            if (mensaje is not null)
+            {
+                ViewData["mensaje"] = mensaje;
+            }
+
+            return View();
+        }
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="modelo"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(modelo);
+            }
+
+            var resultado = await signInManager.PasswordSignInAsync(modelo.User, modelo.Password, modelo.Recuerdame, lockoutOnFailure: false);
+
+            if (resultado.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Nombre de usuario o password incorrecto");
+                return View(modelo);
+            }
+        }
+
+        /// <summary>
+        /// logout
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> logout()
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
