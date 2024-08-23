@@ -5,7 +5,7 @@ using DigitalMenu.Models.EntityAdministrator;
 
 namespace TestWeb
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {

@@ -1,0 +1,4 @@
+﻿1: en ApplicationDbContext agregar IdentityDbContext
+2: Agregar la migracion: add-migration
+3: Actualizar la base de datos update database
+4: Configurar en la clase Program

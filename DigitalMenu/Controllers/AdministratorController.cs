@@ -4,6 +4,7 @@ using DigitalMenu.Models.DTO.UserEmployee;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services;
 using DigitalMenu.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TestWeb;
@@ -16,14 +17,20 @@ namespace DigitalMenu.Controllers
         private readonly ApplicationDbContext context;
         private readonly IAdministratorRepository administratorRepository;
         private readonly IUserRepository userRepository;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
 
         public AdministratorController(ApplicationDbContext context,
             IAdministratorRepository administratorRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager)
         {
             this.context = context;
             this.administratorRepository = administratorRepository;
             this.userRepository = userRepository;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         public IActionResult Index()
