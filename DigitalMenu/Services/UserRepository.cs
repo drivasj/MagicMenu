@@ -46,7 +46,7 @@ namespace DigitalMenu.Services
 
                     int registerUser = GetUserId();
                     var usuario = new IdentityUser() { Email = model.Email, UserName = model.UserName};
-                    string pass = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("Sistemas2024")); ;
+                    string pass = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("Sistemas2024.")); ;
 
                     var resultado = await userManager.CreateAsync(usuario, password: pass);
 
