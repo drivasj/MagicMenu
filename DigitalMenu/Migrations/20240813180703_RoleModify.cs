@@ -10,9 +10,9 @@ namespace DigitalMenu.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "IX_Roleuser_RoleId",
-                table: "Roleuser");
+            //migrationBuilder.DropForeignKey(
+            //    name: "IX_Roleuser_RoleId",
+            //    table: "Roleuser");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roleuser_RoleId",

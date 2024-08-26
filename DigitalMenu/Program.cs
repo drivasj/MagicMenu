@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//var politicaUsuarioAutenticados = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); // solo usuarios Autenticados
+var politicaUsuarioAutenticados = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); // solo usuarios Autenticados
 
-// Add services to the container.
+//Add services to the container.
 builder.Services.AddControllersWithViews(options =>
 {
-   // options.Filters.Add(new AuthorizeFilter(politicaUsuarioAutenticados)); //Configuración aceptar solo usuarios Autenticados
+   options.Filters.Add(new AuthorizeFilter(politicaUsuarioAutenticados)); //Configuración aceptar solo usuarios Autenticados
 
 }).AddJsonOptions(options =>
 {
@@ -42,7 +42,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
 builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme, options =>
 {
-    options.LoginPath = "/Home/Index"; //URL login
+    options.LoginPath = "/Administrator/login"; //URL login
     options.AccessDeniedPath = "/usuarios/login"; // URL Acceso denegado
 });
 

@@ -66,3 +66,7 @@ public class HomeController : Controller
 --Agregar nueva application (application)
 -- Agregar un modulo a la application (menu)
 -- en el administrador de menu agregar al rol el modulo agregado a la aplicacion (administrador de menu)
+
+--Crear roles al ejecutar la migracion
+
+INSERT INTO `tss_test_res`.`role` (`Name`, `Privilege`, `RegisterDate`, `RegisterUser`, `Active`) VALUES ('Desarrollo', '0', '2024-04-24 10:45:49', 'Administrator', '1');

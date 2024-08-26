@@ -239,11 +239,11 @@ namespace DigitalMenu.Migrations
                 table: "Rolemenu",
                 column: "RoleId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Roleuser_RoleId",
-                table: "Roleuser",
-                column: "RoleId",
-                unique: true);
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Roleuser_RoleId",
+            //    table: "Roleuser",
+            //    column: "RoleId",
+            //    unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roleuser_UserId",

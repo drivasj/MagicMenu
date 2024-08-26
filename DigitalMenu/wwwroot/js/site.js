@@ -1,6 +1,6 @@
 ﻿
 function LoadMainPage(controller, action) {   
-    RemoveMenu();
+   // RemoveMenu();
     Loading();
     const url = window.location.protocol + '//' + window.location.host + '/' + controller + '/' + action;
 
