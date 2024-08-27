@@ -37,13 +37,12 @@ builder.Services.AddAuthentication(); //Activar los servicios de Authentication
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false; // El usuario no requiere confirmar la cuenta para logearse 
-}).AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders();
+}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme, options =>
 {
     options.LoginPath = "/Administrator/login"; //URL login
-    options.AccessDeniedPath = "/usuarios/login"; // URL Acceso denegado
+    options.AccessDeniedPath = "/Administrator/login"; // URL Acceso denegado
 });
 
 
