@@ -13,7 +13,16 @@
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuUser">
                 <li><a class="dropdown-item" data-bs-dismiss="offcanvas" style="cursor:pointer" onclick="LoadMainPage('EmployeePerfil','Employee', 'Tools')">Mi perfil</a></li>
                 <li><a class="dropdown-item" data-bs-dismiss="offcanvas" style="cursor:pointer" onclick="LoadMainPage('ResetPassworForm','Administrator', 'Administrator')">Cambiar contraseña</a></li>
-                <li><a class="dropdown-item" data-bs-dismiss="offcanvas" style="cursor:pointer;" onclick="SessionSigOut()">Cerrar sesion</a></li>
+
+@*                <li><a class="dropdown-item" data-bs-dismiss="offcanvas" style="cursor:pointer;" onclick="SessionSigOut()">Cerrar sesion</a></li>*@
+
+                <li class="dropdown-item">
+                    <form class="form-inline" asp-action="logout" asp-controller="Administrator">
+                        <button type="submit" class="nav-link btn btn-link text-dark">
+                            Logout
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
 

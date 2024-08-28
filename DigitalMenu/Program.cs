@@ -10,20 +10,21 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Politica de usuarios autenticados
 var politicaUsuarioAutenticados = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); // solo usuarios Autenticados
 
 //Add services to the container.
 builder.Services.AddControllersWithViews(options =>
 {
-   options.Filters.Add(new AuthorizeFilter(politicaUsuarioAutenticados)); //Configuración aceptar solo usuarios Autenticados
+  options.Filters.Add(new AuthorizeFilter(politicaUsuarioAutenticados)); //Configuración aceptar solo usuarios Autenticados
 
 }).AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = null; // JsonSerializerOptions
 });
 
+//DefaultConnection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 
 //Mysql
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
@@ -31,9 +32,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySQL(connectionString);
 });
 
-//Identity 
+//Activar los servicios de Authentication
 builder.Services.AddAuthentication(); //Activar los servicios de Authentication
 
+//Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false; // El usuario no requiere confirmar la cuenta para logearse 
@@ -41,10 +43,10 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
 builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme, options =>
 {
+     //options.LoginPath = "/Home/Index"; //URL login
     options.LoginPath = "/Administrator/login"; //URL login
     options.AccessDeniedPath = "/Administrator/login"; // URL Acceso denegado
 });
-
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IAdministratorRepository, AdministratorRepository>();
@@ -63,7 +65,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();
+app.UseAuthentication(); //Add
 app.UseAuthorization();
 
 app.MapControllerRoute(

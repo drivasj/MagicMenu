@@ -273,8 +273,7 @@ namespace DigitalMenu.Controllers
         public async Task<IActionResult> logout()
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Index");
         }
-
     }
 }

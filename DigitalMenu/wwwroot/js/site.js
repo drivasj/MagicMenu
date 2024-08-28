@@ -17,6 +17,17 @@ function LoadMainPage(controller, action) {
         });
 }
 
+function SessionSigOut() {
+
+    fetch('/Administrator/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: null
+    })
+}
+
 function successSwal(message) {
     Swal.fire({
         position: "top",

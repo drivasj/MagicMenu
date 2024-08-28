@@ -46,13 +46,14 @@ namespace DigitalMenu.Services
 
                     int registerUser = GetUserId();
                     var usuario = new IdentityUser() { Email = model.Email, UserName = model.UserName};
-                    string pass = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("Sistemas2024."));
+                    //string pass = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("Sistemas2024."));
+                    string pass = "Sistemas2024.";
 
                     var resultado = await userManager.CreateAsync(usuario, password: pass);
 
                     if (resultado.Succeeded)
                     {
-                        await signInManager.SignInAsync(usuario, isPersistent: true);
+                        //await signInManager.SignInAsync(usuario, isPersistent: true);
 
                         var employee = new Employee
                         {
@@ -68,7 +69,6 @@ namespace DigitalMenu.Services
                             User = new User
                             {
                                 UserName = model.UserName,
-                                Password = pass,
                                 RegisterDate = DateTime.Now.Date,
                                 RegisterUser = registerUser.ToString(),
                                 IdCompany = 1,
