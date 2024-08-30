@@ -1,6 +1,6 @@
 ﻿
-function LoadMainPage(controller, action) {   
-   // RemoveMenu();
+function LoadMainPage(controller, action) {
+    // RemoveMenu();
     Loading();
     const url = window.location.protocol + '//' + window.location.host + '/' + controller + '/' + action;
 
@@ -68,4 +68,36 @@ function RemoveMenu() {
     const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
 
     offcanvas.hide();
-} 
+}
+
+function HacerAdmin(userName) {
+    console.log(userName);
+    Loading();
+    const data = getModelMenu();
+
+    fetch('/Administrator/HacerAdmin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userName: userName.value
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                LoadMainPage('Administrator', 'Users');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+        });
+}
+

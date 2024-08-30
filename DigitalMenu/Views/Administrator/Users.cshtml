@@ -32,12 +32,15 @@
                 <td>@item.UserName</td>
                 <td>@item.Email</td>
                 <td>
-                    <a class="bi bi-pencil-square" asp-action="Editar" asp-route-id="@item.IdEmployee"></a>
+                    @* <a class="bi bi-pencil-square" asp-action="Editar" asp-route-id="@item.IdEmployee"></a> *@
+
+@*                     <button class="btn btn-primary me-2" asp-controller="Administrator" asp-action="HacerAdmin" asp-route-userName="@item.UserName">Hacer Admin</button>
+ *@                    <button type="button" class="btn btn-secondary" onclick="HacerAdmin( @item.UserName)"></button>
                 </td>
                 <td>
-                    <a class="bi bi-trash3" asp-action="Borrar" asp-route-id="@item.IdEmployee"></a>
+                    @* <a class="bi bi-trash3" asp-action="Borrar" asp-route-id="@item.IdEmployee"></a> *@
+                      <button class="btn btn-secondary me-2" asp-action="RemoverAdmin" asp-route-userName="@item.UserName"> Remover Admin</button>
                 </td>
-
             </tr>
         }
     </tbody>

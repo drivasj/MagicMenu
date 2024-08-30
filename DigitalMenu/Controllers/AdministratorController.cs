@@ -275,5 +275,79 @@ namespace DigitalMenu.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
             return RedirectToAction("Home", "Index");
         }
+
+        /// <summary>
+        /// HacerAdmin
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [HttpPost]
+        //[Authorize(Roles = Constantes.RolAdmin)]
+        public async Task<IActionResult> HacerAdmin([FromBody]string userName)
+        {
+            try
+            {
+
+                var usuario = await context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync();
+
+                if (usuario is null)
+                {
+                    return NotFound();
+                }
+
+                await userManager.AddToRoleAsync(usuario, Constantes.RolAdmin);
+
+
+                return Json(new { success = true, message = "Registro guardado correctamente." });
+
+                //if (model.RoleId == 0 || model.MenuId == 0)
+                //{
+                //    return BadRequest("Invalid role ID");
+                //}
+
+                //var roleMenu = await administratorRepository.Rolemenu(model);
+
+                //if(usuario is success)
+
+                //return Json(new
+                //{
+                //    success = usuario,
+                //    message = usuario ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                //});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+
+
+
+
+
+
+
+            return View();
+        }
+
+        /// <summary>
+        /// Remover Admin
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [HttpPost]
+        //[Authorize(Roles = Constantes.RolAdmin)]
+        public async Task<IActionResult> RemoverAdmin(string userName)
+        {
+            var usuario = await context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync();
+
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+
+            await userManager.RemoveFromRoleAsync(usuario, Constantes.RolAdmin);
+
+            return View();
+        }
     }
 }
