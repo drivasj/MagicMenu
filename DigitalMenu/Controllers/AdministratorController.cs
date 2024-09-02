@@ -273,7 +273,7 @@ namespace DigitalMenu.Controllers
         public async Task<IActionResult> logout()
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-            return RedirectToAction("Home", "Index");
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
@@ -283,12 +283,11 @@ namespace DigitalMenu.Controllers
         /// <returns></returns>
         [HttpPost]
         //[Authorize(Roles = Constantes.RolAdmin)]
-        public async Task<IActionResult> HacerAdmin([FromBody]string userName)
+        public async Task<IActionResult> HacerAdmin(string user)
         {
             try
             {
-
-                var usuario = await context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync();
+                var usuario = await context.Users.Where(u => u.UserName == user).FirstOrDefaultAsync();
 
                 if (usuario is null)
                 {
@@ -319,14 +318,6 @@ namespace DigitalMenu.Controllers
             {
                 return Json(new { success = false, message = ex.Message });
             }
-
-
-
-
-
-
-
-            return View();
         }
 
         /// <summary>
