@@ -161,9 +161,15 @@ namespace DigitalMenu.Controllers
             {
                 Employees = listemployee,
                 Roles = listRoles
+
             };
 
             return View("Users",listViewModel);
+        }
+
+        public async Task<IActionResult> ShowDetailUser(int idUser)
+        {
+            return PartialView("/Partial/_DetailUser.cshtml", await administratorRepository._getDetailUser(idUser));
         }
 
         [HttpPost]

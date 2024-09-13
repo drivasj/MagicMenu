@@ -189,6 +189,20 @@ namespace DigitalMenu.Services
             }
         }
 
+        public async Task<EmployeeDTO> _getDetailUser(int idUser)
+        {
+            var employee = await context.Employee.Where(x =>x.IdEmployee == idUser).Select(e => new EmployeeDTO
+            {
+                IdEmployee = e.IdEmployee,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                UserName = e.UserName,
+                Email = e.Employeedetails.Email
+            }).FirstOrDefaultAsync();
+
+            return employee;
+        }
+
         public async Task<List<RoleViewModel>> Roles()
         {
             try

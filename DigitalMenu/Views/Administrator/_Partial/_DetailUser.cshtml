@@ -1,0 +1,41 @@
+﻿@using DigitalMenu.Models.DTO.UserEmployee
+@model EmployeeDTO;
+<!-- Modal -->
+<div class="modal fade" id="ModalUserdetail" tabindex="-1" aria-labelledby="ModalUserdetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalUserdetailLabel">
+                    @Model.FirstName @Model.LastName
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body table-responsive">
+                <div class="row g-3 needs-validation mb-3">
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Nombre</label>
+                        <input type="text" class="form-control" id="name" value="@Model.FirstName" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Segundo Nombre</label>
+                        <input type="text" class="form-control" id="middleName" value="@Model.FirstName" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Email</label>
+                        <input type="text" class="form-control" id="email" value="@Model.Email" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">UserName</label>
+                        <input type="text" class="form-control" id="userName" value="@Model.UserName" autocomplete="off" />
+                    </div>                
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveUser()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

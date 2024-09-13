@@ -29,6 +29,37 @@
         });
 }
 
+function ShowDetailUser(idUser) {
+    Loading();
+
+    const data = JSON.stringify(idUser);
+    fetch('/Administrator/ShowDetailUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: { idUser: data } 
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                closeModal("ModalNewUser");
+                LoadMainPage('Administrator', 'Users');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+                closeModal("ModalNewUser");
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+            closeModal("ModalNewUser");
+        });
+}
+
 function modelUser() {
 
     return JSON.stringify({
