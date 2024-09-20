@@ -171,7 +171,7 @@ namespace DigitalMenu.Controllers
         public async Task<IActionResult> ShowDetailUser(int idUser)
         {
             var user = await administratorRepository._getDetailUser(idUser);
-            return PartialView("~/Views/Administrator/_DetailUser.cshtml", user);
+            return PartialView("~/Views/Administrator/_Partial/_DetailUser.cshtml", user);
         }
 
         [HttpPost]
