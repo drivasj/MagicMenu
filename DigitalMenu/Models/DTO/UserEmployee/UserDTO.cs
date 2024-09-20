@@ -6,6 +6,8 @@ namespace DigitalMenu.Models.DTO.UserEmployee
 {
     public class UserDTO
     {
+        public int idUser { get; set; }
+
         [Required]
         public string UserName { get; set; }
         public int IdEmployee { get; set; }

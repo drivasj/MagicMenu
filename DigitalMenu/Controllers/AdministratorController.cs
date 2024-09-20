@@ -164,12 +164,14 @@ namespace DigitalMenu.Controllers
 
             };
 
-            return View("Users",listViewModel);
+            return View("Users", listViewModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> ShowDetailUser(int idUser)
         {
-            return PartialView("/Partial/_DetailUser.cshtml", await administratorRepository._getDetailUser(idUser));
+            var user = await administratorRepository._getDetailUser(idUser);
+            return PartialView("~/Views/Administrator/_DetailUser.cshtml", user);
         }
 
         [HttpPost]

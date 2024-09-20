@@ -11,6 +11,9 @@
 <button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewUser">
     New User
 </button>
+<button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalUserdetail">
+    Detail User
+</button>
 
 <table class="table table-hover">
     <thead>
@@ -32,16 +35,19 @@
                 <td>@item.Email</td>             
                 <td>
                     <a onclick="ShowDetailUser(@item.IdEmployee)"
-                       style="cursor:pointer" class="bi bi-eye data-bs-toggle="modal" data-bs-target="#ModalUserdetail">
+                       style="cursor:pointer" class="bi bi-eye">
                    </a>
                 </td>
-
             </tr>
         }
     </tbody>
 </table>
 
+<div id="DetailUserContainer">
+</div>
+
 <partial name="_Partial/_CreateUserForm" />
+@* <partial name="_Partial/_DetailUser" /> *@
 
 @section Scripts {
     <script src="~/js/administrator/userAdmin.js" asp-append-version=" true"></script>
