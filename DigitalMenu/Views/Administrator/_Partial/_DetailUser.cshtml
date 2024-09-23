@@ -1,5 +1,5 @@
 ﻿@using DigitalMenu.Models.DTO.UserEmployee
-@model EmployeeDTO;
+@model UserDTO;
 
 <div class="modal fade" id="ModalUserdetail" tabindex="-1" aria-labelledby="ModalUserdetailLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -14,31 +14,33 @@
                 <div class="row g-3 needs-validation mb-3">
 
                     <div class="col-6 col-md-4">
-                        @* <label for="name" class="form-label fw-bold">Nombre</label> *@
-                        @* <input type="text" class="form-control" id="name"  autocomplete="off" /> *@
-                        @Model.FirstName
+                        <label for="name" class="form-label fw-bold">Nombre</label>
+                        <input type="text" class="form-control" id="nameEdit" value="@Model.FirstName" autocomplete="off" />
+
                     </div>
                     <div class="col-6 col-md-4">
-                        @* <label for="name" class="form-label fw-bold">Segundo Nombre</label> *@
-                        @* <input type="text" class="form-control" id="middleName"  autocomplete="off" /> *@
-                        @Model.LastName
+                         <label for="name" class="form-label fw-bold">Segundo Nombre</label>
+                        <input type="text" class="form-control" id="middleNameEdit" value="@Model.MiddleName" autocomplete="off" />
+
                     </div>
                     <div class="col-6 col-md-4">
-                      @*   <label for="name" class="form-label fw-bold">Email</label>
-                        <input type="text" class="form-control" id="email"  autocomplete="off" /> *@
-                        @Model.Email
+                        <label for="name" class="form-label fw-bold">Email</label>
+                        <input type="text" class="form-control" id="emailEdit" value="@Model.Email" autocomplete="off" />
+
                     </div>
                     <div class="col-6 col-md-4">
-                      @*   <label for="name" class="form-label fw-bold">UserName</label>
-                        <input type="text" class="form-control" id="userName" autocomplete="off" /> *@
+                         <label for="name" class="form-label fw-bold">UserName</label>
+                        <input type="text" class="form-control" id="userNameEdit" value="@Model.UserName" autocomplete="off" />
                     </div>                
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="saveUser()">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="editUser()">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<input type="hidden" id="idEmployee" value="@Model.IdEmployee" />

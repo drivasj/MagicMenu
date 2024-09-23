@@ -189,13 +189,13 @@ namespace DigitalMenu.Services
             }
         }
 
-        public async Task<EmployeeDTO> _getDetailUser(int idUser)
+        public async Task<UserDTO> _getDetailUser(int idUser)
         {
-            var employee = await context.Employee.Where(x =>x.IdEmployee == idUser).Select(e => new EmployeeDTO
+            var employee = await context.Employee.Where(x =>x.IdEmployee == idUser).Select(e => new UserDTO
             {
                 IdEmployee = e.IdEmployee,
                 FirstName = e.FirstName,
-                LastName = e.LastName,
+                MiddleName = e.MiddleName,
                 UserName = e.UserName,
                 Email = e.Employeedetails.Email
             }).FirstOrDefaultAsync();

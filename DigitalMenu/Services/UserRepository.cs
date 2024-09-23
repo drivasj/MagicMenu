@@ -1,6 +1,7 @@
 ﻿using DigitalMenu.Models.DTO.UserEmployee;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -64,12 +65,12 @@ namespace DigitalMenu.Services
                             Document = model.DocumentNR,
                             UserName = model.UserName,
                             RegisterUser = registerUser.ToString(),
-                            RegisterDate = DateTime.Now.Date,
+                            RegisterDate = DateTime.Now,
                             Active = true,
                             User = new User
                             {
                                 UserName = model.UserName,
-                                RegisterDate = DateTime.Now.Date,
+                                RegisterDate = DateTime.Now,
                                 RegisterUser = registerUser.ToString(),
                                 IdCompany = 1,
                                 Active = true,
@@ -90,7 +91,6 @@ namespace DigitalMenu.Services
                         context.Add(employee);
                         await context.SaveChangesAsync();
                         transaction.Commit();
-
                     }                                 
                 }
                 catch (Exception ex)
@@ -100,6 +100,32 @@ namespace DigitalMenu.Services
                 }
             }
             return true;
+        }
+
+        public async Task<bool> EditUserEmployee(UserDTO model)
+        {
+            try
+            {
+                var employee = await context.Employee.Include(d=>d.Employeedetails).FirstOrDefaultAsync(e=>e.IdEmployee == model.IdEmployee);
+
+                if (employee == null)
+                {
+                    return false;
+                }
+
+                employee.FirstName = model.FirstName;
+                employee.MiddleName = model.MiddleName;
+                employee.UserName = model.UserName;
+                employee.Employeedetails.Email = model.Email;
+                employee.LastUpdate = DateTime.Now;
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string menssage = ex.Message;
+                return false;
+            }
         }
     }
 }

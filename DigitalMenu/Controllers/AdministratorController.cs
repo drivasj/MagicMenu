@@ -199,6 +199,26 @@ namespace DigitalMenu.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditUser([FromBody] UserDTO model)
+        {
+            try
+            {
+                var user = await userRepository.EditUserEmployee(model);
+
+                return Json(new
+                {
+                    success = user,
+                    message = user ? "Registro actulizado correctamente." : "Error al intentar completar la operación."
+                });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Roles()
         {

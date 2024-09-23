@@ -18,7 +18,7 @@ namespace DigitalMenu.Components.Menu
         {
             try
             {
-                int idUser = 1;
+                int idUser = 5;
                 var menu = _getMenu(idUser);
                 return View(menu);
             }

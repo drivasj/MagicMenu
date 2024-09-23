@@ -70,3 +70,29 @@ public class HomeController : Controller
 --Crear roles al ejecutar la migracion
 
 INSERT INTO `tss_test_res`.`role` (`Name`, `Privilege`, `RegisterDate`, `RegisterUser`, `Active`) VALUES ('Desarrollo', '0', '2024-04-24 10:45:49', 'Administrator', '1');
+INSERT INTO `tss_test_res`.`application` (`Name`, `Description`, `RegisterDate`, `RegisterUser`, `Active`, `Display`, `Icon`) VALUES ('Aplicacion de administrador', 'Aplicacion para agregar nuevos elementos', '2024-08-28 00:00:00', 'Administrator', '1', 'Administrador', 'bi bi-collection');
+INSERT INTO `tss_test_res`.`menu` (`IdMenu`, `ApplicationId`, `Controller`, `Action`, `Name`, `Movil`, `Description`, `RegisterDate`, `RegisterUser`, `Active`) VALUES ('1', '1', 'Administrator', 'Application', 'Application', '0', 'Permite ver y agregar nueva aplicación', '2017-05-26 00:00:00', 'Administrator', '1');
+INSERT INTO `tss_test_res`.`rolemenu` (`IdRoleMenu`, `RoleId`, `MenuId`, `Active`) VALUES ('2', '1', '1', '1');
+INSERT INTO `tss_test_res`.`menu` (`IdMenu`, `ApplicationId`, `Controller`, `Action`, `Name`, `Movil`, `Description`, `RegisterDate`, `RegisterUser`, `Active`) VALUES ('2', '1', 'Administrator', 'Menu', 'Menu', '0', 'Permite agregar un menu', '2017-05-26 00:00:00', 'Administrator', '1');
+INSERT INTO `tss_test_res`.`rolemenu` (`IdRoleMenu`, `RoleId`, `MenuId`, `Active`) VALUES ('2', '1', '1', '1');
+INSERT INTO `tss_test_res`.`rolemenu` (`IdRoleMenu`, `RoleId`, `MenuId`, `Active`) VALUES ('2', '1', '2', '1');
+
+
+SELECT
+	a.Display,
+    m.Name,
+    m.Area,
+    m.Controller,
+    m.Action,
+    m.Action,
+    a.Icon
+
+  FROM roleuser ru INNER JOIN user u ON ru.UserId = u.IdUser
+						  INNER JOIN role r ON ru.RoleId = r.IdRole
+                          INNER JOIN rolemenu rm ON r.idrole = rm.RoleId
+                          INNER JOIN menu m ON rm.MenuId = m.IdMenu
+                          INNER JOIN application a ON m.ApplicationId = a.IdApplication
+WHERE u.UserName ='drivasj'
+AND ru.Active is true
+AND rm.Active is true
+ORDER BY 1;

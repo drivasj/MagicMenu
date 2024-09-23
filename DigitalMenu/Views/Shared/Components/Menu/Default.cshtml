@@ -44,7 +44,7 @@
                                 onclick="LoadMainPage('@subItem.action', '@subItem.controller', '@subItem.area');">@subItem.display</a></li>*@
                                 <li>
                                     @*<a style="cursor:pointer;" class="dropdown-item" asp-controller="@subItem.controller" asp-action="@subItem.action">@subItem.display</a>*@
-                                     <a style="cursor:pointer;" class="dropdown-item"
+                                <a style="cursor:pointer;" class="dropdown-item" data-bs-dismiss="offcanvas"
                                    onclick="LoadMainPage('@subItem.controller','@subItem.action');">@subItem.display</a>
                                 </li>
                             }
