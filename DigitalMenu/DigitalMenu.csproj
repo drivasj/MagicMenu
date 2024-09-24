@@ -35,4 +35,11 @@
     <None Include="Views\Administrator\Shared\_AdministratorLayout.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Administrator\_Partial\_DetailApplicationForm.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

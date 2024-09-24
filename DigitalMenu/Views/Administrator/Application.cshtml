@@ -8,7 +8,8 @@
 <h4>Application list</h4>
 <hr class="bg-custom-color" />
 
-<button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewApplication">
+<button type="button" class="btn btn-outline-primary mb-3" onclick="OpenModalNewApplication()"
+data-bs-toggle="modal" data-bs-target="#ModalNewApplication">
     New Application
 </button>
 
@@ -32,15 +33,20 @@
                 <td>@item.Display</td>
                 <td>@item.Icon</td>
                 <td>
-                    <a class="bi bi-pencil-square" asp-action="Editar" asp-route-id="@item.IdApplication"></a>
+                    <a onclick="ShowDetailApplication(@item.IdApplication)" style="cursor:pointer" class="bi bi-pencil-square"></a>
                 </td>
                 <td>
-                    <a class="bi bi-trash3" asp-action="Borrar" asp-route-id="@item.IdApplication"></a>
+                    @* <a onclick="DisableApplication(@item.IdApplication)" style="cursor:pointer" class="bi bi-trash3"></a> *@
+                    <a onclick="Tryme(@item.IdApplication)" style="cursor:pointer" class="bi bi-trash3"></a>
+
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<div id="DetailAppContainer">
+</div>
 
 <partial name="_Partial\_CreateApplicationForm" />
 

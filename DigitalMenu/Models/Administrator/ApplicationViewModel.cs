@@ -1,4 +1,5 @@
 ﻿using DigitalMenu.Models.EntityAdministrator;
+using System.ComponentModel.DataAnnotations;
 
 namespace DigitalMenu.Models.Administrator
 {

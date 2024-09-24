@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TestWeb;
 
 namespace DigitalMenu.Services
@@ -14,27 +15,32 @@ namespace DigitalMenu.Services
         private readonly ApplicationDbContext context;
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly HttpContext httpContext;
 
         public UserRepository(ApplicationDbContext context, 
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
             this.userManager = userManager;
             this.signInManager = signInManager;
-        }
-        public int GetUserId()
-        {
-            int userId = 1;
-            return userId;
-        }
+            httpContext = httpContextAccessor.HttpContext;
 
-        public async Task<int> GetLastUserId()
+        }
+        public string GetUserName()
         {
-            int userId = 1;
+            if (httpContext.User.Identity.IsAuthenticated)
+            {
+                var Claim = httpContext.User.Claims.Where(x=>x.Type == ClaimTypes.Name).FirstOrDefault();
+                var userName = Claim.Value;
 
-            //int userId = await context.User.MaxAsync(x => x.IdUser);
-            return userId;
+                return userName;
+            }
+            else
+            {
+                throw new ApplicationException("The user is not authenticated");
+            }
         }
 
         public async Task<bool> SaveUserEmployee(UserDTO model)
@@ -45,7 +51,7 @@ namespace DigitalMenu.Services
                 {
                     //variables
 
-                    int registerUser = GetUserId();
+                    string registerUser = GetUserName();
                     var usuario = new IdentityUser() { Email = model.Email, UserName = model.UserName};
                     //string pass = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("Sistemas2024."));
                     string pass = "Sistemas2024.";

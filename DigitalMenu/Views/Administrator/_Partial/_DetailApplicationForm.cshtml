@@ -1,5 +1,8 @@
-﻿<!-- Modal -->
-<div class="modal fade" id="ModalNewApplication" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
+﻿@using DigitalMenu.Models.Administrator
+@model ApplicationViewModel;
+
+<!-- Modal -->
+<div class="modal fade" id="ModalDetailApplication" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,32 +13,35 @@
             </div>
             <div class="modal-body table-responsive">
                 <div class="row g-3 needs-validation mb-3">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Application</label>
-                        <input type="text" class="form-control textNewApp" id="nameApplication" autocomplete="off" />
+                        <input type="text" class="form-control" id="nameApplication" value="@Model.Name" autocomplete="off" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
 
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Description</label>
-                        <input type="text" class="form-control textNewApp" id="description" autocomplete="off" />
+                        <input type="text" class="form-control" id="description" value="@Model.Description" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Display</label>
-                        <input type="text" class="form-control textNewApp" id="display" autocomplete="off" />
+                        <input type="text" class="form-control" id="display" value="@Model.Display" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Icon</label>
-                        <input type="text" class="form-control textNewApp" id="icon" autocomplete="off" />
+                        <input type="text" class="form-control" id="icon" value="@Model.Icon" autocomplete="off" />
                     </div>
-
+                    <input type="hidden" id="idApp" value="@Model.IdApplication" />
                 </div>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveApplication()">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="editApplication()">Save changes</button>
             </div>
         </div>
     </div>
 </div>
+

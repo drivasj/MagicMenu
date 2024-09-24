@@ -48,6 +48,50 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> ShowDetailApplication(int idApp)
+        {
+            var app = await administratorRepository._getDetailApp(idApp);
+            return PartialView("~/Views/Administrator/_Partial/_DetailApplicationForm.cshtml", app);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditApp([FromBody] ApplicationViewModel model)
+        {
+            try
+            {
+                var app = await administratorRepository.EditApp(model);
+
+                return Json(new
+                {
+                    success = app,
+                    message = app? "Registro actualizado correctamente." :"Error al intentar completar la opración."
+                });
+            }
+            catch (Exception ex) 
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisableApplication([FromBody] ApplicationViewModel model)
+        {
+            try
+            {
+                var app = await administratorRepository.DisableApplication(model.IdApplication);
+                return Json(new
+                {
+                    success = app,
+                    message = app ? "Registro actualizado correctamente." : "Error al intentar completar la operación"
+                });
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
         public async Task<IActionResult> SaveApplication([FromBody] ApplicationViewModel model)
         {
             try
@@ -153,7 +197,7 @@ namespace DigitalMenu.Controllers
         [HttpGet]
         public async Task<IActionResult> Users()
         {
-            int usuarioId = userRepository.GetUserId();
+            string userName = userRepository.GetUserName();
             var listemployee = await administratorRepository.ListUser();
             var listRoles = await administratorRepository.Roles();
 

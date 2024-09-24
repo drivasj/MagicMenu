@@ -3,6 +3,7 @@ using DigitalMenu.Models.DTO.UserEmployee;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using TestWeb;
@@ -12,10 +13,12 @@ namespace DigitalMenu.Services
     public class AdministratorRepository : IAdministratorRepository
     {
         private readonly ApplicationDbContext context;
+        private readonly IUserRepository userRepository;
 
-        public AdministratorRepository(ApplicationDbContext context)
+        public AdministratorRepository(ApplicationDbContext context, IUserRepository userRepository)
         {
             this.context = context;
+            this.userRepository = userRepository;
         }
         public async Task<List<MenuViewModel>> ListMenu()
         {
@@ -37,7 +40,7 @@ namespace DigitalMenu.Services
             }
             catch (Exception ex)
             {
-                string menssage = ex.Message;
+                string message = ex.Message;
                 return null;
             }
         }
@@ -59,7 +62,7 @@ namespace DigitalMenu.Services
             }
             catch (Exception ex)
             {
-                string menssage = ex.Message;
+                string message = ex.Message;
                 return null;
             }
         }
@@ -88,7 +91,7 @@ namespace DigitalMenu.Services
             }
             catch (Exception ex)
             {
-                string menssage = ex.Message;
+                string message = ex.Message;
                 return false;
             }
         }
@@ -110,9 +113,23 @@ namespace DigitalMenu.Services
             }
             catch (Exception ex)
             {
-                string menssage = ex.Message;
+                string message = ex.Message;
                 return false;
             }
+        }
+
+        public async Task<ApplicationViewModel> _getDetailApp(int idApp)
+        {
+            var app = await context.Application.Where(x => x.IdApplication == idApp).Select(a => new ApplicationViewModel
+            {
+                IdApplication = a.IdApplication,
+                Name = a.Name,
+                Description = a.Description,
+                Display = a.Display,
+                Icon = a.Icon
+            }).FirstOrDefaultAsync();
+
+            return app;
         }
 
         public async Task<List<ApplicationViewModel>> ListApplications()
@@ -132,8 +149,57 @@ namespace DigitalMenu.Services
             }
             catch (Exception ex)
             {
-                string menssage = ex.Message;
+                string message = ex.Message;
                 return null;
+            }
+        }
+
+        public async Task<bool> EditApp(ApplicationViewModel model)
+        {
+            try
+            {
+                var userName = userRepository.GetUserName();
+                var app = await context.Application.FirstOrDefaultAsync(x=>x.IdApplication == model.IdApplication);
+
+                if (app == null)
+                {
+                    return false;
+                }
+
+                app.Name = model.Name;
+                app.Description = model.Description;
+                app.Display = model.Display;
+                app.Icon = model.Icon;
+                app.LastUpdate = DateTime.Now;
+                app.LastUpdateUser = userName;
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
+            }
+        }
+
+        public async Task<bool> DisableApplication(int idApplication)
+        {
+            try
+            {
+                var app = await context.Application.FirstOrDefaultAsync(x => x.IdApplication == idApplication);
+
+                if (app == null) { return false; }
+
+                app.Active = false;
+                await context.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
             }
         }
 
@@ -158,7 +224,7 @@ namespace DigitalMenu.Services
             }
             catch (Exception ex)
             {
-                string menssage = ex.Message;
+                string message = ex.Message;
                 return false;
             }
         }

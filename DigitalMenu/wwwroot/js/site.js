@@ -101,3 +101,37 @@ function HacerAdmin(userName) {
         });
 }
 
+function ShowModalBootstrapEvent(elementId, settingModal) {
+
+    var elem = document.getElementById(elementId);
+
+    if (typeof (elem) != 'undefined' && elem != null) {
+
+        elem.addEventListener('hidden.bs.modal', function (event) {
+            let firstRemove = false;
+
+            if (elem.hasAttribute("data-modalfirst")) {
+                firstRemove = true;
+            }
+
+            if (this.id == event.target.id) {
+                if (typeof (elem) != 'undefined' && elem != null) elem.parentElement.innerHTML = '';
+            }
+
+            if (firstRemove) {
+                $(".modal-backdrop fade show").remove();
+            }
+        });
+
+        if (typeof (settingModal) == 'undefined' || settingModal == null) {
+
+            return new bootstrap.Modal(elem).show();
+        }
+
+        return new bootstrap.Modal(elem, settingModal).show();
+    }
+    else {
+        ErrorSwal("Error al intentar iniciar el modal, elemento no encontrado.");
+    }
+}
+
