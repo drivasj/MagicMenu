@@ -40,9 +40,15 @@ namespace DigitalMenu.Controllers
             return View();
         }
 
-        [HttpGet]
         public async Task<IActionResult> Application()
         {
+            string userName = userRepository.GetUserName();
+
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+
             var listApplications = await administratorRepository.ListApplications();
             return View(listApplications);
         }
@@ -55,19 +61,32 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
+        public IActionResult ShowCreateApplication()
+        {
+            return PartialView("~/Views/Administrator/_Partial/_CreateApplicationForm.cshtml");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> EditApp([FromBody] ApplicationViewModel model)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
+                    return Json(new { success = false, message = errors });
+                }
+
                 var app = await administratorRepository.EditApp(model);
 
                 return Json(new
                 {
                     success = app,
-                    message = app? "Registro actualizado correctamente." :"Error al intentar completar la opración."
+                    message = app ? "Registro actualizado correctamente." : "Error al intentar completar la opración."
                 });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message });
             }
@@ -85,7 +104,7 @@ namespace DigitalMenu.Controllers
                     message = app ? "Registro actualizado correctamente." : "Error al intentar completar la operación"
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message });
             }
@@ -98,7 +117,8 @@ namespace DigitalMenu.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest("Invalid Model");
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
                 }
 
                 var app = await administratorRepository.SaveApplication(model);
@@ -112,7 +132,7 @@ namespace DigitalMenu.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new { success = false, message = string.Concat("Error general: ", ex) });
+                return Json(new { success = false, message = string.Concat("Error general: ", ex) });
             }
         }
 

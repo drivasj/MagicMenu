@@ -13,25 +13,23 @@
             </div>
             <div class="modal-body table-responsive">
                 <div class="row g-3 needs-validation mb-3">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Application</label>
-                        <input type="text" class="form-control" id="nameApplication" value="@Model.Name" autocomplete="off" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <input type="text" asp-for="Name" class="form-control" id="nameApplication" value="@Model.Name" autocomplete="off" />
 
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Description</label>
-                        <input type="text" class="form-control" id="description" value="@Model.Description" autocomplete="off" />
+                        <input type="text" asp-for="Description" class="form-control" id="description" value="@Model.Description" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Display</label>
-                        <input type="text" class="form-control" id="display" value="@Model.Display" autocomplete="off" />
+                        <input type="text" asp-for="Display" class="form-control" id="display" value="@Model.Display" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Icon</label>
-                        <input type="text" class="form-control" id="icon" value="@Model.Icon" autocomplete="off" />
+                        <input type="text" asp-for="Icon" class="form-control" id="icon" value="@Model.Icon" autocomplete="off" />
                     </div>
                     <input type="hidden" id="idApp" value="@Model.IdApplication" />
                 </div>

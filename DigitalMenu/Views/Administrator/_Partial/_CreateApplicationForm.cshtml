@@ -1,4 +1,7 @@
-﻿<!-- Modal -->
+﻿@using DigitalMenu.Models.Administrator
+@model ApplicationViewModel
+
+<!-- Modal -->
 <div class="modal fade" id="ModalNewApplication" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -9,28 +12,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body table-responsive">
-                <div class="row g-3 needs-validation mb-3">
-
-                    <div class="col-6 col-md-4">
-                        <label for="name" class="form-label fw-bold">Application</label>
-                        <input type="text" class="form-control textNewApp" id="nameApplication" autocomplete="off" />
-
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <label for="name" class="form-label fw-bold">Description</label>
-                        <input type="text" class="form-control textNewApp" id="description" autocomplete="off" />
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <label for="name" class="form-label fw-bold">Display</label>
-                        <input type="text" class="form-control textNewApp" id="display" autocomplete="off" />
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <label for="name" class="form-label fw-bold">Icon</label>
-                        <input type="text" class="form-control textNewApp" id="icon" autocomplete="off" />
-                    </div>
-
+                <div class="row g-3 needs-validation mb-3" novalidate>
+                        <div class="col-6 col-md-4">
+                            <label for="name" class="form-label fw-bold">Name Application</label>
+                            <input asp-for="Name" type="text" class="form-control textNewApp" id="nameApplication" autocomplete="off" required />
+                            <div class="invalid-feedback">
+                                El campo Name Application es requerido
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <label for="name" class="form-label fw-bold">Description</label>
+                            <input asp-for="Description" type="text" class="form-control textNewApp" id="description" autocomplete="off" required />
+                            <div class="invalid-feedback">
+                                El campo Description es requerido
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <label for="name" class="form-label fw-bold">Display</label>
+                            <input asp-for="Display" type="text" class="form-control textNewApp" id="display" autocomplete="off" required />
+                            <div class="invalid-feedback">
+                                El campo display es requerido
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <label for="name" class="form-label fw-bold">Icon</label>
+                            <input asp-for="Icon" type="text" class="form-control textNewApp" id="icon" autocomplete="off" required />
+                            <div class="invalid-feedback">
+                                El campo icon es requerido
+                            </div>
+                        </div>              
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
