@@ -12,24 +12,34 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body table-responsive">
-                <div class="row g-3 needs-validation mb-3">
-
+                <div class="row g-3 needs-validation mb-3" novalidate>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Application</label>
-                        <input type="text" asp-for="Name" class="form-control" id="nameApplication" value="@Model.Name" autocomplete="off" />
-
+                        <input type="text" asp-for="Name" class="form-control textEditApp" id="nameApplication" value="@Model.Name" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Name Application es requerido
+                        </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Description</label>
-                        <input type="text" asp-for="Description" class="form-control" id="description" value="@Model.Description" autocomplete="off" />
+                        <input type="text" asp-for="Description" class="form-control textEditApp" id="description" value="@Model.Description" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Description es requerido
+                        </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Display</label>
-                        <input type="text" asp-for="Display" class="form-control" id="display" value="@Model.Display" autocomplete="off" />
+                        <input type="text" asp-for="Display" class="form-control textEditApp" id="display" value="@Model.Display" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo display es requerido
+                        </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Icon</label>
-                        <input type="text" asp-for="Icon" class="form-control" id="icon" value="@Model.Icon" autocomplete="off" />
+                        <input type="text" asp-for="Icon" class="form-control textEditApp" id="icon" value="@Model.Icon" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo icon es requerido
+                        </div>
                     </div>
                     <input type="hidden" id="idApp" value="@Model.IdApplication" />
                 </div>

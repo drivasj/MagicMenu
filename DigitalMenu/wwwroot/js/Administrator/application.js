@@ -126,6 +126,35 @@ async function ShowDetailApplication(idApp) {
 }
 
 function editApplication() {
+
+    let control = true;
+
+    $(".needs-validation").addClass("was-validated");
+
+    if ($("#nameApplication").val() == "") {
+        control = false;
+    }
+
+    if ($("#description").val() == "") {
+        control = false;
+    }
+
+    if ($("#display").val() == "") {
+        control = false;
+    }
+
+    if ($("#icon").val() == "") {
+        control = false;
+    }
+
+    if (control) {
+        _editApplication();
+    } else {
+        $(".needs-validation").addClass("was-validated");
+    }
+}
+
+function _editApplication() {
     Loading();
     const data = modelApplication();
 
