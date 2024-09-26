@@ -17,15 +17,12 @@
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Application</label>
                         <select asp-for="ApplicationId" class="form-select" id="idApplication" asp-items="@(new SelectList(Model.Application,"IdApplication","Display"))">
-                            <option value="">Seleccionar</option>
+                            <option value="0">Seleccionar</option>
                         </select>
                     </div> 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Area</label>
-                        <input type="text" asp-for="Area" class="form-control" id="area" autocomplete="off" required />
-                       @*  <div class="invalid-feedback">
-                            El campo Area es requerido
-                        </div> *@
+                        <input type="text" asp-for="Area" class="form-control" id="area" autocomplete="off" />               
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Controller</label>
@@ -50,7 +47,7 @@
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Description</label>
-                        <input type="textarea" asp-for="Description" class="form-control" id="description" autocomplete="off" required />
+                        <input type="textarea" asp-for="Description" class="form-control" id="description" autocomplete="off" />
                     </div>
                     <input type="hidden" id="idMenu" value="@Model.IdMenu" />
 

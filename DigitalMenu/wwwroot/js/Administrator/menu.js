@@ -27,22 +27,7 @@
 }
 
 function saveMenu() {
-    let control = true;
-
-    $(".needs-validation").addClass("was-validated");
-
-
-    if ($("#controller").val() == "") {
-        control = false;
-    }
-
-    if ($("#action").val() == "") {
-        control = false;
-    }
-
-    if ($("#nameMenu").val() == "") {
-        control = false;
-    }
+    let control = validateMenu();
 
     if (control) {
         _saveMenu();
@@ -83,21 +68,8 @@ function _saveMenu() {
 }
 
 function EditMenu() {
-    let control = true;
 
-    $(".needs-validation").addClass("was-validated");
-
-    if ($("#controller").val() == "") {
-        control = false;
-    }
-
-    if ($("#action").val() == "") {
-        control = false;
-    }
-
-    if ($("#nameMenu").val() == "") {
-        control = false;
-    }
+    let control = validateMenu();
 
     if (control) {
         _EditMenu();
@@ -135,6 +107,32 @@ function _EditMenu() {
             ErrorSwal('Error: ', error);
             closeModal("ModalDetailApplication");
         });
+}
+
+function validateMenu() {
+
+    let control = true;
+
+    $(".needs-validation").addClass("was-validated");
+
+    if ($("#idApplication").val() == 0) {
+        control = false;
+        ErrorSwal("Seleccione una aplicación");
+    }
+
+    if ($("#controller").val() == "") {
+        control = false;
+    }
+
+    if ($("#action").val() == "") {
+        control = false;
+    }
+
+    if ($("#nameMenu").val() == "") {
+        control = false;
+    }
+
+    return control;
 }
 
 function getModelMenu() {

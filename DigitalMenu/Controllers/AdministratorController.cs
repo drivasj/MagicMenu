@@ -137,13 +137,13 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public IActionResult ShowCreateMenu(CreateMenuViewModel model)
+        public async Task<IActionResult> ShowCreateMenu(CreateMenuViewModel model)
         {
             try
             {
-                var listApplication = administratorRepository.ListApplications();
+                var listApplication =  await administratorRepository.ListApplications();
 
-                model.Application = (IEnumerable<ApplicationViewModel>)listApplication;
+                model.Application = listApplication;
 
                 return PartialView("~/Views/Administrator/_Partial/_CreateMenuForm.cshtml", model);
             }
@@ -167,10 +167,9 @@ namespace DigitalMenu.Controllers
         {
             try
             {
-                if (!ModelState.IsValid && model.ApplicationId > 0)
+                if (!ModelState.IsValid || model.ApplicationId <= 0)
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-
                     return Json(new { success = false, message = errors });
                 }
 
@@ -243,13 +242,14 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveMenu([FromBody] MenuViewModel model)
+        public async Task<IActionResult> SaveMenu([FromBody] CreateMenuViewModel model)
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid || model.ApplicationId <= 0)
                 {
-                    return BadRequest("Invalid Model");
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
                 }
 
                 var menu = await administratorRepository.SaveMenu(model);

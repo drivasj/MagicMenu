@@ -119,6 +119,8 @@ namespace DigitalMenu.Services
         {
             try
             {
+                var userName = userRepository.GetUserName();
+
                 var menu = new Menu
                 {
                     ApplicationId = model.ApplicationId,
@@ -129,7 +131,7 @@ namespace DigitalMenu.Services
                     Movil = false,
                     Description = model.Description,
                     RegisterDate = DateTime.Now,
-                    RegisterUser = "1",
+                    RegisterUser = userName,
                     Active = true
                 };
 
