@@ -19,5 +19,7 @@ namespace DigitalMenu.Services.Interfaces
         Task<ApplicationViewModel> _getDetailApp(int idApp);
         Task<bool> EditApp(ApplicationViewModel model);
         Task<bool> DisableApplication(int idApplication);
+        Task<CreateMenuViewModel> _getDetailMenu(int idMenu);
+        Task<bool> Editmenu(CreateMenuViewModel model);
     }
 }

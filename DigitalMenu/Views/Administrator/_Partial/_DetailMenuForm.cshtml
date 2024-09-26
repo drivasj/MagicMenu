@@ -2,7 +2,7 @@
 @model CreateMenuViewModel
 
 <!-- Modal -->
-<div class="modal fade" id="ModalNewMenu" tabindex="-1" aria-labelledby="ModalNewMenuLabel" aria-hidden="true">
+<div class="modal fade" id="ModalDetailMenu" tabindex="-1" aria-labelledby="ModalNewMenuLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,44 +16,48 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Application</label>
-                        <select class="form-select" id="idApplication" asp-items="@(new SelectList(Model.Application,"IdApplication","Display"))">
+                        <select asp-for="ApplicationId" class="form-select" id="idApplication" asp-items="@(new SelectList(Model.Application,"IdApplication","Display"))">
                             <option value="">Seleccionar</option>
                         </select>
-                    </div>
+                    </div> 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Area</label>
-                        <input type="text" class="form-control textNewMenu" id="area" autocomplete="off" required />
+                        <input type="text" asp-for="Area" class="form-control" id="area" autocomplete="off" required />
+                       @*  <div class="invalid-feedback">
+                            El campo Area es requerido
+                        </div> *@
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Controller</label>
-                        <input type="text" class="form-control textNewMenu" id="controller" autocomplete="off" required />
+                        <input type="text" asp-for="Controller" class="form-control" id="controller" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Controller es requerido
                         </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Action</label>
-                        <input type="text" class="form-control textNewMenu" id="action" autocomplete="off" required />
+                        <input type="text" asp-for="Action" class="form-control" id="action" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Action es requerido
                         </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Name</label>
-                        <input type="text" class="form-control textNewMenu" id="nameMenu" autocomplete="off" required />
+                        <input type="text" asp-for="Name" class="form-control" id="nameMenu" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Name es requerido
                         </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Description</label>
-                        <input type="text" class="form-control textNewMenu" id="description" autocomplete="off" required />
+                        <input type="textarea" asp-for="Description" class="form-control" id="description" autocomplete="off" required />
                     </div>
+                    <input type="hidden" id="idMenu" value="@Model.IdMenu" />
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="saveMenu()">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="EditMenu()">Save changes</button>
                 </div>
             </div>
         </div>

@@ -67,6 +67,54 @@ namespace DigitalMenu.Services
             }
         }
 
+        public async Task<CreateMenuViewModel> _getDetailMenu(int idMenu)
+        {
+            var listApplication = await ListApplications();
+
+            var menu = await context.Menu.Where(x => x.IdMenu == idMenu).Select(m => new CreateMenuViewModel
+            {
+               IdMenu = m.IdMenu,
+               ApplicationId = m.ApplicationId,
+               Area = m.Area,
+               Controller = m.Controller,
+               Action = m.Action,
+               Name = m.Name,
+               Description = m.Description,
+               Application = listApplication
+            }).FirstOrDefaultAsync();
+
+            return menu;
+        }
+
+        public async Task<bool> Editmenu(CreateMenuViewModel model)
+        {
+            try
+            {
+                var userName = userRepository.GetUserName();
+                var menu = await context.Menu.FirstOrDefaultAsync(x => x.IdMenu == model.IdMenu);
+
+                if (menu == null)
+                {
+                    return false;
+                }
+                menu.ApplicationId = model.ApplicationId;
+                menu.Name = model.Name;
+                menu.Area = model.Area;
+                menu.Controller = model.Controller;
+                menu.Action = model.Action;
+                menu.Description = model.Description;
+                menu.LastUpdate = DateTime.Now;
+                menu.LastUpdateUser = userName;
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
+            }
+        }
+
         public async Task<bool> SaveMenu(MenuViewModel model)
         {
             try

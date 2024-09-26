@@ -136,6 +136,58 @@ namespace DigitalMenu.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult ShowCreateMenu(CreateMenuViewModel model)
+        {
+            try
+            {
+                var listApplication = administratorRepository.ListApplications();
+
+                model.Application = (IEnumerable<ApplicationViewModel>)listApplication;
+
+                return PartialView("~/Views/Administrator/_Partial/_CreateMenuForm.cshtml", model);
+            }
+            catch (Exception ex) 
+            {
+                string message = ex.Message;
+                return PartialView("~/Views/Administrator/_Partial/_CreateMenuForm.cshtml");
+
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ShowDetailMenu(int idMenu)
+        {
+            var menu = await administratorRepository._getDetailMenu(idMenu);
+            return PartialView("~/Views/Administrator/_Partial/_DetailMenuForm.cshtml", menu);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditMenu([FromBody] CreateMenuViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid && model.ApplicationId > 0)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
+                    return Json(new { success = false, message = errors });
+                }
+
+                var menu = await administratorRepository.Editmenu(model);
+
+                return Json(new
+                {
+                    success = menu,
+                    message = menu ? "Registro actualizado correctamente." : "Error al intentar completar la opración."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Menu()
         {
