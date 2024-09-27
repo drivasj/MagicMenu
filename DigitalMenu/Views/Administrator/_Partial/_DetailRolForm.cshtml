@@ -2,7 +2,7 @@
 @model RoleViewModel
 
 <!-- Modal -->
-<div class="modal fade" id="ModalNewRole" tabindex="-1" aria-labelledby="ModalNewRolLabel" aria-hidden="true">
+<div class="modal fade" id="ModalDetailRole" tabindex="-1" aria-labelledby="ModalNewRolLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,23 +16,23 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Name</label>
-                        <input type="text" class="form-control" id="nameRol" autocomplete="off" required />
+                        <input type="text" class="form-control" id="nameRol" value="@Model.Name" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Name es requerido
                         </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Description</label>
-                        <input type="text" class="form-control" id="description" autocomplete="off" required />
+                        <input type="text" class="form-control" id="description" value="@Model.Description" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Description es requerido
                         </div>
                     </div>
-                    
+                    <input type="hidden" value="@Model.IdRole" id="idrol"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="saveRole()">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="EditRole()">Save changes</button>
                 </div>
             </div>
         </div>

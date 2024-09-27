@@ -18,9 +18,9 @@
             <th>Name</th>
             <th>Description</th>
             <th>Display</th>
-            <th>Icon</th>
-            <th></th>
-            <th></th>
+            <th>Active</th>
+            <th>Edit</th>
+            <th>State</th>
         </tr>
     </thead>
     <tbody>
@@ -30,12 +30,12 @@
                 <td>@item.Name</td>
                 <td>@item.Description</td>
                 <td>@item.Display</td>
-                <td>@item.Icon</td>
+                <td>@item.Active</td>
                 <td>
                     <a onclick="ShowDetailApplication(@item.IdApplication)" style="cursor:pointer" class="bi bi-pencil-square"></a>
                 </td>
                 <td>
-                    <a onclick="Tryme(@item.IdApplication)" style="cursor:pointer" class="bi bi-trash3"></a>
+                    <a onclick="UpdateStateApp(@item.IdApplication)" style="cursor:pointer" class="bi bi-android"></a>
 
                 </td>
             </tr>

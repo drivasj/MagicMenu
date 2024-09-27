@@ -44,7 +44,7 @@ function ErrorSwal(message) {
         icon: "error",
         title: message,
         showConfirmButton: false,
-        timer: 4500
+        timer: 2500
     });
 }
 

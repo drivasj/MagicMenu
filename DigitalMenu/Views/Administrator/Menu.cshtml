@@ -28,8 +28,8 @@
             <th>Application</th>         
             <th>Name</th>
             <th>Active</th>
-            <th></th>
-            <th></th>
+            <th>Edit</th>
+            <th>State</th>
         </tr>
     </thead>
     <tbody>
@@ -43,7 +43,7 @@
                     <a onclick="ShowDetailMenu(@item.IdMenu)" style="cursor:pointer" class="bi bi-pencil-square"></a>
                 </td>
                 <td>
-                    <a class="bi bi-trash3" asp-action="Borrar" asp-route-id="@item.IdMenu"></a>
+                    <a onclick="UpdateStateMenu(@item.IdMenu)" style="cursor:pointer" class="bi bi-android"></a>
                 </td>
             </tr>
         }

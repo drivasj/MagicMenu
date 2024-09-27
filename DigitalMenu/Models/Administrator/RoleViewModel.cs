@@ -9,6 +9,7 @@ namespace DigitalMenu.Models.Administrator
 
         [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
         public int Privilege { get; set; }
         public bool Active { get; set; }

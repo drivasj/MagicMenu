@@ -73,14 +73,14 @@ namespace DigitalMenu.Services
 
             var menu = await context.Menu.Where(x => x.IdMenu == idMenu).Select(m => new CreateMenuViewModel
             {
-               IdMenu = m.IdMenu,
-               ApplicationId = m.ApplicationId,
-               Area = m.Area,
-               Controller = m.Controller,
-               Action = m.Action,
-               Name = m.Name,
-               Description = m.Description,
-               Application = listApplication
+                IdMenu = m.IdMenu,
+                ApplicationId = m.ApplicationId,
+                Area = m.Area,
+                Controller = m.Controller,
+                Action = m.Action,
+                Name = m.Name,
+                Description = m.Description,
+                Application = listApplication
             }).FirstOrDefaultAsync();
 
             return menu;
@@ -146,6 +146,29 @@ namespace DigitalMenu.Services
             }
         }
 
+        public async Task<bool> UpdateStateMenu(int idMenu)
+        {
+            try
+            {
+                var menu = await context.Menu.FirstOrDefaultAsync(x => x.IdMenu == idMenu);
+
+                if (menu == null) { return false; }
+
+                bool newState = menu.Active == true ? false : true;
+
+                menu.Active = newState;
+                await context.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
+            }
+        }
+
         public async Task<bool> Rolemenu(RoleMenuViewModel model)
         {
             try
@@ -186,13 +209,14 @@ namespace DigitalMenu.Services
         {
             try
             {
-                var application = await context.Application.Where(a => a.Active == true).Select(a => new ApplicationViewModel
+                var application = await context.Application.Select(a => new ApplicationViewModel
                 {
                     IdApplication = a.IdApplication,
                     Name = a.Name,
                     Description = a.Description,
                     Display = a.Display,
-                    Icon = a.Icon
+                    Icon = a.Icon,
+                    Active = a.Active
                 }).ToListAsync();
 
                 return application;
@@ -209,7 +233,7 @@ namespace DigitalMenu.Services
             try
             {
                 var userName = userRepository.GetUserName();
-                var app = await context.Application.FirstOrDefaultAsync(x=>x.IdApplication == model.IdApplication);
+                var app = await context.Application.FirstOrDefaultAsync(x => x.IdApplication == model.IdApplication);
 
                 if (app == null)
                 {
@@ -232,7 +256,7 @@ namespace DigitalMenu.Services
             }
         }
 
-        public async Task<bool> DisableApplication(int idApplication)
+        public async Task<bool> UpdateStateApp(int idApplication)
         {
             try
             {
@@ -240,7 +264,9 @@ namespace DigitalMenu.Services
 
                 if (app == null) { return false; }
 
-                app.Active = false;
+                bool newState = app.Active == true ? false : true;
+
+                app.Active = newState;
                 await context.SaveChangesAsync();
 
                 return true;
@@ -307,7 +333,7 @@ namespace DigitalMenu.Services
 
         public async Task<UserDTO> _getDetailUser(int idUser)
         {
-            var employee = await context.Employee.Where(x =>x.IdEmployee == idUser).Select(e => new UserDTO
+            var employee = await context.Employee.Where(x => x.IdEmployee == idUser).Select(e => new UserDTO
             {
                 IdEmployee = e.IdEmployee,
                 FirstName = e.FirstName,
@@ -340,17 +366,60 @@ namespace DigitalMenu.Services
             }
         }
 
+        public async Task<RoleViewModel> _getDetailRole(int idRole)
+        {
+
+            var role = await context.Role.Where(x => x.IdRole == idRole).Select(m => new RoleViewModel
+            {
+                IdRole = m.IdRole,
+                Name = m.Name,
+                Description = m.Description
+
+            }).FirstOrDefaultAsync();
+
+            return role;
+        }
+
+        public async Task<bool> EditRole(RoleViewModel model)
+        {
+            try
+            {
+                var userName = userRepository.GetUserName();
+                var role = await context.Role.FirstOrDefaultAsync(x => x.IdRole == model.IdRole);
+
+                if (role == null)
+                {
+                    return false;
+                }
+
+                role.IdRole = model.IdRole;
+                role.Name = model.Name;
+                role.Description = model.Description;
+                role.LastUpdate = DateTime.Now;
+                role.LastUpdateUser = userName;
+
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
+            }
+        }
+
         public async Task<bool> SaveRole(RoleViewModel model)
         {
             try
             {
+                var userName = userRepository.GetUserName();
                 var role = new Role
                 {
                     Name = model.Name,
                     Description = model.Description,
                     Privilege = 0,
                     RegisterDate = DateTime.Now,
-                    RegisterUser = "1",
+                    RegisterUser = userName,
                     Active = true
                 };
 
@@ -361,6 +430,29 @@ namespace DigitalMenu.Services
             catch (Exception ex)
             {
                 string menssage = ex.Message;
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateStateRole(int idRole)
+        {
+            try
+            {
+                var role = await context.Role.FirstOrDefaultAsync(x => x.IdRole == idRole);
+
+                if (role == null) { return false; }
+
+                bool newState = role.Active == true ? false : true;
+
+                role.Active = newState;
+                await context.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
                 return false;
             }
         }

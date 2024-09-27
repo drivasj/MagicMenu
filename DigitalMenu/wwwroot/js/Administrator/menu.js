@@ -39,7 +39,7 @@ function saveMenu() {
 function _saveMenu() {
     Loading();
     const data = getModelMenu();
-    
+
     fetch('/Administrator/SaveMenu', {
         method: 'POST',
         headers: {
@@ -149,29 +149,29 @@ function getModelMenu() {
 
 function saveRolMenu() {
 
-    const data = getRolMenu();
+        const data = getRolMenu();
 
-    fetch('/Administrator/SaveMenuRol', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: data
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                successSwal(data.message);
-                closeModal("ModalRolMenu");
-            } else {
-                ErrorSwal(data.message);
-                closeModal("ModalRolMenu");
-            }
+        fetch('/Administrator/SaveMenuRol', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: data
         })
-        .catch(error => {
-            ErrorSwal('Error: ', error);
-            closeModal("ModalRolMenu");
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    successSwal(data.message);
+                    closeModal("ModalRolMenu");
+                } else {
+                    ErrorSwal(data.message);
+                    closeModal("ModalRolMenu");
+                }
+            })
+            .catch(error => {
+                ErrorSwal('Error: ', error);
+                closeModal("ModalRolMenu");
+            });
 }
 
 function getRolMenu() {
@@ -239,4 +239,47 @@ async function ShowCreateMenu() {
         RemoveLoading();
         ErrorSwal('No se puede realizar la operación.');
     }
+}
+
+function UpdateStateMenu(idMenu) {
+    Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            _UpdateStateMenu(idMenu);
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
+}
+
+function _UpdateStateMenu(idMenu) {
+    Loading();
+
+    fetch('/Administrator/UpdateStateMenu', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ IdMenu: idMenu })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                LoadMainPage('Administrator', 'Menu');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+        });
 }

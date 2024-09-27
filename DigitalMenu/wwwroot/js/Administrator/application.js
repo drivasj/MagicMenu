@@ -185,7 +185,7 @@ function _editApplication() {
         });
 }
 
-function Tryme(idApp) {
+function UpdateStateApp(idApp) {
     Swal.fire({
         title: "Do you want to save the changes?",
         showDenyButton: true,
@@ -194,17 +194,17 @@ function Tryme(idApp) {
         denyButtonText: `Don't save`
     }).then((result) => {
         if (result.isConfirmed) {
-            DisableApplication(idApp);
+            _UpdateStateApp(idApp);
         } else if (result.isDenied) {
             Swal.fire("Changes are not saved", "", "info");
         }
     });
 }
 
-function DisableApplication(idApp) {
+function _UpdateStateApp(idApp) {
     Loading();
 
-    fetch('/Administrator/DisableApplication', {
+    fetch('/Administrator/UpdateStateApp', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

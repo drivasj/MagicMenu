@@ -18,5 +18,7 @@ namespace DigitalMenu.Models.Administrator
         [Required(ErrorMessage = "El campo {0} es requerido")]
 
         public string Icon { get; set; }
+
+        public bool Active { get; set; }
     }
 }

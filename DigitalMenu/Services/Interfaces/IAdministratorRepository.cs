@@ -18,8 +18,12 @@ namespace DigitalMenu.Services.Interfaces
         Task<UserDTO> _getDetailUser(int idUser);
         Task<ApplicationViewModel> _getDetailApp(int idApp);
         Task<bool> EditApp(ApplicationViewModel model);
-        Task<bool> DisableApplication(int idApplication);
+        Task<bool> UpdateStateApp(int idApplication);
         Task<CreateMenuViewModel> _getDetailMenu(int idMenu);
         Task<bool> Editmenu(CreateMenuViewModel model);
+        Task<RoleViewModel> _getDetailRole(int idRole);
+        Task<bool> EditRole(RoleViewModel model);
+        Task<bool> UpdateStateRole(int idRole);
+        Task<bool> UpdateStateMenu(int idMenu);
     }
 }

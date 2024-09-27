@@ -93,11 +93,11 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DisableApplication([FromBody] ApplicationViewModel model)
+        public async Task<IActionResult> UpdateStateApp([FromBody] ApplicationViewModel model)
         {
             try
             {
-                var app = await administratorRepository.DisableApplication(model.IdApplication);
+                var app = await administratorRepository.UpdateStateApp(model.IdApplication);
                 return Json(new
                 {
                     success = app,
@@ -224,7 +224,7 @@ namespace DigitalMenu.Controllers
             {
                 if (model.RoleId == 0 || model.MenuId == 0)
                 {
-                    return BadRequest("Invalid role ID");
+                    return Json(new { success = false, message = "Debe seleccionar un rol y un menu para continuar" });
                 }
 
                 var roleMenu = await administratorRepository.Rolemenu(model);
@@ -258,6 +258,24 @@ namespace DigitalMenu.Controllers
                 {
                     success = menu,
                     message = menu ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStateMenu([FromBody] MenuViewModel model)
+        {
+            try
+            {
+                var app = await administratorRepository.UpdateStateMenu(model.IdMenu);
+                return Json(new
+                {
+                    success = app,
+                    message = app ? "Registro actualizado correctamente." : "Error al intentar completar la operación"
                 });
             }
             catch (Exception ex)
@@ -335,11 +353,25 @@ namespace DigitalMenu.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ShowDetailRol(int idRol)
+        {
+            var rol = await administratorRepository._getDetailRole(idRol);
+            return PartialView("~/Views/Administrator/_Partial/_DetailRolForm.cshtml", rol);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Roles()
         {
             var roles = await administratorRepository.Roles();
             return View(roles);
+        }
+
+
+        [HttpPost]
+        public IActionResult ShowCreateRole()
+        {
+            return PartialView("~/Views/Administrator/_Partial/_CreateRolForm.cshtml");
         }
 
         [HttpPost]
@@ -349,7 +381,8 @@ namespace DigitalMenu.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest("Invalid Model");
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
                 }
 
                 var rol = await administratorRepository.SaveRole(model);
@@ -360,6 +393,49 @@ namespace DigitalMenu.Controllers
                     message = rol ? "Registro guardado correctamente." : "Error al intentar completar la operación."
                 });
 
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditRole([FromBody] RoleViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid || model.IdRole <= 0)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
+                }
+
+                var menu = await administratorRepository.EditRole(model);
+
+                return Json(new
+                {
+                    success = menu,
+                    message = menu ? "Registro actualizado correctamente." : "Error al intentar completar la opración."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStateRole([FromBody] RoleViewModel model)
+        {
+            try
+            {
+                var app = await administratorRepository.UpdateStateRole(model.IdRole);
+                return Json(new
+                {
+                    success = app,
+                    message = app ? "Registro actualizado correctamente." : "Error al intentar completar la operación"
+                });
             }
             catch (Exception ex)
             {
