@@ -1,0 +1,69 @@
+﻿@using DigitalMenu.Models.Administrator
+@model CombosRoleUserViewModel
+<!-- Modal -->
+<div class="modal fade" id="ModalNewUser" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalNewUserLabel">
+                    New User
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body table-responsive">
+                <div class="row g-3 needs-validation mb-3">
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Nombre</label>
+                        <input type="text" class="form-control" id="name" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Segundo Nombre</label>
+                        <input type="text" class="form-control" id="middleName" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Primer Apellido</label>
+                        <input type="text" class="form-control" id="motherName" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Segundo Apellido</label>
+                        <input type="text" class="form-control" id="lastName" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Documento</label>
+                        <input type="text" class="form-control" id="document" autocomplete="off" />
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Teléfono</label>
+                        <input type="text" class="form-control" id="phone" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Correo electrónico</label>
+                        <input type="text" class="form-control" id="email" autocomplete="off" />
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Role</label>
+                            <select class="form-select" id="role" asp-items="@(new SelectList(Model.Roles,"IdRole","Name"))">
+                                <option value="">Seleccionar</option>
+                            </select>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Usuario</label>
+                        <input type="text" class="form-control" id="userName" autocomplete="off" />
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Dirección</label>
+                        <input type="text" class="form-control" id="adress" autocomplete="off" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveUser()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

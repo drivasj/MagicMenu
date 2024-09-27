@@ -305,7 +305,7 @@ namespace DigitalMenu.Controllers
         public async Task<IActionResult> ShowDetailUser(int idUser)
         {
             var user = await administratorRepository._getDetailUser(idUser);
-            return PartialView("~/Views/Administrator/_Partial/_DetailUser.cshtml", user);
+            return PartialView("~/Views/Administrator/_Partial/_DetailUserForm.cshtml", user);
         }
 
         [HttpPost]
@@ -326,6 +326,24 @@ namespace DigitalMenu.Controllers
                     message = user ? "Registro guardado correctamente." : "Error al intentar completar la operación."
                 });
 
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStateUser([FromBody] UserDTO model)
+        {
+            try
+            {
+                var app = await userRepository.UpdateStateUser(model.IdEmployee);
+                return Json(new
+                {
+                    success = app,
+                    message = app ? "Registro actualizado correctamente." : "Error al intentar completar la operación"
+                });
             }
             catch (Exception ex)
             {

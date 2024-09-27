@@ -8,5 +8,6 @@ namespace DigitalMenu.Services.Interfaces
         Task<bool> EditUserEmployee(UserDTO model);
         string GetUserName();
         Task<bool> SaveUserEmployee(UserDTO model);
+        Task<bool> UpdateStateUser(int idUser);
     }
 }

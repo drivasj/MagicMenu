@@ -133,5 +133,28 @@ namespace DigitalMenu.Services
                 return false;
             }
         }
+
+        public async Task<bool> UpdateStateUser(int idUser)
+        {
+            try
+            {
+                var user = await context.Employee.FirstOrDefaultAsync(x => x.IdEmployee == idUser);
+
+                if (user == null) { return false; }
+
+                bool newState = user.Active == true ? false : true;
+
+                user.Active = newState;
+                await context.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
+            }
+        }
     }
 }

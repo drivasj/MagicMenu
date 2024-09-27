@@ -138,3 +138,46 @@ function modelUserEdit() {
         Email: $("#emailEdit").val()
     });
 }
+
+function UpdateStateUser(idUser) {
+    Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            _UpdateStateUser(idUser);
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
+}
+
+function _UpdateStateUser(idUser) {
+    Loading();
+
+    fetch('/Administrator/UpdateStateUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ IdEmployee: idUser })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                LoadMainPage('Administrator', 'Users');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+        });
+}

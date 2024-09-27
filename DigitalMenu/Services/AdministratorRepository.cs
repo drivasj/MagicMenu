@@ -279,6 +279,7 @@ namespace DigitalMenu.Services
             }
         }
 
+
         public async Task<bool> SaveApplication(ApplicationViewModel model)
         {
             try
@@ -311,7 +312,7 @@ namespace DigitalMenu.Services
             {
                 var employee = await context.Employee
                 //.Include(e=>e.Employeedetails)
-                .Where(e => e.Active == true)
+                //.Where(e => e.Active == true)
                 .OrderByDescending(e => e.IdEmployee)
                 .Select(t => new EmployeeDTO
                 {
@@ -319,6 +320,7 @@ namespace DigitalMenu.Services
                     FirstName = t.FirstName,
                     LastName = t.LastName,
                     UserName = t.UserName,
+                    Active= t.Active,
                     Email = t.Employeedetails.Email
                 }).ToListAsync();
 
@@ -331,15 +333,21 @@ namespace DigitalMenu.Services
             }
         }
 
-        public async Task<UserDTO> _getDetailUser(int idUser)
+        public async Task<CreateUserViewModel> _getDetailUser(int idEmployee)
         {
-            var employee = await context.Employee.Where(x => x.IdEmployee == idUser).Select(e => new UserDTO
+            var employee = await context.Employee.Where(x => x.IdEmployee == idEmployee).Select(e => new CreateUserViewModel
             {
                 IdEmployee = e.IdEmployee,
                 FirstName = e.FirstName,
                 MiddleName = e.MiddleName,
+                LastName = e.LastName,
+                MotherLastName = e.MotherLastName,
+                Document = e.Document,
                 UserName = e.UserName,
-                Email = e.Employeedetails.Email
+                Email = e.Employeedetails.Email,
+                Phone = e.Employeedetails.Phone,
+                Adress = e.Employeedetails.Adress
+
             }).FirstOrDefaultAsync();
 
             return employee;
