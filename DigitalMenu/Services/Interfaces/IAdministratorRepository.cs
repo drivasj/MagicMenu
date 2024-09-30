@@ -15,7 +15,7 @@ namespace DigitalMenu.Services.Interfaces
         Task<bool> SaveMenu(MenuViewModel model);
         Task<bool> Rolemenu(RoleMenuViewModel model);
         Task<bool> SaveRole(RoleViewModel model);
-        Task<UserDTO> _getDetailUser(int idUser);
+        Task<CreateUserViewModel> _getDetailUser(int idUser);
         Task<ApplicationViewModel> _getDetailApp(int idApp);
         Task<bool> EditApp(ApplicationViewModel model);
         Task<bool> UpdateStateApp(int idApplication);

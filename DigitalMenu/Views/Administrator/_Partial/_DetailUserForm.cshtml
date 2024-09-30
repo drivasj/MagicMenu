@@ -1,7 +1,7 @@
 ﻿@using DigitalMenu.Models.Administrator
-@model CombosRoleUserViewModel
+@model CreateUserViewModel
 <!-- Modal -->
-<div class="modal fade" id="ModalNewUser" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
+<div class="modal fade" id="ModalUserdetail" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,57 +11,78 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body table-responsive">
-                <div class="row g-3 needs-validation mb-3">
+                <div class="row g-3 needs-validation mb-3" novalidate>
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Nombre</label>
-                        <input type="text" class="form-control" id="name" autocomplete="off" />
-                    </div>
+                        <input type="text" asp-for="FirstName" class="form-control" id="name" value="@Model.FirstName" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Nombre es requerido
+                        </div>
+                    </div>             
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Segundo Nombre</label>
-                        <input type="text" class="form-control" id="middleName" autocomplete="off" />
+                        <input type="text" asp-for="MiddleName" class="form-control" id="middleName" value="@Model.MiddleName" autocomplete="off" />
                     </div>
                     <div class="col-6 col-md-4">
-                        <label for="name" class="form-label fw-bold">Primer Apellido</label>
-                        <input type="text" class="form-control" id="motherName" autocomplete="off" />
+                        <label for="name" class="form-label fw-bold">Apellido</label>
+                        <input type="text" asp-for="LastName" class="form-control" id="lastName" value="@Model.LastName" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Apellido es requerido
+                        </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Segundo Apellido</label>
-                        <input type="text" class="form-control" id="lastName" autocomplete="off" />
-                    </div>
+                        <input type="text" asp-for="MotherLastName" class="form-control" id="motherName" value="@Model.MotherLastName" autocomplete="off" />
+                    </div>                    
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Documento</label>
-                        <input type="text" class="form-control" id="document" autocomplete="off" />
-                    </div>
-
+                        <input type="text" asp-for="Document" class="form-control" id="document" value="@Model.Document" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Documento es requerido
+                        </div>
+                    </div>                 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Teléfono</label>
-                        <input type="text" class="form-control" id="phone" autocomplete="off" />
+                        <input type="text" asp-for="Phone" class="form-control" id="phone" value="@Model.Phone" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Teléfono es requerido
+                        </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Correo electrónico</label>
-                        <input type="text" class="form-control" id="email" autocomplete="off" />
+                        <input type="text" asp-for="Email" class="form-control" id="email" value="@Model.Email" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Email es requerido
+                        </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Role</label>
-                            <select class="form-select" id="role" asp-items="@(new SelectList(Model.Roles,"IdRole","Name"))">
+                        <select asp-for="IdRole" class="form-select" id="role" required asp-items="@(new SelectList(Model.Roles,"IdRole","Name"))">
                                 <option value="">Seleccionar</option>
                             </select>
+                        <div class="invalid-feedback">
+                            Debe seleccionar un rol
+                        </div>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Usuario</label>
-                        <input type="text" class="form-control" id="userName" autocomplete="off" />
+                        <input type="text" asp-for="UserName" class="form-control" id="userName" value="@Model.UserName" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Usuario es requerido
+                        </div>
                     </div>
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Dirección</label>
-                        <input type="text" class="form-control" id="adress" autocomplete="off" />
+                        <input type="text" asp-for="Adress" class="form-control" id="adress" value="@Model.Adress" autocomplete="off" required />
                     </div>
+                    <input type="hidden" value="@Model.IdEmployee" id="idEmployee" />
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="saveUser()">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="EditUser()">Save changes</button>
                 </div>
             </div>
         </div>

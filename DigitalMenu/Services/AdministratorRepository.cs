@@ -335,6 +335,9 @@ namespace DigitalMenu.Services
 
         public async Task<CreateUserViewModel> _getDetailUser(int idEmployee)
         {
+            var listRoles = await Roles();
+            var idrole = await context.Roleuser.Where(x => x.UserId == idEmployee).Select(x => x.RoleId).FirstOrDefaultAsync();
+
             var employee = await context.Employee.Where(x => x.IdEmployee == idEmployee).Select(e => new CreateUserViewModel
             {
                 IdEmployee = e.IdEmployee,
@@ -346,7 +349,9 @@ namespace DigitalMenu.Services
                 UserName = e.UserName,
                 Email = e.Employeedetails.Email,
                 Phone = e.Employeedetails.Phone,
-                Adress = e.Employeedetails.Adress
+                Adress = e.Employeedetails.Adress,
+                IdRole = idrole,
+                Roles = listRoles
 
             }).FirstOrDefaultAsync();
 

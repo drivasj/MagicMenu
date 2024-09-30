@@ -1,4 +1,5 @@
-﻿using DigitalMenu.Models.DTO.UserEmployee;
+﻿using DigitalMenu.Models.Administrator;
+using DigitalMenu.Models.DTO.UserEmployee;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -43,7 +44,7 @@ namespace DigitalMenu.Services
             }
         }
 
-        public async Task<bool> SaveUserEmployee(UserDTO model)
+        public async Task<bool> SaveUserEmployee(CreateUserViewModel model)
         {
             using (var transaction = context.Database.BeginTransaction())
             {
@@ -68,7 +69,7 @@ namespace DigitalMenu.Services
                             MiddleName = model.MiddleName,
                             LastName = model.LastName,
                             MotherLastName = model.LastName,
-                            Document = model.DocumentNR,
+                            Document = model.Document,
                             UserName = model.UserName,
                             RegisterUser = registerUser.ToString(),
                             RegisterDate = DateTime.Now,
@@ -108,42 +109,70 @@ namespace DigitalMenu.Services
             return true;
         }
 
-        public async Task<bool> EditUserEmployee(UserDTO model)
+        public async Task<bool> EditUserEmployee(CreateUserViewModel model)
         {
-            try
+            using (var transaction = context.Database.BeginTransaction())
             {
-                var employee = await context.Employee.Include(d=>d.Employeedetails).FirstOrDefaultAsync(e=>e.IdEmployee == model.IdEmployee);
-
-                if (employee == null)
+                try
                 {
+                    var userName = GetUserName();
+
+                    var employee = await context.Employee
+                        .Include(d => d.Employeedetails)
+                        .Include(u => u.User)
+                        .FirstOrDefaultAsync(e => e.IdEmployee == model.IdEmployee);
+
+                    var roleUser = await context.Roleuser.FirstOrDefaultAsync(r => r.RoleId == model.IdRole);
+
+                    if (employee == null)
+                    {
+                        return false;
+                    }
+
+                    employee.FirstName = model.FirstName;
+                    employee.MiddleName = model.MiddleName;
+                    employee.LastName = model.LastName;
+                    employee.MotherLastName = model.MotherLastName;
+                    employee.Document = model.Document;
+                    employee.UserName = model.UserName;
+                    employee.LastUpdate = DateTime.Now;
+
+                    employee.User.UserName = model.UserName;
+                    employee.User.LastUpdate = DateTime.Now;
+                    employee.User.LastUpdateUser = userName;
+
+                    employee.Employeedetails.Email = model.Email;
+                    employee.Employeedetails.Phone = model.Phone;
+                    employee.Employeedetails.Adress = model.Adress;
+
+                    roleUser.RoleId = model.IdRole;
+
+                    await context.SaveChangesAsync();
+                    transaction.Commit();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    string menssage = ex.Message;
                     return false;
                 }
-
-                employee.FirstName = model.FirstName;
-                employee.MiddleName = model.MiddleName;
-                employee.UserName = model.UserName;
-                employee.Employeedetails.Email = model.Email;
-                employee.LastUpdate = DateTime.Now;
-                await context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                string menssage = ex.Message;
-                return false;
-            }
+            }            
         }
 
         public async Task<bool> UpdateStateUser(int idUser)
         {
             try
             {
-                var user = await context.Employee.FirstOrDefaultAsync(x => x.IdEmployee == idUser);
+                var employee = await context.Employee.FirstOrDefaultAsync(x => x.IdEmployee == idUser);
+                var user = await context.User.FirstOrDefaultAsync(x => x.EmployeeId == idUser);
 
-                if (user == null) { return false; }
+                if (employee == null || user == null) { return false; }
 
-                bool newState = user.Active == true ? false : true;
+                bool newState = employee.Active == true ? false : true;
 
+                employee.Active = newState;
                 user.Active = newState;
                 await context.SaveChangesAsync();
 
@@ -155,6 +184,13 @@ namespace DigitalMenu.Services
                 string message = ex.Message;
                 return false;
             }
+        }
+
+        public async Task<bool> UserExist(string userName)
+        {
+            bool existUserName = await context.User.AnyAsync(x => x.UserName.ToUpper() == userName.ToUpper());
+
+            return existUserName;                
         }
     }
 }

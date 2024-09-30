@@ -291,7 +291,7 @@ namespace DigitalMenu.Controllers
             var listemployee = await administratorRepository.ListUser();
             var listRoles = await administratorRepository.Roles();
 
-            var listViewModel = new CombosRoleUserViewModel
+            var listViewModel = new CreateUserViewModel
             {
                 Employees = listemployee,
                 Roles = listRoles
@@ -302,21 +302,50 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ShowDetailUser(int idUser)
+        public async Task <IActionResult> ShowCreateUser()
         {
-            var user = await administratorRepository._getDetailUser(idUser);
-            return PartialView("~/Views/Administrator/_Partial/_DetailUserForm.cshtml", user);
+            var listemployee = await administratorRepository.ListUser();
+            var listRoles = await administratorRepository.Roles();
+
+            var listViewModel = new CreateUserViewModel
+            {
+                Employees = listemployee,
+                Roles = listRoles
+            };
+
+            return PartialView("~/Views/Administrator/_Partial/_CreateUserForm.cshtml", listViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveUser([FromBody] UserDTO model)
+        public async Task<IActionResult> ShowDetailUser(int idUser)
+        {
+            try
+            {
+                var listRoles = await administratorRepository.Roles();
+
+                var user = await administratorRepository._getDetailUser(idUser);
+
+                return PartialView("~/Views/Administrator/_Partial/_DetailUserForm.cshtml", user);
+            }
+            catch (Exception ex) 
+            {
+                return PartialView("~/Views/Administrator/_Partial/_DetailUserForm.cshtml");
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveUser([FromBody] CreateUserViewModel model)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest("Invalid Model");
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
                 }
+
+                if (await userRepository.UserExist(model.UserName)) throw new ApplicationException("El nombre de usuario ya existe.");
 
                 var user = await userRepository.SaveUserEmployee(model);
 
@@ -352,10 +381,18 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUser([FromBody] UserDTO model)
+        public async Task<IActionResult> EditUser([FromBody] CreateUserViewModel model)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
+                }
+
+                if (await userRepository.UserExist(model.UserName)) throw new ApplicationException("El nombre de usuario ya existe.");
+
                 var user = await userRepository.EditUserEmployee(model);
 
                 return Json(new

@@ -1,5 +1,5 @@
 ﻿@using DigitalMenu.Models.Administrator;
-@model CombosRoleUserViewModel;
+@model CreateUserViewModel;
 
 @{
     ViewData["Title"] = "Adminstrador de usuarios";
@@ -8,10 +8,9 @@
 <h4>Users</h4>
 <hr class="bg-custom-color" />
 
-<button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalNewUser">
+<button type="button" class="btn btn-outline-primary mb-3" onclick="ShowCreateUser()">
     New User
 </button>
-
 
 <table class="table table-hover">
     <thead>
@@ -31,7 +30,7 @@
                 <td>@item.Email</td>
                 <td>@item.Active</td>
                 <td>
-                    <a onclick="ShowDetailUser(@item.IdEmployee)" style="cursor:pointer" class="bi bi-eye">
+                    <a onclick="ShowDetailUser(@item.IdEmployee)" style="cursor:pointer" class="bi bi-pencil-square">
                    </a>
                 </td>
                 <td>
@@ -45,7 +44,7 @@
 <div id="DetailUserContainer">
 </div>
 
-<partial name="_Partial/_CreateUserForm" />
+@* <partial name="_Partial/_CreateUserForm" /> *@
 
 
 @section Scripts {

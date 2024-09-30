@@ -1,4 +1,14 @@
-﻿function saveUser() {
+﻿
+function saveUser() {
+    let control = validateUser();
+
+    if (control) {
+        _saveUser();
+    } else {
+        $(".needs-validation").addClass("was-validated");
+    }
+}
+function _saveUser() {
     Loading();
     const data = modelUser();
 
@@ -29,7 +39,17 @@
         });
 }
 
-function editUser() {
+function EditUser() {
+    let control = validateUser();
+
+    if (control) {
+        _EditUser();
+    } else {
+        $(".needs-validation").addClass("was-validated");
+    }
+}
+
+function _EditUser() {
     Loading();
     const data = modelUserEdit();
 
@@ -50,39 +70,87 @@ function editUser() {
             } else {
                 RemoveLoading();
                 ErrorSwal(data.message);
-                closeModal("ModalNewUser");
+                closeModal("ModalUserdetail");
             }
         })
         .catch(error => {
             RemoveLoading();
             ErrorSwal('Error: ', error);
-            closeModal("ModalNewUser");
+            closeModal("ModalUserdetail");
         });
 }
 
-//function ShowDetailUser(idUser) {
-//    $.ajax({
-//        url: '/Administrator/ShowDetailUser',
-//        type: 'POST',
-//        async: true,
-//        data: { idUser: idUser },
-//        cache: false,
-//        beforeSend: function () {
-//            Loading();
-//        },
-//        success: function (data) {
-//            RemoveLoading();
+function validateUser() {
 
-//            $("#DetailUserContainer").html(data);
-//            ShowModalBootstrapEvent('ModalUserdetail', null);
-//        },
-//        error: function () {
-//            RemoveLoading();
-//            $("#DetailUserContainer").remove();
-//            ErrorSwal('No se puede realizar la operación.');
-//        }
-//    });
-//}
+    let control = true;
+
+    $(".needs-validation").addClass("was-validated");
+
+    if ($("#name").val() == 0) {
+        control = false;
+        ErrorSwal("Seleccione una aplicación");
+    }
+
+    if ($("#lastName").val() == "") {
+        control = false;
+    }
+
+
+    if ($("#document").val() == "") {
+        control = false;
+    }
+
+    if ($("#Phone").val() == "") {
+        control = false;
+    }
+
+    if ($("#Email").val() == "") {
+        control = false;
+    }
+
+    if ($("#role").val() == "") {
+        control = false;
+    }
+
+    if ($("#UserName").val() == "") {
+        control = false;
+    }
+
+    if ($("#nameMenu").val() == "") {
+        control = false;
+    }
+
+    return control;
+}
+
+async function ShowCreateUser() {
+    $(".textNewUser").val("");
+    try {
+        Loading();
+
+        const response = await fetch('/Administrator/ShowCreateUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+
+        if (response.ok) {
+            console.log("response Ok");
+            const data = await response.text();
+            $("#DetailUserContainer").html(data);
+            ShowModalBootstrapEvent('ModalNewUser', null);
+        } else {
+            $("#DetailUserContainer").remove();
+            ErrorSwal('No se puede realizar la operación.');
+        }
+
+        RemoveLoading();
+    } catch (error) {
+        RemoveLoading();
+        ErrorSwal('No se puede realizar la operación.');
+    }
+}
 
 async function ShowDetailUser(idUser) {
     try {
@@ -119,7 +187,8 @@ function modelUser() {
         MiddleName: $("#middleName").val(),
         LastName: $("#lastName").val(),
         MotherName: $("#motherName").val(),
-        DocumentNR: $("#document").val(),
+        MotherLastName: $("#motherName").val(),
+        Document: $("#document").val(),
         Phone: $("#phone").val(),
         Email: $("#email").val(),
         IdRole: $("#role").val(),
