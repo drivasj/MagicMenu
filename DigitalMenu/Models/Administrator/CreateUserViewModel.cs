@@ -16,7 +16,7 @@ namespace DigitalMenu.Models.Administrator
         public string MotherLastName { get; set; }
         [Required(ErrorMessage = "El campo {0} es requerido")]
         public string Document { get; set; }
-        [Required(ErrorMessage = "El campo {0} es requerido")]
+        //[Required(ErrorMessage = "El campo {0} es requerido")]
         public string UserName { get; set; }
         //EmployeeDetails
         [Required(ErrorMessage = "El campo {0} es requerido")]

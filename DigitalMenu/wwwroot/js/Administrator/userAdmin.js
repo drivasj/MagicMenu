@@ -95,16 +95,15 @@ function validateUser() {
         control = false;
     }
 
-
     if ($("#document").val() == "") {
         control = false;
     }
 
-    if ($("#Phone").val() == "") {
+    if ($("#phone").val() == "") {
         control = false;
     }
 
-    if ($("#Email").val() == "") {
+    if ($("#email").val() == "") {
         control = false;
     }
 
@@ -112,11 +111,7 @@ function validateUser() {
         control = false;
     }
 
-    if ($("#UserName").val() == "") {
-        control = false;
-    }
-
-    if ($("#nameMenu").val() == "") {
+    if ($("#userName").val() == "") {
         control = false;
     }
 
@@ -200,11 +195,18 @@ function modelUser() {
 function modelUserEdit() {
 
     return JSON.stringify({
-        FirstName: $("#nameEdit").val(),
         IdEmployee: $("#idEmployee").val(),
-        MiddleName: $("#middleNameEdit").val(),
-        UserName: $("#userNameEdit").val(),
-        Email: $("#emailEdit").val()
+        FirstName: $("#name").val(),
+        MiddleName: $("#middleName").val(),
+        LastName: $("#lastName").val(),
+        MotherName: $("#motherName").val(),
+        MotherLastName: $("#motherName").val(),
+        Document: $("#document").val(),
+        Phone: $("#phone").val(),
+        Email: $("#email").val(),
+        IdRole: $("#role").val(),
+        UserName: $("#userName").val(),
+        Adress: $("#adress").val()
     });
 }
 

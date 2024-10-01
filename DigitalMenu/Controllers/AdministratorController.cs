@@ -391,8 +391,6 @@ namespace DigitalMenu.Controllers
                     return Json(new { success = false, message = errors });
                 }
 
-                if (await userRepository.UserExist(model.UserName)) throw new ApplicationException("El nombre de usuario ya existe.");
-
                 var user = await userRepository.EditUserEmployee(model);
 
                 return Json(new

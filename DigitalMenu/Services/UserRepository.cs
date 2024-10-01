@@ -134,10 +134,10 @@ namespace DigitalMenu.Services
                     employee.LastName = model.LastName;
                     employee.MotherLastName = model.MotherLastName;
                     employee.Document = model.Document;
-                    employee.UserName = model.UserName;
+                    //employee.UserName = model.UserName;
                     employee.LastUpdate = DateTime.Now;
 
-                    employee.User.UserName = model.UserName;
+                    //employee.User.UserName = model.UserName;
                     employee.User.LastUpdate = DateTime.Now;
                     employee.User.LastUpdateUser = userName;
 

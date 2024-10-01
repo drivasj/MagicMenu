@@ -65,17 +65,10 @@
                             Debe seleccionar un rol
                         </div>
                     </div>
-                    <div class="col-6 col-md-4">
-                        <label for="name" class="form-label fw-bold">Usuario</label>
-                        <input type="text" asp-for="UserName" class="form-control" id="userName" value="@Model.UserName" autocomplete="off" required />
-                        <div class="invalid-feedback">
-                            El campo Usuario es requerido
-                        </div>
-                    </div>
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Dirección</label>
-                        <input type="text" asp-for="Adress" class="form-control" id="adress" value="@Model.Adress" autocomplete="off" required />
+                        <input type="text" asp-for="Adress" class="form-control" id="adress" value="@Model.Adress" autocomplete="off" />
                     </div>
                     <input type="hidden" value="@Model.IdEmployee" id="idEmployee" />
 
