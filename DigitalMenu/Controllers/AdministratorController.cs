@@ -613,5 +613,76 @@ namespace DigitalMenu.Controllers
 
             return View();
         }
+
+        //systemVariable
+        public async Task<IActionResult> SystemVariable()
+        {
+            var variables = await administratorRepository.ListSystemVariables();
+            return View(variables);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ShowCreateVariable()
+        {
+            var listType = await administratorRepository.ListTypesyStemvariable();
+            return PartialView("~/Views/Administrator/_Partial/_CreateVariableForm.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveVariable([FromBody] SystemvariableViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
+                }
+
+                var variable = await administratorRepository.SaveVariable(model);
+
+                return Json(new
+                {
+                    success = variable,
+                    message = variable ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ShowDetailVariable(int idVariable)
+        {
+            var rol = await administratorRepository._getDetailRole(idVariable);
+            return PartialView("~/Views/Administrator/_Partial/_DetailVariableForm.cshtml", rol);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditVariable([FromBody] SystemvariableViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
+                }
+
+                var variable = await administratorRepository.EditVariable(model);
+
+                return Json(new
+                {
+                    success = variable,
+                    message = variable ? "Registro actualizado correctamente." : "Error al intentar completar la opración."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

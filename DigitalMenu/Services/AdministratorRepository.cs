@@ -469,5 +469,110 @@ namespace DigitalMenu.Services
                 return false;
             }
         }
+
+        //SystemVariables
+
+        public async Task<List<SystemvariableViewModel>> ListSystemVariables()
+        {
+            try
+            {
+                var variables = await context.Systemvariable.Select(s => new SystemvariableViewModel
+                {
+                    IdSystemVariable = s.IdSystemVariable,
+                    Name = s.Name,
+                    Description = s.Description,
+                    ValueNumeric = s.ValueNumeric,
+                    ValueString = s.ValueString,
+                    Active = s.Active
+                }).ToListAsync();
+                return variables;
+            }
+            catch(Exception ex)
+            {
+                string message = ex.Message;
+                return null;
+            }
+        }
+
+        public async Task<bool> SaveVariable(SystemvariableViewModel model)
+        {
+            try
+            {
+                var userName = userRepository.GetUserName();
+
+                var variable = new Systemvariable
+                {
+                    IdSystemVariable = model.IdSystemVariable,               
+                    Name = model.Name = model.Name,               
+                    Description = model.Description,
+                    ValueNumeric = model.ValueNumeric,
+                    ValueString= model.ValueString,
+                    IdCompany = 1,
+                    RegisterDate = DateTime.Now,
+                    RegisterUser = userName,
+                    Active = true
+                };
+
+                context.Add(variable);
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
+            }
+        }
+
+        public async Task<bool> EditVariable(SystemvariableViewModel model)
+        {
+            try
+            {
+                var userName = userRepository.GetUserName();
+                var variable = await context.Systemvariable.FirstOrDefaultAsync(x => x.IdSystemVariable == model.IdSystemVariable);
+
+                if (variable == null)
+                {
+                    return false;
+                }
+                variable.TypesystemvariableId = model.TypesystemvariableId;
+                variable.IdCompany =1;
+                variable.Name = model.Name;
+                variable.Description = model.Description;
+                variable.ValueNumeric = model.ValueNumeric;
+                variable.ValueString = model.ValueString;
+                variable.LastUpdate = DateTime.Now;
+                variable.LastUpdateUser = userName;
+
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
+            }
+        }
+
+        public async Task<List<TypesystemvariableViewModel>> ListTypesyStemvariable()
+        {
+            try
+            {
+                var type = await context.Typesystemvariable.Select(t => new TypesystemvariableViewModel
+                {
+                    IdTypesystemvariable = t.IdTypesystemvariable,
+                    Name = t.Name,
+                    Description = t.Description,                 
+                    Active = t.Active
+                }).ToListAsync();
+
+                return type;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return null;
+            }
+        }
     }
 }

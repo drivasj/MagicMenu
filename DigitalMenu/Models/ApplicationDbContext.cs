@@ -27,6 +27,7 @@ namespace TestWeb
         public DbSet<Rolemenu> Rolemenu { get; set; }
         public DbSet<Menu> Menu { get; set; }
         public DbSet<Application> Application { get; set; }
-
+        public DbSet<Typesystemvariable> Typesystemvariable { get; set; }
+        public DbSet<Systemvariable> Systemvariable { get; set; }
     }
 }

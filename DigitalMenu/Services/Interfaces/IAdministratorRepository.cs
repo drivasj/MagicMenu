@@ -1,5 +1,6 @@
 ﻿using DigitalMenu.Models.Administrator;
 using DigitalMenu.Models.DTO.UserEmployee;
+using DigitalMenu.Models.EntityAdministrator;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DigitalMenu.Services.Interfaces
@@ -25,5 +26,9 @@ namespace DigitalMenu.Services.Interfaces
         Task<bool> EditRole(RoleViewModel model);
         Task<bool> UpdateStateRole(int idRole);
         Task<bool> UpdateStateMenu(int idMenu);
+        Task<List<SystemvariableViewModel>> ListSystemVariables();
+        Task<bool> SaveVariable(SystemvariableViewModel model);
+        Task<bool> EditVariable(SystemvariableViewModel model);
+        Task<List<TypesystemvariableViewModel>> ListTypesyStemvariable();
     }
 }

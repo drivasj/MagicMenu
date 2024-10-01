@@ -1,0 +1,58 @@
+﻿@using DigitalMenu.Models.Administrator
+@model SystemvariableViewModel
+<!-- Modal -->
+<div class="modal fade" id="ModalNewVariable" tabindex="-1" aria-labelledby="ModalNewVariableLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalNewUserLabel">
+                    New User
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body table-responsive">
+                <div class="row g-3 needs-validation mb-3" novalidate>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Type Systemvariable</label>
+                        <input type="text" asp-for="TypesystemvariableId" class="form-control textNewVariable" id="typesystemvariableId" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Type Systemvariable es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Nombre</label>
+                        <input type="text" asp-for="Name" class="form-control textNewVariable" id="name" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Nombre es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Description</label>
+                        <input type="text" asp-for="Description" class="form-control textNewVariable" id="description" autocomplete="off" />
+                        <div class="invalid-feedback">
+                            El campo Description es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Value String</label>
+                        <input type="text" asp-for="ValueString" class="form-control textNewVariable" id="valueString" autocomplete="off" required />
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label for="name" class="form-label fw-bold">Value Numeric</label>
+                        <input type="text" asp-for="ValueNumeric" class="form-control textNewVariable" id="valueNumeric" autocomplete="off" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveVariable()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
