@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DigitalMenu.Models.EntityAdministrator;
+using System.ComponentModel.DataAnnotations;
 
 namespace DigitalMenu.Models.Administrator
 {
@@ -16,8 +17,7 @@ namespace DigitalMenu.Models.Administrator
         public decimal ValueNumeric { get; set; }
         public bool Active { get; set; }
 
-        public IEnumerable<ApplicationViewModel> Application { get; set; }
-
+        public IEnumerable<TypesystemvariableViewModel> Typesystemvariable { get; set; }
 
     }
 }

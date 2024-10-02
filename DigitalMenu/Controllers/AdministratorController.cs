@@ -622,9 +622,10 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ShowCreateVariable()
+        public async Task<IActionResult> ShowCreateVariable(SystemvariableViewModel model)
         {
             var listType = await administratorRepository.ListTypesyStemvariable();
+            model.Typesystemvariable = listType;
             return PartialView("~/Views/Administrator/_Partial/_CreateVariableForm.cshtml");
         }
 
