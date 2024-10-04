@@ -30,5 +30,7 @@ namespace DigitalMenu.Services.Interfaces
         Task<bool> SaveVariable(SystemvariableViewModel model);
         Task<bool> EditVariable(SystemvariableViewModel model);
         Task<List<TypesystemvariableViewModel>> ListTypesyStemvariable();
+        Task<SystemvariableViewModel> _getDetailSystemvariable(int idVariable);
+        Task<bool> UpdateStateVariable(int idVariable);
     }
 }

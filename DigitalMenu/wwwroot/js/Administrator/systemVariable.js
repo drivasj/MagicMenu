@@ -39,7 +39,7 @@ function _saveVariable() {
     Loading();
     const data = modelSystemVariable();
 
-    fetch('/Administrator/SaveMenu', {
+    fetch('/Administrator/SaveVariable', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ function _EditVariable() {
     Loading();
     const data = modelSystemVariable();
 
-    fetch('/Administrator/EditRole', {
+    fetch('/Administrator/EditVariable', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -161,4 +161,47 @@ function modelSystemVariable() {
         ValueString: $("#valueString").val(),
         ValueNumeric: $("#valueNumeric").val()
     });
+}
+
+function UpdateStateVariable(idVariable) {
+    Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            _UpdateStateVariable(idVariable);
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
+}
+
+function _UpdateStateVariable(idVariable) {
+    Loading();
+
+    fetch('/Administrator/UpdateStateVariable', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ IdSystemVariable: idVariable })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                LoadMainPage('Administrator', 'SystemVariable');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+        });
 }

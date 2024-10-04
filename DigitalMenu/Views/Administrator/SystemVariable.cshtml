@@ -20,6 +20,7 @@
             <th>Description</th>
             <th>String Value</th>
             <th>Number Value</th>
+            <th>Status</th>
             <th>Details</th>
             <th>State</th>
         </tr>
@@ -32,6 +33,7 @@
                 <td>@item.Description</td>
                 <td>@item.ValueString</td>
                 <td>@item.ValueNumeric</td>
+                <td>@item.Active</td>
                 <td>
                     <a onclick="ShowDetailVariable(@item.IdSystemVariable)" style="cursor:pointer" class="bi bi-pencil-square"></a>
                 </td>
@@ -47,5 +49,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/administrator/systemVariables.js" asp-append-version=" true"></script>
+    <script src="~/js/administrator/systemVariable.js" asp-append-version=" true"></script>
 }

@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="ModalNewUserLabel">
-                    New User
+                    Edit System variable
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -15,9 +15,11 @@
 
                     <div class="col-6 col-md-4">
                         <label for="name" class="form-label fw-bold">Type Systemvariable</label>
-                        <input type="text" value="@Model.TypesystemvariableId" class="form-control textNewVariable" id="typesystemvariableId" autocomplete="off" required />
+                        <select asp-for="TypesystemvariableId" required class="form-select" id="typesystemvariableId" asp-items="@(new SelectList(Model.Typesystemvariable,"IdTypesystemvariable","Name"))">
+                            <option value="0">Seleccionar</option>
+                        </select>
                         <div class="invalid-feedback">
-                            El campo Type Systemvariable es requerido
+                            Seleccione un tipo de variable
                         </div>
                     </div>
 

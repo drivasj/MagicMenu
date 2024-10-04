@@ -16,8 +16,7 @@ namespace DigitalMenu.Models.Administrator
         public string ValueString { get; set; }
         public decimal ValueNumeric { get; set; }
         public bool Active { get; set; }
-
+        DateTime RegisterDate { get; set; }
         public IEnumerable<TypesystemvariableViewModel> Typesystemvariable { get; set; }
-
     }
 }

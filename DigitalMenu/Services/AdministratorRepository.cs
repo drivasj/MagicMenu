@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using TestWeb;
 
 namespace DigitalMenu.Services
@@ -502,7 +503,7 @@ namespace DigitalMenu.Services
 
                 var variable = new Systemvariable
                 {
-                    IdSystemVariable = model.IdSystemVariable,               
+                    TypesystemvariableId = model.TypesystemvariableId,               
                     Name = model.Name = model.Name,               
                     Description = model.Description,
                     ValueNumeric = model.ValueNumeric,
@@ -536,11 +537,11 @@ namespace DigitalMenu.Services
                     return false;
                 }
                 variable.TypesystemvariableId = model.TypesystemvariableId;
-                variable.IdCompany =1;
                 variable.Name = model.Name;
                 variable.Description = model.Description;
                 variable.ValueNumeric = model.ValueNumeric;
                 variable.ValueString = model.ValueString;
+                variable.IdCompany = 1;
                 variable.LastUpdate = DateTime.Now;
                 variable.LastUpdateUser = userName;
 
@@ -562,8 +563,6 @@ namespace DigitalMenu.Services
                 {
                     IdTypesystemvariable = t.IdTypesystemvariable,
                     Name = t.Name,
-                    Description = t.Description,                 
-                    Active = t.Active
                 }).ToListAsync();
 
                 return type;
@@ -572,6 +571,49 @@ namespace DigitalMenu.Services
             {
                 string message = ex.Message;
                 return null;
+            }
+        }
+
+        public async Task<SystemvariableViewModel> _getDetailSystemvariable(int idVariable)
+        {
+            var listTypeVariables = await ListTypesyStemvariable();
+
+            var menu = await context.Systemvariable.Where(x => x.IdSystemVariable == idVariable).Select(s => new SystemvariableViewModel
+            {
+                IdSystemVariable = s.IdSystemVariable,
+                TypesystemvariableId = s.TypesystemvariableId,
+                IdCompany = s.IdCompany,
+                Name = s.Name,
+                Description = s.Description,
+                ValueString = s.ValueString,
+                ValueNumeric = s.ValueNumeric,
+                Active = s.Active,
+                Typesystemvariable = listTypeVariables
+
+            }).FirstOrDefaultAsync();
+
+            return menu;
+        }
+
+        public async Task<bool> UpdateStateVariable(int idVariable)
+        {
+            try
+            {
+                var variable = await context.Systemvariable.FirstOrDefaultAsync(x => x.IdSystemVariable == idVariable);
+
+                if (variable == null) { return false; }
+
+                bool newState = variable.Active == true ? false : true;
+
+                variable.Active = newState;
+                await context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
             }
         }
     }

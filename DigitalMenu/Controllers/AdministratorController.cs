@@ -626,7 +626,7 @@ namespace DigitalMenu.Controllers
         {
             var listType = await administratorRepository.ListTypesyStemvariable();
             model.Typesystemvariable = listType;
-            return PartialView("~/Views/Administrator/_Partial/_CreateVariableForm.cshtml");
+            return PartialView("~/Views/Administrator/_Partial/_CreateVariableForm.cshtml", model);
         }
 
         [HttpPost]
@@ -657,8 +657,9 @@ namespace DigitalMenu.Controllers
         [HttpPost]
         public async Task<IActionResult> ShowDetailVariable(int idVariable)
         {
-            var rol = await administratorRepository._getDetailRole(idVariable);
-            return PartialView("~/Views/Administrator/_Partial/_DetailVariableForm.cshtml", rol);
+            var variables = await administratorRepository._getDetailSystemvariable(idVariable);
+
+            return PartialView("~/Views/Administrator/_Partial/_DetailVariableForm.cshtml", variables);
         }
 
         [HttpPost]
@@ -678,6 +679,24 @@ namespace DigitalMenu.Controllers
                 {
                     success = variable,
                     message = variable ? "Registro actualizado correctamente." : "Error al intentar completar la opración."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStateVariable([FromBody] SystemvariableViewModel model)
+        {
+            try
+            {
+                var app = await administratorRepository.UpdateStateVariable(model.IdSystemVariable);
+                return Json(new
+                {
+                    success = app,
+                    message = app ? "Registro actualizado correctamente." : "Error al intentar completar la operación"
                 });
             }
             catch (Exception ex)
