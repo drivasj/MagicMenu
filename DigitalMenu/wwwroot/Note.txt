@@ -96,3 +96,12 @@ WHERE u.UserName ='drivasj'
 AND ru.Active is true
 AND rm.Active is true
 ORDER BY 1;
+
+https://compartiendocodigos.com/cc_demos/sisventas014/vistas/escritorio.php
+https://compartiendocodigos.com/cc_demos/sisventas014/vistas/escritorio.php
+
+APPLICATION -> Almacen
+
+Articulos o productos {Nombre, categoria, Codigo, stock, imagen, descripcion, precio compra, precio venta}
+
+Categoria{Nombre, Descripcion, Estado}
