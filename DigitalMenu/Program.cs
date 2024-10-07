@@ -50,6 +50,8 @@ builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.Ap
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IAdministratorRepository, AdministratorRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+
 
 var app = builder.Build();
 

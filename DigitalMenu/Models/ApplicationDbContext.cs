@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using DigitalMenu.Models;
 using DigitalMenu.Models.EntityAdministrator;
+using DigitalMenu.Models.Entity.Product;
 
 namespace TestWeb
 {
@@ -29,5 +30,11 @@ namespace TestWeb
         public DbSet<Application> Application { get; set; }
         public DbSet<Typesystemvariable> Typesystemvariable { get; set; }
         public DbSet<Systemvariable> Systemvariable { get; set; }
+
+        public DbSet<Product> Product { get; set; }
+        public DbSet<ProductDetails> ProductDetails { get; set; }
+        public DbSet<ProductCategory> ProductCategory { get; set; }
+        public DbSet<ProductTax> ProductTax { get; set; }
+
     }
 }
