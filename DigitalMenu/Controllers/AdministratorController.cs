@@ -321,8 +321,6 @@ namespace DigitalMenu.Controllers
         {
             try
             {
-                var listRoles = await administratorRepository.Roles();
-
                 var user = await administratorRepository._getDetailUser(idUser);
 
                 return PartialView("~/Views/Administrator/_Partial/_DetailUserForm.cshtml", user);

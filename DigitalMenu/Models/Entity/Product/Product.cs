@@ -23,5 +23,6 @@ namespace DigitalMenu.Models.Entity.Product
         [StringLength(100)]
         public string LastUpdateUser { get; set; }
         public bool Active { get; set; }
+        public ProductDetails productDetails { get; set; }
     }
 }

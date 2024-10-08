@@ -1,0 +1,109 @@
+﻿@using DigitalMenu.Models.Product
+@model ProductViewModel
+
+<!-- Modal -->
+<div class="modal fade" id="ModalNewProduct" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalNewProductLabel">
+                    Nuevo Product
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body table-responsive">
+                <div class="row g-3 needs-validation mb-3" novalidate>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Codigo</label>
+                        <input asp-for="Code" type="text" class="form-control textNewApp" id="code" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El codigo es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Categoria</label>
+                        <select class="form-select" id="productCategoryId" required asp-items="@(new SelectList(Model.ProductsCategory,"ProductCategoryId","Name"))">
+                            <option value="">Seleccionar</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Debe seleccionar una Categoria
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">StatusPromotion</label>
+                        <input asp-for="StatusPromotion" type="text" class="form-control textNewApp" id="statusPromotion" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo StatusPromotion es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label  class="form-label fw-bold">Display</label>
+                        <input asp-for="IdCompany" type="text" class="form-control textNewApp" id="idCompany" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Company es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Icon</label>
+                        <input asp-for="NameProduct" type="text" class="form-control textNewApp" id="nameProduct" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Nombre es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Description</label>
+                        <input asp-for="Description" type="text" class="form-control textNewApp" id="description" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Description es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Precio</label>
+                        <input asp-for="Price" type="text" class="form-control textNewApp" id="price" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Precio es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Icon</label>
+                        <input asp-for="Stock" type="text" class="form-control textNewApp" id="icon" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo name es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Role</label>
+                        <select class="form-select" id="productTaxId" required asp-items="@(new SelectList(Model.ProductTax,"Value","Text"))">
+                            <option value="">Seleccionar</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Debe seleccionar una Tasa
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Icon</label>
+                        <input asp-for="UrlImage" type="text" class="form-control textNewApp" id="icon" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo name es requerido
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveProduct()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
