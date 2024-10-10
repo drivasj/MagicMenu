@@ -1,4 +1,5 @@
-﻿using DigitalMenu.Models.Product;
+﻿using DigitalMenu.Models.Entity.Product;
+using DigitalMenu.Models.Product;
 using DigitalMenu.Services;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -34,17 +35,20 @@ namespace DigitalMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ShowCreateProduct(ProductViewModel model)
+        public async Task<IActionResult> ShowCreateProduct()
         {
             try
             {
                 var productsCategory = await productRepository.ListProductCategory();
                 var productTax = await productRepository.ListProductTax();
 
-                model.ProductsCategory = productsCategory;
-                model.ProductTax = productTax;
+                var list = new ProductViewModel
+                {
+                    ProductsCategory = productsCategory,
+                    ProductTax = productTax
+                };
 
-                return PartialView("~/Views/Product/_Partial/_CreateProductForm.cshtml", model);
+                return PartialView("~/Views/Product/_Partial/_CreateProductForm.cshtml", list);
             }
             catch (Exception ex) 
             {
@@ -57,9 +61,16 @@ namespace DigitalMenu.Controllers
         [HttpPost]
         public async Task<IActionResult> ShowDetailProduct(int idProduct)
         {
-            var product = await productRepository._getDetailProduct(idProduct);
+            try
+            {
+                var product = await productRepository._getDetailProduct(idProduct);
 
-            return PartialView("~/Views/Administrator/_Partial/_DetailProductForm.cshtml", product);
+                return PartialView("~/Views/Product/_Partial/_DetailProductForm.cshtml", product);
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -86,6 +97,7 @@ namespace DigitalMenu.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> EditProduct([FromBody] ProductViewModel model)

@@ -32,6 +32,7 @@ namespace DigitalMenu.Services
                     .Include(pd => pd.productDetails)
                     .Select(p => new ProductViewModel
                     {
+                        IdProduct = p.IdProduct,
                         NameProduct = p.productDetails.Name,
                         NameCategory = p.productCategory.Name,
                         Code = p.Code,
@@ -115,7 +116,7 @@ namespace DigitalMenu.Services
                     {
                         Code = model.Code,
                         ProductCategoryId = model.ProductCategoryId,
-                        StatusPromotion = model.StatusPromotion,
+                        StatusPromotion = false,
                         IdCompany = model.IdCompany,
                         RegisterDate =DateTime.Now,
                         RegisterUser = userName,
@@ -161,7 +162,7 @@ namespace DigitalMenu.Services
 
                     products.Code = model.Code;
                     products.ProductCategoryId = model.ProductCategoryId;
-                    products.StatusPromotion = model.StatusPromotion;
+                    //products.StatusPromotion = model.StatusPromotion;
                     products.IdCompany = model.IdCompany;
                     products.LastUpdate = DateTime.Now;
                     products.LastUpdateUser = userName;
@@ -191,31 +192,39 @@ namespace DigitalMenu.Services
 
         public async Task<ProductViewModel> _getDetailProduct(int idProduct)
         {
-            var ListProductsCategory = await ListProductCategory();
-            var ListtProductTax = await ListProductTax();
+            try
+            {
+                var ListProductsCategory = await ListProductCategory();
+                var ListtProductTax = await ListProductTax();
 
-            var product = await context.Product
-                               .Include(pc => pc.productCategory)
-                               .Include(pd => pd.productDetails).Where(x => x.IdProduct == idProduct).Select(p => new ProductViewModel
-                               {
-                                   IdProduct = p.IdProduct,
-                                   Code = p.Code,
-                                   ProductCategoryId = p.ProductCategoryId,
-                                   StatusPromotion  = p.StatusPromotion,
-                                   IdCompany = p.IdCompany,
+                var product = await context.Product
+                                   //.Include(pc => pc.productCategory)
+                                   //.Include(pd => pd.productDetails)
+                                   .Where(x => x.IdProduct == idProduct).Select(p => new ProductViewModel
+                                   {
+                                       IdProduct = p.IdProduct,
+                                       Code = p.Code,
+                                       ProductCategoryId = p.ProductCategoryId,
+                                       StatusPromotion = p.StatusPromotion,
+                                       IdCompany = p.IdCompany,
 
-                                   NameProduct = p.productDetails.Name,
-                                   Description = p.productDetails.Description,
-                                   Price = p.productDetails.Price,
-                                   Stock = p.productDetails.Stock,
-                                   ProductTaxId = p.productDetails.ProductTaxId,
-                                   UrlImage = p.productDetails.UrlImage,
-                                   Active =p.Active,
-                                   ProductsCategory = ListProductsCategory,
-                                   ProductTax = ListtProductTax
+                                       NameProduct = p.productDetails.Name,
+                                       Description = p.productDetails.Description,
+                                       Price = p.productDetails.Price,
+                                       Stock = p.productDetails.Stock,
+                                       ProductTaxId = p.productDetails.ProductTaxId,
+                                       UrlImage = p.productDetails.UrlImage,
+                                       Active = p.Active,
+                                       ProductsCategory = ListProductsCategory,
+                                       ProductTax = ListtProductTax
 
-                               }).FirstOrDefaultAsync();
-            return product;
+                                   }).FirstOrDefaultAsync();
+                return product;
+            }
+            catch (Exception ex) 
+            {
+                throw new ApplicationException(ex.ToString());
+            }
         }
     }
 }

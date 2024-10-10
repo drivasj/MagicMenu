@@ -21,5 +21,6 @@ namespace DigitalMenu.Models.Product
         public string UrlImage { get; set; }
         public List<ProductCategoryViewModel> ProductsCategory { get; set; }
         public List<TwoElement> ProductTax { get; set; }
+
     }
 }

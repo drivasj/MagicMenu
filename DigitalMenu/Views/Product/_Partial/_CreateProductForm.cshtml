@@ -24,24 +24,24 @@
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Categoria</label>
-                        <select class="form-select" id="productCategoryId" required asp-items="@(new SelectList(Model.ProductsCategory,"ProductCategoryId","Name"))">
-                            <option value="">Seleccionar</option>
+                        <select class="form-select" id="productCategoryId" required asp-items="@(new SelectList(Model.ProductsCategory,"IdProductCategory","Name"))">
+                            <option value=0>Seleccionar</option>
                         </select>
                         <div class="invalid-feedback">
                             Debe seleccionar una Categoria
                         </div>
                     </div>
-
+@* 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">StatusPromotion</label>
                         <input asp-for="StatusPromotion" type="text" class="form-control textNewApp" id="statusPromotion" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo StatusPromotion es requerido
                         </div>
-                    </div>
+                    </div> *@
 
                     <div class="col-6 col-md-4">
-                        <label  class="form-label fw-bold">Display</label>
+                        <label class="form-label fw-bold">Company</label>
                         <input asp-for="IdCompany" type="text" class="form-control textNewApp" id="idCompany" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Company es requerido
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="col-6 col-md-4">
-                        <label class="form-label fw-bold">Icon</label>
+                        <label class="form-label fw-bold">Nombre Producto</label>
                         <input asp-for="NameProduct" type="text" class="form-control textNewApp" id="nameProduct" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Nombre es requerido
@@ -58,10 +58,7 @@
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Description</label>
-                        <input asp-for="Description" type="text" class="form-control textNewApp" id="description" autocomplete="off" required />
-                        <div class="invalid-feedback">
-                            El campo Description es requerido
-                        </div>
+                        <input asp-for="Description" type="text" class="form-control textNewApp" id="description" autocomplete="off" />                  
                     </div>
 
                     <div class="col-6 col-md-4">
@@ -73,26 +70,26 @@
                     </div>
 
                     <div class="col-6 col-md-4">
-                        <label class="form-label fw-bold">Icon</label>
-                        <input asp-for="Stock" type="text" class="form-control textNewApp" id="icon" autocomplete="off" required />
+                        <label class="form-label fw-bold">Stock</label>
+                        <input asp-for="Stock" type="number" class="form-control textNewApp" id="stock" autocomplete="off" required />
                         <div class="invalid-feedback">
-                            El campo name es requerido
+                            El campo Stock es requerido
                         </div>
                     </div>
 
                     <div class="col-6 col-md-4">
-                        <label class="form-label fw-bold">Role</label>
+                        <label class="form-label fw-bold">Tasa de impuesto</label>
                         <select class="form-select" id="productTaxId" required asp-items="@(new SelectList(Model.ProductTax,"Value","Text"))">
                             <option value="">Seleccionar</option>
                         </select>
                         <div class="invalid-feedback">
-                            Debe seleccionar una Tasa
+                            Debe seleccionar una Tasa de impuesto
                         </div>
                     </div>
 
                     <div class="col-6 col-md-4">
-                        <label class="form-label fw-bold">Icon</label>
-                        <input asp-for="UrlImage" type="text" class="form-control textNewApp" id="icon" autocomplete="off" required />
+                        <label class="form-label fw-bold">Url Image</label>
+                        <input asp-for="UrlImage" type="text" class="form-control textNewApp" id="urlImage" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo name es requerido
                         </div>
