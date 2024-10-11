@@ -69,7 +69,9 @@
 
     @if (!string.IsNullOrEmpty(ViewBag.filter))
     {
-        <partial name="_SearchProductResult" model="Model" />
+        @* return PartialView("~/Views/Product/_Partial/_SearchProductResult.cshtml", Model); *@
+
+        <partial name="~/Views/Product/_Partial/_SearchProductResult.cshtml" model="Model" />
     }
 
 
