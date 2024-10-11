@@ -156,9 +156,10 @@ namespace DigitalMenu.Services
 
                     var products = await context.Product
                    .Include(pc => pc.productCategory)
-                   .Include(pd => pd.productDetails).FirstOrDefaultAsync(p => p.IdProduct == model.IdProduct);
+                   .Include(pd => pd.productDetails)
+                   .FirstOrDefaultAsync(p => p.IdProduct == model.IdProduct);
 
-                    if (products != null) { return false; }
+                    if (products == null) { return false; }
 
                     products.Code = model.Code;
                     products.ProductCategoryId = model.ProductCategoryId;
@@ -184,8 +185,7 @@ namespace DigitalMenu.Services
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    string menssage = ex.Message;
-                    return false;
+                    throw new ApplicationException(ex.Message);
                 }
             }
         }
@@ -224,6 +224,60 @@ namespace DigitalMenu.Services
             catch (Exception ex) 
             {
                 throw new ApplicationException(ex.ToString());
+            }
+        }
+
+        public async Task<bool> UpdateStateProduct(int idProduct)
+        {
+            try
+            {
+                var product = await context.Product
+                    .Include(pd=>pd.productDetails)
+                    .FirstOrDefaultAsync(x => x.IdProduct == idProduct);
+
+                if (product == null) { return false; }
+
+                bool newState = product.Active == true ? false : true;
+
+                product.Active = newState;
+                product.productDetails.Active = newState;
+                await context.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(ex.ToString());
+            }
+        }
+
+        public async Task<List<ProductViewModel>> SearchProductCode(string filter)
+        {
+            try
+            {
+                var products = await context.Product
+                    .Include(pc => pc.productCategory)
+                    .Include(pd => pd.productDetails)
+                    .Where(x=>x.Code == filter)
+                    .Select(p => new ProductViewModel
+                    {
+                        IdProduct = p.IdProduct,
+                        NameProduct = p.productDetails.Name,
+                        NameCategory = p.productCategory.Name,
+                        Code = p.Code,
+                        Stock = p.productDetails.Stock,
+                        Description = p.productDetails.Description,
+                        Price = p.productDetails.Price,
+                        Active = p.Active
+
+                    }).ToListAsync();
+                return products;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return null;
             }
         }
     }

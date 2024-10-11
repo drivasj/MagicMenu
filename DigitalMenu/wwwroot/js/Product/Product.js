@@ -95,11 +95,98 @@ function _saveProduct() {
         });
 }
 
+function EditProduct() {
+    console.log("Editar");
+    let control = validateProduct();
+
+    if (control) {
+        _editProduct();
+    } else {
+        $(".needs-validation").addClass("was-validated");
+    }
+}
+
+function _editProduct() {
+    Loading();
+    const data = modelProduct();
+
+    fetch('/Product/EditProduct', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: data
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                closeModal("ModalDetailProduct");
+                LoadMainPage('Product', 'Products');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+                closeModal("ModalDetailProduct");
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+            closeModal("ModalDetailProduct");
+        });
+}
+
+function UpdateStateProduct(idProduct) {
+    Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            _UpdateStateProduct(idProduct);
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
+}
+
+function _UpdateStateProduct(idProduct) {
+    Loading();
+
+    fetch('/Product/UpdateStateProduct', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ IdProduct: idProduct })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                RemoveLoading();
+                successSwal(data.message);
+                LoadMainPage('Product', 'Products');
+            } else {
+                RemoveLoading();
+                ErrorSwal(data.message);
+            }
+        })
+        .catch(error => {
+            RemoveLoading();
+            ErrorSwal('Error: ', error);
+        });
+}
+
+
 function validateProduct() {
 
     let control = true;
 
     $(".needs-validation").addClass("was-validated");
+
 
     if ($("#code").val() == "") {
         control = false;
@@ -157,4 +244,37 @@ function modelProduct() {
         ProductTaxId: $("#productTaxId").val(),
         UrlImage: $("#urlImage").val()
     });
+}
+
+
+async function SearchProductCode() {
+    try {
+        var filter = $("#filter").val();
+
+        if (filter != "") {
+            Loading();
+
+            const response = await fetch('/Product/SearchProductCode', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ filter }).toString()
+            });
+
+            if (response.ok) {
+                const data = await response.text();
+                $("#content-section").html(data);
+            } else {
+                $("#content-section").remove();
+            }
+            RemoveLoading();
+        } else {
+            ErrorSwal("Debe ingresar un codigo de producto");
+        }
+
+    } catch (error) {
+        RemoveLoading();
+        ErrorSwal('No se puede realizar la operación.');
+    }
 }

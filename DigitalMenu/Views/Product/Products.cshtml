@@ -6,48 +6,81 @@
     Layout = "~/Views/Product/Shared/ProductLayout.cshtml";
 }
 
-<h4>Lista de productos</h4>
-<hr class="bg-custom-color" />
+<div class="row g-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">Busqueda</h6>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
 
-<button type="button" class="btn btn-outline-primary mb-3" onclick="ShowCreateProduct()">
-    New Product
-</button>
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold" for="filter">Codigo</label>
+                        <div class="input-group">
+                            <input id="filter" type="text" placeholder="Codigo de producto" class="form-control" />
+                            <button type="button" class="btn btn-primary" onclick="SearchProductCode()">Buscar</button>
+                        </div>
+                    </div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Categoria</th>
-            <th>Codigo</th>
-            <th>Stock</th>
-            <th>Descripcion</th>
-            <th>Precio</th>
-            <th>Estado</th>
-            <th>Edit</th>
-            <th>State</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var item in Model)
-        {
-            <tr>
-                <td>@item.NameProduct</td>
-                <td>@item.NameCategory</td>
-                <td>@item.Code</td>
-                <td>@item.Stock</td>
-                <td>@item.Description</td>
-                <td>@item.Price</td>
-                <td>@item.Active</td>
-                <td>
-                    <a onclick="ShowDetailProduct(@item.IdProduct)" style="cursor:pointer" class="bi bi-pencil-square"></a>
-                </td>
-                <td>
-                    <a onclick="UpdateStateProduct(@item.IdProduct)" style="cursor:pointer" class="bi bi-android"></a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold" for="idTypeStatusClient">Estado</label>
+                        <div class="input-group">
+                            <select id="idTypeStatus" name="idTypeStatusClient" class="form-select">
+                                <option value="">Seleccionar</option>
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                            <button type="button" class="btn btn-primary" onclick="SearcFilterState()">Buscar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="text-muted"><strong>Estado</strong> de los clientes en base a su historial de compras de los ultimos</span>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewBag.filter))
+    {
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Filtro:</strong> @ViewBag.filter
+                <button type="button" onclick="FilterClearSearchClient()" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+
+    @*     <div class="col-12" id="SearchResultClient">
+    @if (!string.IsNullOrEmpty(ViewBag.filter))
+    {
+    if (Model.clientsState != null && Model.clientsState.Any())
+    {
+    { Html.RenderPartial("~/Areas/Sales/Views/ClientSales/Partial/_SearchClientResultAll.cshtml", Model.clientsState); }
+    }
+    else
+    {
+    { Html.RenderPartial("~/Areas/Sales/Views/ClientSales/Partial/_SearchClientResult.cshtml", Model); }
+    }
+    }
+    </div> *@
+
+    @if (!string.IsNullOrEmpty(ViewBag.filter))
+    {
+        <partial name="_SearchProductResult" model="Model" />
+    }
+
+
+
+    <div class="col-12">
+        <blockquote class="blockquote-footer">
+            Busca un cliente por su código, o realiza una busqueda por su nombre para traer clientes relacionados.
+        </blockquote>
+    </div>
+</div>
+
 
 <div id="DetailProductContainer">
 </div>

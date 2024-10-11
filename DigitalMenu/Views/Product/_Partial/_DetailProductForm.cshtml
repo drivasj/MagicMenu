@@ -16,7 +16,7 @@
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Codigo</label>
-                        <input type="text" class="form-control textNewApp" id="code" value="@Model.Code" autocomplete="off" required />
+                        <input type="text" class="form-control" id="code" value="@Model.Code" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El codigo es requerido
                         </div>
@@ -34,7 +34,7 @@
                     @*
                     <div class="col-6 col-md-4">
                     <label class="form-label fw-bold">StatusPromotion</label>
-                    <input asp-for="StatusPromotion" type="text" class="form-control textNewApp" id="statusPromotion" autocomplete="off" required />
+                    <input asp-for="StatusPromotion" type="text" class="form-control" id="statusPromotion" autocomplete="off" required />
                     <div class="invalid-feedback">
                     El campo StatusPromotion es requerido
                     </div>
@@ -42,7 +42,7 @@
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Company</label>
-                        <input type="text" class="form-control textNewApp" id="idCompany" value="@Model.IdCompany" autocomplete="off" required />
+                        <input type="text" class="form-control " id="idCompany" value="@Model.IdCompany" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Company es requerido
                         </div>
@@ -50,7 +50,7 @@
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Nombre Producto</label>
-                        <input type="text" class="form-control textNewApp" id="nameProduct" value="@Model.NameProduct" autocomplete="off" required />
+                        <input type="text" class="form-control" id="nameProduct" value="@Model.NameProduct" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Nombre es requerido
                         </div>
@@ -58,12 +58,12 @@
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Description</label>
-                        <input type="text" class="form-control textNewApp" id="description" value="@Model.Description" autocomplete="off" />
+                        <input type="text" class="form-control" id="description" value="@Model.Description" autocomplete="off" />
                     </div>
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Precio</label>
-                        <input type="text" class="form-control textNewApp" id="price" value="@Model.Price" autocomplete="off" required />
+                        <input type="text" class="form-control" id="price" value="@Model.Price" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Precio es requerido
                         </div>
@@ -71,7 +71,7 @@
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Stock</label>
-                        <input type="number" class="form-control textNewApp" id="stock" value="@Model.Stock" autocomplete="off" required />
+                        <input type="number" class="form-control" id="stock" value="@Model.Stock" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo Stock es requerido
                         </div>
@@ -89,17 +89,17 @@
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold">Url Image</label>
-                        <input type="text" class="form-control textNewApp" id="urlImage" value="@Model.UrlImage" autocomplete="off" required />
+                        <input type="text" class="form-control" id="urlImage" value="@Model.UrlImage" autocomplete="off" required />
                         <div class="invalid-feedback">
                             El campo name es requerido
                         </div>
                     </div>
-                    <input type="hidden" value="@Model.IdProduct" id="idrol" />
+                    <input type="hidden" value="@Model.IdProduct" id="idProduct" />
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="editProduct()">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="EditProduct()">Save changes</button>
             </div>
         </div>
     </div>

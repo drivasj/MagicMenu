@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Administrator\_Partial\_AdministratorLayout.cshtml" />
+    <Content Remove="Views\Product\_Partial\__SearchProductResult.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +30,12 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Administrator\_Partial\_AdministratorLayout.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Product\_Partial\__SearchProductResult.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Views\Administrator\Shared\_AdministratorLayout.cshtml" />
+    <None Include="Views\Product\_Partial\__SearchProductResult.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +55,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Product\_Partial\__SearchProductResult.cshtml" />
   </ItemGroup>
 
 </Project>

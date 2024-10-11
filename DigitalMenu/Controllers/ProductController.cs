@@ -1,4 +1,5 @@
-﻿using DigitalMenu.Models.Entity.Product;
+﻿using DigitalMenu.Models.Administrator;
+using DigitalMenu.Models.Entity.Product;
 using DigitalMenu.Models.Product;
 using DigitalMenu.Services;
 using DigitalMenu.Services.Interfaces;
@@ -122,6 +123,32 @@ namespace DigitalMenu.Controllers
             {
                 return Json(new { success = false, message = ex.Message });
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStateProduct([FromBody] ProductViewModel model)
+        {
+            try
+            {
+                var app = await productRepository.UpdateStateProduct(model.IdProduct);
+                return Json(new
+                {
+                    success = app,
+                    message = app ? "Registro actualizado correctamente." : "Error al intentar completar la operación"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchProductCode(string filter)
+        {
+            ViewBag.filter = filter;
+            var listFilter = await productRepository.SearchProductCode(filter);
+            return View("Products", listFilter);
         }
     }
 }
