@@ -69,9 +69,50 @@
 
     @if (!string.IsNullOrEmpty(ViewBag.filter))
     {
-        @* return PartialView("~/Views/Product/_Partial/_SearchProductResult.cshtml", Model); *@
-
-        <partial name="~/Views/Product/_Partial/_SearchProductResult.cshtml" model="Model" />
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Codigo</th>
+                        <th>Stock</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                        <th>Edit</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.NameProduct</td>
+                            <td>@item.NameCategory</td>
+                            <td>@item.Code</td>
+                            <td>@item.Stock</td>
+                            <td>@item.Description</td>
+                            <td>@item.Price</td>
+                            <td>@item.Active</td>
+                            <td>
+                                <a onclick="ShowDetailProduct(@item.IdProduct)" style="cursor:pointer" class="bi bi-pencil-square"></a>
+                            </td>
+                            <td>
+                                <a onclick="UpdateStateProduct(@item.IdProduct)" style="cursor:pointer" class="bi bi-android"></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                <span>No se encontraron resultados en la búsqueda.</span>
+            </div>
+        }
     }
 
 
