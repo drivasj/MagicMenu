@@ -26,7 +26,7 @@
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold" for="idTypeStatusClient">Estado</label>
                         <div class="input-group">
-                            <select id="idTypeStatus" name="idTypeStatusClient" class="form-select">
+                            <select id="idTypeStatus" name="idTypeStatusClient" onchange="FilterActiveProduct(this.value)" class="form-select">
                                 <option value="">Seleccionar</option>
                                 <option value="1">Activo</option>
                                 <option value="0">Inactivo</option>

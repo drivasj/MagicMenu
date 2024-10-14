@@ -303,3 +303,8 @@ async function FilterClearSearchProduct() {
         ErrorSwal('No se puede realizar la operación.');
     }
 }
+
+async function FilterActiveProduct() {
+    if ($(sender).val() !== "") { }
+
+}
