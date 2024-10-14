@@ -246,7 +246,6 @@ function modelProduct() {
     });
 }
 
-
 async function SearchProductCode() {
     try {
         var filter = $("#filter").val();
@@ -272,6 +271,32 @@ async function SearchProductCode() {
         } else {
             ErrorSwal("Debe ingresar un codigo de producto");
         }
+
+    } catch (error) {
+        RemoveLoading();
+        ErrorSwal('No se puede realizar la operación.');
+    }
+}
+
+async function FilterClearSearchProduct() {
+    try {   
+            Loading();
+
+            const response = await fetch('/Product/Products', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.text();
+                $("#content-section").html(data);
+            } else {
+                $("#content-section").remove();
+            }
+            RemoveLoading();
+      
 
     } catch (error) {
         RemoveLoading();
