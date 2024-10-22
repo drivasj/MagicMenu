@@ -150,5 +150,21 @@ namespace DigitalMenu.Controllers
             var listFilter = await productRepository.SearchProductCode(filter);
             return View("Products", listFilter);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchProductStatus(string filter)
+        {
+            bool status;
+
+            status = filter == "1";
+            if (filter != "1" && filter != "0")
+            {
+                throw new ApplicationException("Filtro invalido");
+            }
+
+            ViewBag.filter = filter;
+            var listFilter = await productRepository.SearchProductStatus(status);
+            return View("Products", listFilter);
+        }
     }
 }

@@ -10,7 +10,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h6 class="card-title">Busqueda</h6>
+                <h6 class="card-title">Busqueda de producto</h6>
             </div>
             <div class="card-body">
                 <div class="row g-3">
@@ -19,26 +19,25 @@
                         <label class="form-label fw-bold" for="filter">Codigo</label>
                         <div class="input-group">
                             <input id="filter" type="text" placeholder="Codigo de producto" class="form-control" />
-                            <button type="button" class="btn btn-primary" onclick="SearchProductCode()">Buscar</button>
+                            <button type="button" class="btn btn-outline-primary" onclick="SearchProductCode()">Buscar</button>
                         </div>
                     </div>
 
                     <div class="col-6 col-md-4">
                         <label class="form-label fw-bold" for="idTypeStatusClient">Estado</label>
                         <div class="input-group">
-                            <select id="idTypeStatus" name="idTypeStatusClient" onchange="FilterActiveProduct(this.value)" class="form-select">
+                            <select id="idTypeStatus" onchange="FilterStatusProduct()" class="form-select">
                                 <option value="">Seleccionar</option>
                                 <option value="1">Activo</option>
                                 <option value="0">Inactivo</option>
                             </select>
-                            <button type="button" class="btn btn-primary" onclick="SearcFilterState()">Buscar</button>
                         </div>
                     </div>
 
                 </div>
             </div>
             <div class="card-footer">
-                <span class="text-muted"><strong>Estado</strong> de los clientes en base a su historial de compras de los ultimos</span>
+                <span class="text-muted"><strong></strong></span>
             </div>
         </div>
     </div>
@@ -119,7 +118,7 @@
 
     <div class="col-12">
         <blockquote class="blockquote-footer">
-            Busca un cliente por su código, o realiza una busqueda por su nombre para traer clientes relacionados.
+            Busca un producto por su código, o filtra los productos activos o inactivos.
         </blockquote>
     </div>
 </div>
@@ -129,5 +128,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/Product/Product.js" asp-append-version=" true"></script>
+    <script src="~/js/Product/Product.js" asp-append-version="true"></script>
 }

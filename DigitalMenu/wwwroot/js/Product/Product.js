@@ -279,14 +279,47 @@ async function SearchProductCode() {
 }
 
 async function FilterClearSearchProduct() {
-    try {   
+    try {
+        Loading();
+
+        const response = await fetch('/Product/Products', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.text();
+            $("#content-section").html(data);
+        } else {
+            $("#content-section").remove();
+        }
+        RemoveLoading();
+
+
+    } catch (error) {
+        RemoveLoading();
+        ErrorSwal('No se puede realizar la operación.');
+    }
+}
+
+async function FilterStatusProduct() {
+
+    var filter = $("#idTypeStatus").val();
+    console.log(filter);
+
+    if (filter != "") {
+        try {
             Loading();
 
-            const response = await fetch('/Product/Products', {
-                method: 'GET',
+            const response = await fetch('/Product/SearchProductStatus', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                },
+                
+                body: new URLSearchParams({ filter })
             });
 
             if (response.ok) {
@@ -296,15 +329,12 @@ async function FilterClearSearchProduct() {
                 $("#content-section").remove();
             }
             RemoveLoading();
-      
 
-    } catch (error) {
-        RemoveLoading();
-        ErrorSwal('No se puede realizar la operación.');
+        } catch (error) {
+            RemoveLoading();
+            ErrorSwal('No se puede realizar la operación.');
+        }
+    } else {
+        ErrorSwal("Debe ingresar un codigo de producto");
     }
-}
-
-async function FilterActiveProduct() {
-    if ($(sender).val() !== "") { }
-
 }

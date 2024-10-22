@@ -13,5 +13,6 @@ namespace DigitalMenu.Services.Interfaces
         Task<ProductViewModel> _getDetailProduct(int idProduct);
         Task<bool> UpdateStateProduct(int idProduct);
         Task<List<ProductViewModel>> SearchProductCode(string filter);
+        Task<List<ProductViewModel>> SearchProductStatus(bool filter);
     }
 }

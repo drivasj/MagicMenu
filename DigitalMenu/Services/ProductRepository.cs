@@ -280,5 +280,34 @@ namespace DigitalMenu.Services
                 return null;
             }
         }
+
+        public async Task<List<ProductViewModel>> SearchProductStatus(bool filter)
+        {
+            try
+            {
+                var products = await context.Product
+                    .Include(pc => pc.productCategory)
+                    .Include(pd => pd.productDetails)
+                    .Where(x => x.Active == filter)
+                    .Select(p => new ProductViewModel
+                    {
+                        IdProduct = p.IdProduct,
+                        NameProduct = p.productDetails.Name,
+                        NameCategory = p.productCategory.Name,
+                        Code = p.Code,
+                        Stock = p.productDetails.Stock,
+                        Description = p.productDetails.Description,
+                        Price = p.productDetails.Price,
+                        Active = p.Active
+
+                    }).ToListAsync();
+                return products;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return null;
+            }
+        }
     }
 }
