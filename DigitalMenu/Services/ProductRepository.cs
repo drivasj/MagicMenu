@@ -1,4 +1,5 @@
 ﻿using DigitalMenu.Models;
+using DigitalMenu.Models.Administrator;
 using DigitalMenu.Models.Entity.Product;
 using DigitalMenu.Models.Product;
 using DigitalMenu.Services.Interfaces;
@@ -62,8 +63,9 @@ namespace DigitalMenu.Services
                 var productCategory = await context.ProductCategory.Select(pc => new ProductCategoryViewModel
                 {
                     IdProductCategory = pc.IdProductCategory,
-                    Name = pc.Name
-                }).ToListAsync();
+                    Name = pc.Name,
+                    Description = pc.Description
+                }).ToListAsync();       
 
                 return productCategory;
             }
@@ -73,6 +75,7 @@ namespace DigitalMenu.Services
                 return null;
             }
         }
+
 
         /// <summary>
         /// ListProductTax
@@ -308,6 +311,42 @@ namespace DigitalMenu.Services
                 string message = ex.Message;
                 return null;
             }
+        }
+
+        public async Task<bool> SaveProductCategory(ProductCategoryViewModel model)
+        {
+            try
+            {
+                var userName = userRepository.GetUserName();
+
+
+                var category = new ProductCategory
+                {
+                    Name = model.Name,
+                    Code = " ",
+                    Description = model.Description,
+                    StatusPromotion = false,
+                    IdCompany = 1,
+                    RegisterDate = DateTime.Now,
+                    RegisterUser = userName,
+                    LastUpdate = DateTime.MinValue,
+                };
+
+                context.Add(category);
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return false;
+            }
+        }
+
+        public async Task<int>  CountProductCategory()
+        {
+            var products = await context.Product.CountAsync();
+            return products;
         }
     }
 }

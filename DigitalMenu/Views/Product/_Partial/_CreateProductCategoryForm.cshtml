@@ -1,0 +1,38 @@
+﻿@using DigitalMenu.Models.Product
+@model ProductCategoryViewModel
+
+<!-- Modal -->
+<div class="modal fade" id="ModalNewProductCategory" tabindex="-1" aria-labelledby="ModalNewUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalNewProductLabel">
+                    Nuevo Product
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body table-responsive">
+                <div class="row g-3 needs-validation mb-3" novalidate>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Nombre Categoria</label>
+                        <input asp-for="Name" type="text" class="form-control textNewApp" id="nameProductCategory" autocomplete="off" required />
+                        <div class="invalid-feedback">
+                            El campo Nombre es requerido
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4">
+                        <label class="form-label fw-bold">Description</label>
+                        <input asp-for="Description" type="text" class="form-control textNewApp" id="description" autocomplete="off" />
+                    </div>
+                 
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveProductCategory()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

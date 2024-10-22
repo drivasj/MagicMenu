@@ -27,35 +27,6 @@
     }
 }
 
-async function ShowCreateApplication() {
-    $(".textNewApp").val("");
-    try {
-        Loading();
-
-        const response = await fetch('/Administrator/ShowCreateApplication', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-           // body: new URLSearchParams({ idApp }).toString()
-        });
-
-        if (response.ok) {
-            const data = await response.text();
-            $("#DetailAppContainer").html(data);
-            ShowModalBootstrapEvent('ModalNewApplication', null);
-        } else {
-            $("#DetailAppContainer").remove();
-            ErrorSwal('No se puede realizar la operación.');
-        }
-
-        RemoveLoading();
-    } catch (error) {
-        RemoveLoading();
-        ErrorSwal('No se puede realizar la operación.');
-    }
-}
-
 function _saveApplication() {
     Loading();
     const data = modelApplication();
@@ -85,6 +56,35 @@ function _saveApplication() {
             ErrorSwal('Error: ', error);
             closeModal("ModalNewApplication");
         });
+}
+
+async function ShowCreateApplication() {
+    $(".textNewApp").val("");
+    try {
+        Loading();
+
+        const response = await fetch('/Administrator/ShowCreateApplication', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+           // body: new URLSearchParams({ idApp }).toString()
+        });
+
+        if (response.ok) {
+            const data = await response.text();
+            $("#DetailAppContainer").html(data);
+            ShowModalBootstrapEvent('ModalNewApplication', null);
+        } else {
+            $("#DetailAppContainer").remove();
+            ErrorSwal('No se puede realizar la operación.');
+        }
+
+        RemoveLoading();
+    } catch (error) {
+        RemoveLoading();
+        ErrorSwal('No se puede realizar la operación.');
+    }
 }
 
 function modelApplication() {

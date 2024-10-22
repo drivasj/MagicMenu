@@ -52,19 +52,6 @@
         </div>
     }
 
-    @*     <div class="col-12" id="SearchResultClient">
-    @if (!string.IsNullOrEmpty(ViewBag.filter))
-    {
-    if (Model.clientsState != null && Model.clientsState.Any())
-    {
-    { Html.RenderPartial("~/Areas/Sales/Views/ClientSales/Partial/_SearchClientResultAll.cshtml", Model.clientsState); }
-    }
-    else
-    {
-    { Html.RenderPartial("~/Areas/Sales/Views/ClientSales/Partial/_SearchClientResult.cshtml", Model); }
-    }
-    }
-    </div> *@
 
     @if (!string.IsNullOrEmpty(ViewBag.filter))
     {

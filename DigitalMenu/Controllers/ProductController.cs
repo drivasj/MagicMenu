@@ -1,9 +1,12 @@
-﻿using DigitalMenu.Models.Administrator;
+﻿using DigitalMenu.Models;
+using DigitalMenu.Models.Administrator;
 using DigitalMenu.Models.Entity.Product;
 using DigitalMenu.Models.Product;
 using DigitalMenu.Services;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using TestWeb;
 
 namespace DigitalMenu.Controllers
 {
@@ -11,11 +14,13 @@ namespace DigitalMenu.Controllers
     {
         private readonly IProductRepository productRepository;
         private readonly IUserRepository userRepository;
+        private readonly ApplicationDbContext context;
 
-        public ProductController(IProductRepository productRepository, IUserRepository userRepository)
+        public ProductController(IProductRepository productRepository, IUserRepository userRepository, ApplicationDbContext context)
         {
             this.productRepository = productRepository;
             this.userRepository = userRepository;
+            this.context = context;
         }
         public IActionResult Index()
         {
@@ -33,6 +38,41 @@ namespace DigitalMenu.Controllers
 
             var listProducts = await productRepository.ListProducts();
             return View(listProducts);
+        }
+
+        //public async Task<IActionResult> Category()
+        //{
+        //    ProductCategory model = new ProductCategory();
+
+          
+
+        //    var productsCategory = await productRepository.ListProductCategoryPage(10, 1)();
+        //    return View(productsCategory);
+        //}
+
+
+        public async Task<IActionResult> Category(PaginacionViewModel paginacion)
+        {
+            try
+            {
+                var productCategory = await productRepository.ListProductCategory();
+
+                var respuestaVW = new PaginacionRespuesta<ProductCategoryViewModel>
+                {
+                    Elementos = productCategory,
+                    Pagina = paginacion.Pagina,
+                    RecordsPorPagina = paginacion.RecorsPorPagina,
+                    CantidadTotalRecords = await productRepository.CountProductCategory(),
+                    BaseURL = "/"
+                };
+
+                return View(respuestaVW);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return null;
+            }
         }
 
         [HttpPost]
@@ -165,6 +205,41 @@ namespace DigitalMenu.Controllers
             ViewBag.filter = filter;
             var listFilter = await productRepository.SearchProductStatus(status);
             return View("Products", listFilter);
+        }
+
+        ///////
+        ///
+
+        [HttpPost]
+        public IActionResult ShowCreateProductCategory()
+        {
+            return PartialView("~/Views/Product/_Partial/_CreateProductCategoryForm.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveProductCategory([FromBody] ProductCategoryViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return Json(new { success = false, message = errors });
+                }
+
+                var app = await productRepository.SaveProductCategory(model);
+
+                return Json(new
+                {
+                    success = app,
+                    message = app ? "Registro guardado correctamente." : "Error al intentar completar la operación."
+                });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = string.Concat("Error general: ", ex) });
+            }
         }
     }
 }
