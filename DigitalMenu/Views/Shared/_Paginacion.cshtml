@@ -1,50 +1,95 @@
-﻿@model PaginacionRespuesta
+﻿
+@model PagedList
 
-@{
-    var plantillaLink = string.Concat(Model.BaseURL, "?pagina={0}&recordsPorPagina={1}");
-    var activarBotonAnterior = Model.Pagina > 1;
-    var activarBotonSiguiente = Model.Pagina < Model.CantidadTotalDePaginas;
+@if (Model != null)
+{
+    <nav aria-label="Resultados paginados">
+        <ul class="pagination">
+            @if (Model.pageInicial != 1)
+            {
+                if (Model.pageInicial >= 31)
+                {
+                    <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="LoadFirstPagedList('@Model.controller', '@Model.action', '@Model.panelUpdate', '@Model.filter')">Inicio</a></li>
+                }
+
+                <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="LoadPreviousPagedList('@Model.controller', '@Model.action', '@Model.panelUpdate', '@Model.filter')">Anterior</a></li>
+
+                for (int x = Model.pageInicial; x < (Model.pageInicial + 10); x++)
+                {
+                    if (x > Math.Ceiling(Model.pageTotal))
+                    {
+                        break;
+                    }
+                    else
+                    {
+
+                        if (Model.page == x)
+                        {
+                            <li class="page-item active"><a class="page-link" style="cursor:pointer;">@x</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="LoadPagedList('@Model.controller','@Model.action',@x,'@Model.panelUpdate','@Model.filter')">@x</a></li>
+                        }
+                    }
+
+                }
+
+                if (Math.Ceiling(Model.pageTotal) > (Model.pageInicial + 10))
+                {
+                    <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="LoadNextPagedList('@Model.controller', '@Model.action', '@Model.panelUpdate', '@Model.filter')">Siguiente</a></li>
+
+                    if (Math.Ceiling(Model.pageTotal) > (Model.pageInicial + 20))
+                    {
+                        <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="LoadLastPagedList('@Model.controller', '@Model.action', '@Model.panelUpdate', '@Model.filter')">Fin</a></li>
+                    }
+
+                }
+
+            }
+            else
+            {
+
+                for (int x = Model.pageInicial; x < (Model.pageInicial + 10); x++)
+                {
+                    if (x > Math.Ceiling(Model.pageTotal))
+                    {
+                        break;
+                    }
+                    else
+                    {
+
+                        if (Model.page == x)
+                        {
+                            <li class="page-item active"><a class="page-link" style="cursor:pointer;">@x</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="LoadPagedList('@Model.controller','@Model.action',@x,'@Model.panelUpdate','@Model.filter')">@x</a></li>
+                        }
+                    }
+
+                }
+
+                if (Math.Ceiling(Model.pageTotal) >= 10)
+                {
+
+                    <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="LoadNextPagedList('@Model.controller','@Model.action','@Model.panelUpdate','@Model.filter')">Siguiente</a></li>
+                    if (Math.Ceiling(Model.pageTotal) >= 21)
+                    {
+                        <li class="page-item"><a class="page-link" style="cursor:pointer;" onclick="LoadLastPagedList('@Model.controller', '@Model.action', '@Model.panelUpdate', '@Model.filter')">Fin</a></li>
+                    }
+                }
+            }
+        </ul>
+    </nav>
+
+    @Html.Hidden("PagedListPageTotal", Math.Ceiling(Model.pageTotal))
+    @Html.Hidden("PagedListPageInicial", Model.pageInicial)
+
+    <script type="text/javascript">
+    $(function () {
+        AddDataBackPaged(10, @Model.page, @Model.pageInicial);
+    });
+    </script>
 }
-
-<nav>
-    <ul class="pagination">
-        <li class="page-item @(activarBotonAnterior ? null: "disabled")">
-            @if (activarBotonAnterior)
-            {
-                <a class="page-link"
-                   href="@string.Format(plantillaLink, Model.Pagina - 1, Model.RecordsPorPagina)">
-                    Anterior
-                </a>
-            }
-            else
-            {
-                <span class="page-link">Anterior</span>
-            }
-
-        </li>
-        @for (var pagina = 1; pagina <= Model.CantidadTotalDePaginas; pagina++)
-        {
-            <li class="page-item @(pagina == Model.Pagina ? "active" : null)">
-                <a class="page-link" href="@string.Format(plantillaLink, pagina, Model.RecordsPorPagina)">
-                    @pagina
-                </a>
-            </li>
-        }
-
-        <li class="page-item @(activarBotonSiguiente ? null: "disabled")">
-            @if (activarBotonSiguiente)
-            {
-                <a class="page-link"
-                   href="@string.Format(plantillaLink, Model.Pagina + 1, Model.RecordsPorPagina)">
-                    Siguiente
-                </a>
-            }
-            else
-            {
-                <span class="page-link">Siguiente</span>
-            }
-
-        </li>
-
-    </ul>
-</nav>

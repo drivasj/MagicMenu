@@ -1,0 +1,25 @@
+﻿@using DigitalMenu.Models.Product
+@model ProductCategoryViewModel
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProductCategories)
+        {
+            <tr>
+                <td>@item.IdProductCategory</td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+<partial name="_Paginacion" model="Model.Paged" />

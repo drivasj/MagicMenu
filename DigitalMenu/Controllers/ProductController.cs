@@ -1,11 +1,14 @@
 ﻿using DigitalMenu.Models;
 using DigitalMenu.Models.Administrator;
 using DigitalMenu.Models.Entity.Product;
+using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Models.Product;
 using DigitalMenu.Services;
 using DigitalMenu.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Routing;
+using System.Xml.Linq;
 using TestWeb;
 
 namespace DigitalMenu.Controllers
@@ -40,38 +43,47 @@ namespace DigitalMenu.Controllers
             return View(listProducts);
         }
 
-        //public async Task<IActionResult> Category()
-        //{
-        //    ProductCategory model = new ProductCategory();
+        public async Task<IActionResult> Category()
+        {
+            var model = await _getProductCategorySearch(10, 1);
+            return View(model);
+        }
 
-          
+        private async Task<ProductCategoryViewModel> _getProductCategorySearch(int numrow, int page, int pageInitial = 1)
+        {
 
-        //    var productsCategory = await productRepository.ListProductCategoryPage(10, 1)();
-        //    return View(productsCategory);
-        //}
+            ProductCategoryViewModel model = new ProductCategoryViewModel();
+            {
+                model.ProductCategories = await productRepository.ListProductCategory(numrow, page);
+            }
 
+            model.Paged = new PagedList()
+            {
+                page = page,
+                // area = "Tools",
+                action = "ProductCategoryPagedList",
+                controller = "Product",
+                rowTotal = await productRepository.CountProductCategory(),
+                pageInicial = pageInitial,
+                //filter = idRoute.ToString(),
+                panelUpdate = "SearchResultProductCategory"
+            };
+            return model;
+        }
 
-        public async Task<IActionResult> Category(PaginacionViewModel paginacion)
+        [HttpPost]
+        public async Task<PartialViewResult> ProductCategoryPagedList(string filter, int page, int pageInitial, int numrow = 10)
         {
             try
             {
-                var productCategory = await productRepository.ListProductCategory();
+                var model = await _getProductCategorySearch(numrow, page, pageInitial);
 
-                var respuestaVW = new PaginacionRespuesta<ProductCategoryViewModel>
-                {
-                    Elementos = productCategory,
-                    Pagina = paginacion.Pagina,
-                    RecordsPorPagina = paginacion.RecorsPorPagina,
-                    CantidadTotalRecords = await productRepository.CountProductCategory(),
-                    BaseURL = "/"
-                };
+                return PartialView("~/Views/Product/_Partial/_SearchProductCategoryResult.cshtml", model);
 
-                return View(respuestaVW);
             }
             catch (Exception ex)
             {
-                string message = ex.Message;
-                return null;
+                throw new ApplicationException(ex.Message);
             }
         }
 
@@ -91,7 +103,7 @@ namespace DigitalMenu.Controllers
 
                 return PartialView("~/Views/Product/_Partial/_CreateProductForm.cshtml", list);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message });
 
@@ -108,7 +120,7 @@ namespace DigitalMenu.Controllers
 
                 return PartialView("~/Views/Product/_Partial/_DetailProductForm.cshtml", product);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ApplicationException(ex.Message);
             }
@@ -133,7 +145,7 @@ namespace DigitalMenu.Controllers
                     message = product ? "Registro guardado correctamente." : "Error al intentar completar la operación."
                 });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message });
             }

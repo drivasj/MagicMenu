@@ -16,5 +16,6 @@ namespace DigitalMenu.Services.Interfaces
         Task<List<ProductViewModel>> SearchProductStatus(bool filter);
         Task<bool> SaveProductCategory(ProductCategoryViewModel model);
         Task<int> CountProductCategory();
+        Task<List<ProductCategoryViewModel>> ListProductCategory(int numrow, int page);
     }
 }

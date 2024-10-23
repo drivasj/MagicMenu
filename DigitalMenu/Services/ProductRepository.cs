@@ -65,7 +65,27 @@ namespace DigitalMenu.Services
                     IdProductCategory = pc.IdProductCategory,
                     Name = pc.Name,
                     Description = pc.Description
-                }).ToListAsync();       
+                }).ToListAsync();
+
+                return productCategory;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return null;
+            }
+        }
+
+        public async Task<List<ProductCategoryViewModel>> ListProductCategory(int numrow, int page)
+        {
+            try
+            {
+                var productCategory = await context.ProductCategory.Select(pc => new ProductCategoryViewModel
+                {
+                    IdProductCategory = pc.IdProductCategory,
+                    Name = pc.Name,
+                    Description = pc.Description
+                }).OrderBy(x=>x.IdProductCategory).Skip((page - 1) * numrow).Take(numrow).ToListAsync(); 
 
                 return productCategory;
             }
@@ -345,8 +365,8 @@ namespace DigitalMenu.Services
 
         public async Task<int>  CountProductCategory()
         {
-            var products = await context.Product.CountAsync();
-            return products;
+            var data = await context.ProductCategory.CountAsync();
+            return data;
         }
     }
 }
