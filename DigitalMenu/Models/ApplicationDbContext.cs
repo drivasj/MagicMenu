@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using DigitalMenu.Models;
 using DigitalMenu.Models.EntityAdministrator;
 using DigitalMenu.Models.Entity.Product;
+using DigitalMenu.Models.Entity;
+using DigitalMenu.Models.Entity.Client;
 
 namespace TestWeb
 {
@@ -35,6 +37,17 @@ namespace TestWeb
         public DbSet<ProductDetails> ProductDetails { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<ProductTax> ProductTax { get; set; }
+
+        public DbSet<Company> Company { get; set; }
+        public DbSet<CompanyDetails> CompanyDetails { get; set; }
+        public DbSet<RoleCompany> RoleCompany { get; set; }
+        public DbSet<CompanyEmployee> CompanyEmployee { get; set; }
+        public DbSet<Country> Country { get; set; }
+        public DbSet<State> State { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<Client> Client { get; set; }
+        public DbSet<ClientDetails> ClientDetails { get; set; }
+        public DbSet<Typedocument> Typedocument { get; set; }
 
     }
 }
