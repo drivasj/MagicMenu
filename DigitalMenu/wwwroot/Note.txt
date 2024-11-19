@@ -107,11 +107,10 @@ Articulos o productos {Nombre, categoria, Codigo, stock, imagen, descripcion, pr
 Categoria{Nombre, Descripcion, Estado}
 
 
-
 New sale
 sale , SalesMethodPayment
-
-Juridic:
+invoicesales
+Juridic: 
 InvoiceNumber+1,Invoice,InvoiceProduct,InvoiceAddress
 
 Natural:
