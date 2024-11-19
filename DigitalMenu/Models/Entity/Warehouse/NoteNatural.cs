@@ -1,15 +1,15 @@
 ﻿using DigitalMenu.Models.Entity.Client;
 using DigitalMenu.Models.EntityAdministrator;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace DigitalMenu.Models.Entity.Warehouse
 {
-    public class Invoice
+    public class NoteNatural
     {
         [Key]
-        public int IdInvoice { get; set; }
-        public int NumberInvoice { get; set; }
+        public int IdNatural { get; set; }
+        public int NumberNatural { get; set; }
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public int ClientId { get; set; }
@@ -19,7 +19,7 @@ namespace DigitalMenu.Models.Entity.Warehouse
         public string NameClient { get; set; }
 
         public int TypedocumentId { get; set; }
-        public Typedocument typedocument { get;set; }
+        public Typedocument typedocument { get; set; }
 
         [StringLength(100)]
         public string NumberDocument { get; set; }
@@ -41,12 +41,5 @@ namespace DigitalMenu.Models.Entity.Warehouse
         [StringLength(100)]
         public string RegisterUser { get; set; }
         public bool Active { get; set; }
-
-        public List<InvoiceSales> invoiceSales { get; set; }
-        public List<InvoiceAddress> invoiceAddress { get; set; }
-        public List<SalesMethodPayment> SalesMethodPayment { get; set; }
-
-
-
     }
 }

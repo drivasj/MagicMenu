@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DigitalMenu.Models.Entity.Warehouse;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DigitalMenu.Models.Entity.Product
@@ -24,5 +25,7 @@ namespace DigitalMenu.Models.Entity.Product
         public string LastUpdateUser { get; set; }
         public bool Active { get; set; }
         public ProductDetails productDetails { get; set; }
+        public List<InvoiceProduct> invoiceProduct { get; set; }
+
     }
 }

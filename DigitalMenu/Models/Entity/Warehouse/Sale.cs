@@ -17,12 +17,17 @@ namespace DigitalMenu.Models.Entity.Warehouse
 
         [Column(TypeName = "datetime")]
         public DateTime ExpirationDate { get; set; }
+
         [Column(TypeName = "datetime")]
         public DateTime RegisterDate { get; set; }
 
         [StringLength(100)]
         public string RegisterUser { get; set; }
         public bool Active { get; set; }
+
+        public List<SalesMethodPayment> salesMethodPayment { get; set; }
+
+        public List<InvoiceSales> invoiceSales { get; set; }
 
     }
 }

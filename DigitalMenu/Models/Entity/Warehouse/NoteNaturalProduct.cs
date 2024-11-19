@@ -1,17 +1,13 @@
-﻿using DigitalMenu.Migrations;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DigitalMenu.Models.Entity.Warehouse
 {
-    public class InvoiceProduct
+    public class NoteNaturalProduct
     {
-        /// <summary>
-        /// items detallados de la factura
-        /// </summary>
         [Key]
-        public int IdInvoiceProduct { get; set; }
-        public int InvoiceId { get; set; }
-        public Invoice invoice { get; set; }
+        public int IdNaturalProduct { get; set; }
+        public int NaturalId { get; set; }
+        public NoteNatural natural { get; set; }
         public int ProductId { get; set; }
         public Product.Product product { get; set; }
 

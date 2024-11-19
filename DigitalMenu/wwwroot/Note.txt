@@ -105,3 +105,14 @@ APPLICATION -> Almacen
 Articulos o productos {Nombre, categoria, Codigo, stock, imagen, descripcion, precio compra, precio venta}
 
 Categoria{Nombre, Descripcion, Estado}
+
+
+
+New sale
+sale , SalesMethodPayment
+
+Juridic:
+InvoiceNumber+1,Invoice,InvoiceProduct,InvoiceAddress
+
+Natural:
+NoteNaturalNumber+1, NoteNatural, InvoiceAddress
